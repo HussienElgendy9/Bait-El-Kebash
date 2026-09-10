@@ -10,6 +10,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 //chatgpt recommendation
 use Illuminate\Support\Facades\DB;
+use App\Models\User;
+use App\Notifications\NewOrderNotification;
+use Illuminate\Support\Facades\Notification;
 
 class CartController extends Controller
 {
@@ -112,7 +115,7 @@ class CartController extends Controller
         if (empty($this->cart)) {
         return redirect()->back()->with('error', 'Your cart is empty.');
     }
-        DB::transaction(function () {
+        $order = DB::transaction(function () {
 
         $order = Order::create([
             'user_id' => Auth::id(),
@@ -120,10 +123,17 @@ class CartController extends Controller
         ]);
 
         $this->order($order->id);
+        return $order;
 
         });
         session()->forget('cart');
         session()->forget('total_price');
+
+        $order->load(['user', 'orderitems.product']);
+
+$admins = User::where('role', 'admin')->get();
+
+Notification::send($admins, new NewOrderNotification($order));
 
         return redirect()->route('store.home')
         ->with('success', 'Order placed successfully.');
@@ -135,6 +145,8 @@ class CartController extends Controller
                 'product_id'=>$item['id'],
                 'quantity'=>$item['qty'],
                 'price_snapshot'=>$item['price'],
+                'unit_price' => $item['unit_price'],
+
                 // 'product_id'=>$this->$item['id'],
                 // 'quantity'=>$this->$item['qty'],
                 // 'price_snapshot'=>$this->$item['price'],
