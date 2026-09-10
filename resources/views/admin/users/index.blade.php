@@ -1,104 +1,251 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="max-w-7xl mx-auto p-8">
 
-    <div class="flex justify-between items-center mb-6">
-        <h1 class="text-3xl font-bold text-gray-800">Products</h1>
+<div class="min-h-screen bg-[#fcf9f8] p-5 text-[#1b1c1c] lg:p-10">
 
-        {{-- <a href="{{ route('admin.products.create') }}"
-           class="bg-green-600 hover:bg-green-700 text-white px-5 py-2 rounded-lg transition">
-            + Add Product
-        </a> --}}
-    </div>
+    <div class="mx-auto max-w-[1400px]">
 
-    <div class="overflow-x-auto bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden">
+        {{-- HEADER --}}
+        <div class="mb-10 border-b border-[#e4e2e1] pb-6">
 
-        <table class="w-full">
+            <p class="text-sm font-bold tracking-wider text-[#8b5e3c]">
+                بيت الكباش
+            </p>
 
-            <thead class="bg-gray-100 border-b border-gray-200">
-                <tr>
-                    <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700">ID</th>
-                    <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700">Name</th>
-                    <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700">Email</th>
-                    <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700">Phone Number</th>
-                    <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700">Address</th>
-                    <th class="px-6 py-4 text-center text-sm font-semibold text-gray-700">Actions</th>
-                </tr>
-            </thead>
+            <h1 class="mt-2 text-4xl font-bold text-[#002a15]">
+                المستخدمين
+            </h1>
 
-            <tbody>
+            <p class="mt-3 text-gray-500">
+                إدارة ومتابعة حسابات المستخدمين.
+            </p>
 
-                @forelse($users as $user)
+        </div>
 
-                    <tr class="border-b border-gray-200 hover:bg-gray-50">
 
-                        <td class="px-6 py-4">
-                            {{ $user->id }}
-                        </td>
+        {{-- TABLE --}}
+        <div class="overflow-hidden rounded-[24px] bg-white shadow-sm">
 
-                        <td class="px-6 py-4 font-medium text-gray-800">
-                            {{ $user->name }}
-                        </td>
+            <div class="overflow-x-auto">
 
-                        <td class="px-6 py-4">
-                            {{ $user->email }}
-                        </td>
+                <table class="w-full min-w-[900px]">
 
-                        <td class="px-6 py-4">
-                            {{ $user->phone_number }}
-                        </td>
+                    {{-- HEADER --}}
+                    <thead>
 
-                        <td class="px-6 py-4 max-w-xs truncate">
-                            {{ $user->address }}
-                        </td>
+                        <tr class="border-b border-[#e4e2e1] bg-[#f6f3f2]">
 
-                        <td class="px-6 py-4">
+                            <th class="px-6 py-5 text-right text-sm font-bold text-gray-500">
+                                المستخدم
+                            </th>
 
-                            <div class="flex justify-center gap-2">
+                            <th class="px-6 py-5 text-right text-sm font-bold text-gray-500">
+                                البريد الإلكتروني
+                            </th>
 
-                                <a href="{{ route('admin.users.show', $user->id) }}"
-                                   class="bg-green-600 hover:bg-blue-700 text-white px-3 py-2 rounded-md text-sm">
-                                    View
-                                </a>
-                                <a href="{{ route('admin.users.edit', $user->id) }}"
-                                   class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-2 rounded-md text-sm">
-                                    Edit
-                                </a>
+                            <th class="px-6 py-5 text-right text-sm font-bold text-gray-500">
+                                رقم الهاتف
+                            </th>
 
-                                <form action="{{ route('admin.users.destroy', $user->id) }}" method="POST">
-                                    @csrf
-                                    @method('DELETE')
+                            <th class="px-6 py-5 text-right text-sm font-bold text-gray-500">
+                                العنوان
+                            </th>
 
-                                    <button
-                                        type="submit"
-                                        onclick="return confirm('Delete this product?')"
-                                        class="bg-red-600 hover:bg-red-700 text-white px-3 py-2 rounded-md text-sm">
-                                        Delete
-                                    </button>
-                                </form>
+                            <th class="px-6 py-5 text-center text-sm font-bold text-gray-500">
+                                الإجراءات
+                            </th>
 
-                            </div>
+                        </tr>
 
-                        </td>
+                    </thead>
 
-                    </tr>
 
-                @empty
+                    {{-- BODY --}}
+                    <tbody>
 
-                    <tr>
-                        <td colspan="7" class="text-center py-8 text-gray-500">
-                            No products found.
-                        </td>
-                    </tr>
+                        @forelse($users as $user)
 
-                @endforelse
+                            <tr class="group border-b border-[#e4e2e1]/60 transition hover:bg-[#fcf9f8]">
 
-            </tbody>
+                                {{-- USER --}}
+                                <td class="px-6 py-5">
 
-        </table>
+                                    <div class="flex items-center gap-4">
+
+                                        {{-- AVATAR --}}
+                                        <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#ece2c7] font-bold text-[#004225]">
+
+                                            {{ mb_substr($user->name, 0, 1) }}
+
+                                        </div>
+
+
+                                        <div>
+
+                                            <p class="font-bold text-[#002a15]">
+                                                {{ $user->name }}
+                                            </p>
+
+                                            <p class="mt-1 text-xs text-gray-400">
+                                                #{{ $user->id }}
+                                            </p>
+
+                                        </div>
+
+                                    </div>
+
+                                </td>
+
+
+                                {{-- EMAIL --}}
+                                <td class="px-6 py-5 text-sm text-gray-600">
+
+                                    {{ $user->email }}
+
+                                </td>
+
+
+                                {{-- PHONE --}}
+                                <td class="px-6 py-5">
+
+                                    @if($user->phone_number)
+
+                                        <span class="font-medium text-[#002a15]">
+                                            {{ $user->phone_number }}
+                                        </span>
+
+                                    @else
+
+                                        <span class="text-sm text-gray-400">
+                                            غير متوفر
+                                        </span>
+
+                                    @endif
+
+                                </td>
+
+
+                                {{-- ADDRESS --}}
+                                <td class="max-w-xs px-6 py-5">
+
+                                    @if($user->address)
+
+                                        <p class="line-clamp-2 text-sm text-gray-500">
+                                            {{ $user->address }}
+                                        </p>
+
+                                    @else
+
+                                        <span class="text-sm text-gray-400">
+                                            غير متوفر
+                                        </span>
+
+                                    @endif
+
+                                </td>
+
+
+                                {{-- ACTIONS --}}
+                                <td class="px-6 py-5">
+
+                                    <div class="flex items-center justify-center gap-2">
+
+
+                                        {{-- VIEW --}}
+                                        <a
+                                            href="{{ route('admin.users.show', $user->id) }}"
+                                            class="flex h-10 w-10 items-center justify-center rounded-full text-[#004225] transition hover:bg-[#b4f0c7]"
+                                            title="عرض المستخدم"
+                                        >
+                                            <i class="fa-solid fa-eye"></i>
+                                        </a>
+
+
+                                        {{-- EDIT --}}
+                                        <a
+                                            href="{{ route('admin.users.edit', $user->id) }}"
+                                            class="flex h-10 w-10 items-center justify-center rounded-full text-blue-600 transition hover:bg-blue-50"
+                                            title="تعديل المستخدم"
+                                        >
+                                            <i class="fa-solid fa-pen"></i>
+                                        </a>
+
+
+                                        {{-- DELETE --}}
+                                        <form
+                                            action="{{ route('admin.users.destroy', $user->id) }}"
+                                            method="POST"
+                                        >
+
+                                            @csrf
+                                            @method('DELETE')
+
+                                            <button
+                                                type="submit"
+                                                onclick="return confirm('هل أنت متأكد من حذف هذا المستخدم؟')"
+                                                class="flex h-10 w-10 items-center justify-center rounded-full text-red-500 transition hover:bg-red-50"
+                                                title="حذف المستخدم"
+                                            >
+                                                <i class="fa-solid fa-trash"></i>
+                                            </button>
+
+                                        </form>
+
+                                    </div>
+
+                                </td>
+
+                            </tr>
+
+                        @empty
+
+                            <tr>
+
+                                <td colspan="5" class="px-6 py-16 text-center">
+
+                                    <div class="mx-auto flex max-w-sm flex-col items-center">
+
+                                        <div class="flex h-16 w-16 items-center justify-center rounded-full bg-[#ece2c7] text-2xl text-[#004225]">
+                                            <i class="fa-solid fa-users"></i>
+                                        </div>
+
+                                        <h3 class="mt-5 text-xl font-bold text-[#002a15]">
+                                            لا يوجد مستخدمين
+                                        </h3>
+
+                                        <p class="mt-2 text-sm text-gray-500">
+                                            لم يتم العثور على أي حسابات مستخدمين.
+                                        </p>
+
+                                    </div>
+
+                                </td>
+
+                            </tr>
+
+                        @endforelse
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+
+            {{-- PAGINATION --}}
+            @if(method_exists($users, 'links'))
+
+                <div class="border-t border-[#e4e2e1] bg-[#fcf9f8] px-6 py-4">
+                    {{ $users->links() }}
+                </div>
+
+            @endif
+
+        </div>
 
     </div>
 
 </div>
+
 @endsection

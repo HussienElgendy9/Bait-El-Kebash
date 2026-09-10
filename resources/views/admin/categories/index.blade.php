@@ -1,88 +1,162 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="max-w-7xl mx-auto p-8">
 
-    <div class="flex justify-between items-center mb-6">
-        <h1 class="text-3xl font-bold text-gray-800">Products</h1>
+<div class="min-h-screen bg-[#fcf9f8] text-[#1b1c1c]">
 
-        <a href="{{ route('admin.categories.create') }}"
-           class="bg-green-600 hover:bg-green-700 text-white px-5 py-2 rounded-lg transition">
-            + Add Category
-        </a>
-    </div>
+    <div class="mx-auto max-w-[1280px] px-5 py-10 lg:px-10">
 
-    <div class="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden">
+        {{-- HEADER --}}
+        <div class="mb-10 flex flex-col justify-between gap-5 border-b border-[#c0c9c0]/30 pb-6 sm:flex-row sm:items-end">
 
-        <table class="w-full">
+            <div>
+                <h1 class="text-4xl font-bold text-[#002a15]">
+                    الأقسام
+                </h1>
 
-            <thead class="bg-gray-100 border-b border-gray-200">
-                <tr>
-                    <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700">ID</th>
+                <p class="mt-2 text-gray-500">
+                    إدارة أقسام المنتجات في متجر بيت الكباش.
+                </p>
+            </div>
 
-                    <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700">Name</th>
-                    
-                    <th class="px-6 py-4 text-center text-sm font-semibold text-gray-700">Actions</th>
-                </tr>
-            </thead>
+            {{-- ADD CATEGORY --}}
+            <a
+                href="{{ route('admin.categories.create') }}"
+                class="flex items-center justify-center gap-2 rounded-lg bg-[#002a15] px-6 py-3 font-bold text-white transition hover:bg-[#004225] hover:shadow-lg"
+            >
+                <i class="fa-solid fa-plus"></i>
+                إضافة قسم
+            </a>
 
-            <tbody>
-
-                @forelse($categories as $category)
-
-                    <tr class="border-b border-gray-200 hover:bg-gray-50">
-
-                        <td class="px-6 py-4">
-                            {{ $category->id }}
-                        </td>
+        </div>
 
 
-                        <td class="px-6 py-4 font-medium text-gray-800">
-                            {{ $category->name }}
-                        </td>
+        {{-- TABLE --}}
+        <div class="overflow-hidden rounded-xl bg-white shadow-md">
 
-                        <td class="px-6 py-4">
+            <div class="overflow-x-auto">
 
-                            <div class="flex justify-center gap-2">
+                <table class="w-full text-right">
 
-                                <a href="{{ route('admin.categories.edit', $category->id) }}"
-                                   class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-2 rounded-md text-sm">
-                                    Edit
-                                </a>
+                    {{-- TABLE HEADER --}}
+                    <thead class="border-b border-[#717971]/10 bg-[#f6f3f2]">
 
-                                <form action="{{ route('admin.categories.destroy', $category->id) }}" method="POST">
-                                    @csrf
-                                    @method('DELETE')
+                        <tr>
+                            <th class="px-6 py-4 text-sm font-semibold text-[#404942]">
+                                الرقم
+                            </th>
 
-                                    <button
-                                        type="submit"
-                                        onclick="return confirm('Delete this category?')"
-                                        class="bg-red-600 hover:bg-red-700 text-white px-3 py-2 rounded-md text-sm">
-                                        Delete
-                                    </button>
-                                </form>
+                            <th class="px-6 py-4 text-sm font-semibold text-[#404942]">
+                                اسم القسم
+                            </th>
 
-                            </div>
+                            <th class="px-6 py-4 text-left text-sm font-semibold text-[#404942]">
+                                الإجراءات
+                            </th>
+                        </tr>
 
-                        </td>
+                    </thead>
 
-                    </tr>
 
-                @empty
+                    {{-- TABLE BODY --}}
+                    <tbody>
 
-                    <tr>
-                        <td colspan="7" class="text-center py-8 text-gray-500">
-                            No products found.
-                        </td>
-                    </tr>
+                        @forelse($categories as $category)
 
-                @endforelse
+                            <tr class="group border-b border-[#717971]/5 transition hover:bg-[#fcf9f8]">
 
-            </tbody>
+                                {{-- ID --}}
+                                <td class="px-6 py-5 font-medium text-[#002a15]">
+                                    #{{ $category->id }}
+                                </td>
 
-        </table>
+
+                                {{-- CATEGORY NAME --}}
+                                <td class="px-6 py-5">
+
+                                    <div class="flex items-center gap-3">
+
+                                        <div class="flex h-10 w-10 items-center justify-center rounded-full bg-[#ece2c7] text-[#004225]">
+                                            <i class="fa-solid fa-layer-group"></i>
+                                        </div>
+
+                                        <span class="font-medium text-[#1b1c1c]">
+                                            {{ $category->name }}
+                                        </span>
+
+                                    </div>
+
+                                </td>
+
+
+                                {{-- ACTIONS --}}
+                                <td class="px-6 py-5">
+
+                                    <div class="flex items-center justify-end gap-2">
+
+                                        {{-- EDIT --}}
+                                        <a
+                                            href="{{ route('admin.categories.edit', $category->id) }}"
+                                            class="flex h-10 w-10 items-center justify-center rounded-full text-[#404942] transition hover:bg-[#ece2c7] hover:text-[#004225]"
+                                            title="تعديل"
+                                        >
+                                            <i class="fa-solid fa-pen"></i>
+                                        </a>
+
+
+                                        {{-- DELETE --}}
+                                        <form
+                                            action="{{ route('admin.categories.destroy', $category->id) }}"
+                                            method="POST"
+                                        >
+                                            @csrf
+                                            @method('DELETE')
+
+                                            <button
+                                                type="submit"
+                                                onclick="return confirm('Delete this category?')"
+                                                class="flex h-10 w-10 items-center justify-center rounded-full text-[#404942] transition hover:bg-red-100 hover:text-red-600"
+                                                title="حذف"
+                                            >
+                                                <i class="fa-solid fa-trash"></i>
+                                            </button>
+
+                                        </form>
+
+                                    </div>
+
+                                </td>
+
+                            </tr>
+
+                        @empty
+
+                            <tr>
+
+                                <td colspan="3" class="px-6 py-16 text-center text-gray-500">
+
+                                    <i class="fa-solid fa-layer-group mb-4 block text-4xl text-gray-300"></i>
+
+                                    <p>
+                                        لا توجد أقسام حتى الآن.
+                                    </p>
+
+                                </td>
+
+                            </tr>
+
+                        @endforelse
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
 
     </div>
 
 </div>
+
 @endsection
