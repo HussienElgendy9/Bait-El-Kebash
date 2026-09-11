@@ -3,11 +3,6 @@
 namespace App\Http\Controllers\Store;
 
 use App\Http\Controllers\Controller;
-<<<<<<< Updated upstream
-use Illuminate\Http\Request;
-//chatgpt recommendation
-use Illuminate\Support\Facades\DB;
-=======
 use App\Models\Product;
 use App\Models\User;
 use App\Services\CheckoutService;
@@ -16,7 +11,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
->>>>>>> Stashed changes
 
 class CartController extends Controller
 {
@@ -141,45 +135,11 @@ class CartController extends Controller
 
     }
 
-<<<<<<< Updated upstream
-    public function checkout(){
-        if (empty($this->cart)) {
-        return redirect()->back()->with('error', 'Your cart is empty.');
-    }
-        DB::transaction(function () {
-
-        $order = Order::create([
-            'user_id' => Auth::id(),
-            'status'  => 'pending',
-        ]);
-
-        $this->order($order->id);
-
-        });
-        session()->forget('cart');
-        session()->forget('total_price');
-
-        return redirect()->route('store.home')
-        ->with('success', 'Order placed successfully.');
-    }
-    private function order($order_id){
-        foreach ($this->cart as $item){
-            OrderItem::create([
-                'order_id'=>$order_id,
-                'product_id'=>$item['id'],
-                'quantity'=>$item['qty'],
-                'price_snapshot'=>$item['price'],
-                // 'product_id'=>$this->$item['id'],
-                // 'quantity'=>$this->$item['qty'],
-                // 'price_snapshot'=>$this->$item['price'],
-            ]);
-=======
     public function checkout(CheckoutService $service)
     {
         $cart = session('cart', []);
         if (empty($cart)) {
             return redirect()->back()->with('error', 'Your cart is empty.');
->>>>>>> Stashed changes
         }
         $key = session('checkout_key', (string) Str::uuid());
         session()->put('checkout_key', $key);

@@ -1,31 +1,19 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
-use App\Models\User;
-use App\Models\Order;
-use App\Models\OrderItem;
-use App\Models\Product;
-use App\Models\Category;
+
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
+use App\Services\DashboardStatistics;
 
 class DashboardController extends Controller
 {
-    public function index()
+    public function index(DashboardStatistics $statistics)
     {
-        // $users = User::all();
-        // $order = Order::all();
-        // $orderItem = OrderItem::all();
-        // $product = Product::all();
-        // $category = Category::all();
+        $data = $statistics->legacy();
 
-        $users = User::count();
-        $order = Order::count();
-        $product = Product::count();
-        $category = Category::count();
-
-        return view('admin.index',compact('users', 'order', 'product', 'category'));
+        return view('admin.index', $data + [
+            'users' => $data['usersCount'], 'orders' => $data['ordersCount'],
+            'products' => $data['productsCount'], 'categories' => $data['categoriesCount'],
+        ]);
     }
-// return view admin.dashboard compact('users', 'order', 'orderItem', 'product', 'category');    }
 }

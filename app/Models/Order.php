@@ -19,15 +19,10 @@ class Order extends Model
         'user_id',
         'status',
     ];
-<<<<<<< Updated upstream
-    public function orderitems(){
-        return $this->hasmany(OrderItem::class);
-=======
 
     public function orderitems()
     {
         return $this->hasMany(OrderItem::class);
->>>>>>> Stashed changes
     }
 
     public function user()

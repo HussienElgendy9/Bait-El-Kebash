@@ -21,6 +21,7 @@
 /storage/*.key
 /storage/pail
 /storage/api-validation-cache/
+/storage/composer-cache/
 /vendor
 Homestead.json
 Homestead.yaml
