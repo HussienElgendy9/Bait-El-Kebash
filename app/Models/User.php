@@ -7,6 +7,10 @@ use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+<<<<<<< Updated upstream
+=======
+use Laravel\Sanctum\HasApiTokens;
+>>>>>>> Stashed changes
 
 class User extends Authenticatable
 {
@@ -23,7 +27,7 @@ class User extends Authenticatable
         'email',
         'password',
         'phone_number',
-        'address'
+        'address',
     ];
 
     /**
@@ -50,10 +54,34 @@ class User extends Authenticatable
         ];
     }
 
-    public function isAdmin() {
+    public function isAdmin()
+    {
         return $this->role === 'admin';
     }
-    public function order(){
+
+    public function order()
+    {
         return $this->hasmany(Order::class);
     }
+<<<<<<< Updated upstream
+=======
+
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
+    }
+
+    protected static function booted(): void
+    {
+        static::deleting(function (User $user) {
+            abort_if($user->orders()->exists(), 409, 'Users with orders cannot be deleted.');
+            abort_if($user->isAdmin(), 409, 'Demote the administrator before deletion.');
+        });
+    }
+
+    public function phoneVerifications()
+    {
+        return $this->hasMany(PhoneVerification::class);
+    }
+>>>>>>> Stashed changes
 }

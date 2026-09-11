@@ -48,9 +48,9 @@ class ProfileController extends Controller
 
         $user = $request->user();
 
-        Auth::logout();
-
         $user->delete();
+
+        Auth::guard('web')->logoutCurrentDevice();
 
         $request->session()->invalidate();
         $request->session()->regenerateToken();

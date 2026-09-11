@@ -1,11 +1,11 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
-use App\Models\Category;
-use App\Models\Product;
-
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
+use App\Models\Product;
+use App\Services\ProductImages;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -16,11 +16,11 @@ class ProductController extends Controller
      */
     public function index()
     {
-        
+
         $products = Product::all();
         $categories = Category::all();
 
-        return view('admin.products.index',compact('products', 'categories'));
+        return view('admin.products.index', compact('products', 'categories'));
     }
 
     /**
@@ -31,7 +31,7 @@ class ProductController extends Controller
         $categories = Category::all();
 
         return view('admin.products.create', compact('categories'));
-        
+
     }
 
     /**
@@ -41,24 +41,25 @@ class ProductController extends Controller
     {
         //
         $request->validate([
-        'name' => 'required',
-        'cat_id' => 'required|exists:categories,id',
-        'unit_price' => 'required|numeric',
-        'description' => 'nullable',
-        'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
+            'name' => 'required',
+            'cat_id' => 'required|exists:categories,id',
+            'unit_price' => 'required|numeric',
+            'description' => 'nullable',
+            'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
         ]);
         $imagePath = null;
 
         if ($request->hasFile('image')) {
-        $imagePath = $request->file('image')->store('products', 'public');
-    }
+            $imagePath = $request->file('image')->store('products', 'public');
+        }
         Product::create([
-            'name'=>$request->name,
-            'category_id'=>$request->cat_id,
-            'unit_price'=>$request->unit_price,
-            'description'=>$request->description,
+            'name' => $request->name,
+            'category_id' => $request->cat_id,
+            'unit_price' => $request->unit_price,
+            'description' => $request->description,
             'image' => $imagePath,
         ]);
+
         return redirect()->route('admin.products.index');
     }
 
@@ -84,11 +85,12 @@ class ProductController extends Controller
     // }
     public function edit(string $id)
     {
-        //use this code if you are not using resource
+        // use this code if you are not using resource
         $product = Product::findOrFail($id);
         $categories = Category::all();
+
         // take advantage of resource's route model binding
-        return view('admin.products.edit',compact('product','categories'));
+        return view('admin.products.edit', compact('product', 'categories'));
     }
 
     /**
@@ -99,11 +101,11 @@ class ProductController extends Controller
         //
         $product = Product::findOrFail($id);
         $request->validate([
-        'name' => 'required',
-        'cat_id' => 'required|exists:categories,id',
-        'unit_price' => 'required|numeric',
-        'description' => 'nullable',
-        'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
+            'name' => 'required',
+            'cat_id' => 'required|exists:categories,id',
+            'unit_price' => 'required|numeric',
+            'description' => 'nullable',
+            'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
         ]);
 
         $imagePath = $product->image;
@@ -116,12 +118,13 @@ class ProductController extends Controller
             $imagePath = $newImage;
         }
         $product->update([
-            'name'=>$request->name,
-            'category_id'=>$request->cat_id,
-            'unit_price'=>$request->unit_price,
-            'description'=>$request->description,
+            'name' => $request->name,
+            'category_id' => $request->cat_id,
+            'unit_price' => $request->unit_price,
+            'description' => $request->description,
             'image' => $imagePath,
         ]);
+
         return redirect()->route('admin.products.index');
     }
 
@@ -132,11 +135,9 @@ class ProductController extends Controller
     {
         //
         $product = Product::findOrFail($id);
-        if($product->image){
-            Storage::disk('public')->delete($product->image);
-        }
-        $product->delete();
+        app(ProductImages::class)->delete($product);
+
         return redirect()->route('admin.products.index')
-                     ->with('success', 'Product deleted successfully.');
+            ->with('success', 'Product deleted successfully.');
     }
 }

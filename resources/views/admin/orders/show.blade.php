@@ -7,8 +7,8 @@
                 <p>{{$order->user->name}}</p>
                 <p>{{$order->status}}</p>
                 {{-- <p>{{$categories->find($order->category_id)->name}}</p> --}}
-                @foreach ($$order->order_items as $item)
-                    <p>{{$item->name}}</p>
+                @foreach ($order->orderitems as $item)
+                    <p>{{$item->product_name ?? $item->product->name}}</p>
                     <p>{{$item->quantity}}</p>
                     <p>{{$item->price_snapshot}}</p>
                 @endforeach

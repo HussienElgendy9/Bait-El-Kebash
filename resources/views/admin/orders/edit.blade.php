@@ -17,7 +17,7 @@
 <h3>Product ID: {{ $item->product_id }}</h3>
 <h3>Product: {{ $item->product->name }}</h3>
 <hr>
-        <form action="{{ route('admin.orders.update',$item->id) }}" method="POST" enctype="multipart/form-data" class="space-y-5">
+        <form action="{{ route('admin.orders.items.update',[$order->id, $item->id]) }}" method="POST" enctype="multipart/form-data" class="space-y-5">
             @csrf
             @method('PUT')
             <!-- Product Name -->
