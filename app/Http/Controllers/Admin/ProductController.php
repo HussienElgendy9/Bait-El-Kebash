@@ -62,26 +62,6 @@ class ProductController extends Controller
         return redirect()->route('admin.products.index');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    // public function show(string $id)
-    // {
-    //     $product = Product::findOrFail($id);
-    //     return view('admin.products.edit',compact('product'));
-    // }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-
-    // public function edit(Product $product)
-    // {
-    //     //use this code if you are not using resource
-    //     // $product = Product::findOrFail($id);
-    //     // take advantage of resource's route model binding
-    //     return view('admin.products.edit',compact('product'));
-    // }
     public function edit(string $id)
     {
         //use this code if you are not using resource

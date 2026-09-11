@@ -12,7 +12,7 @@ class Order extends Model
         'status',
     ];
     public function orderitems(){
-        return $this->hasmany(OrderItem::class);
+        return $this->hasMany(OrderItem::class);
     }
     public function user()
     {

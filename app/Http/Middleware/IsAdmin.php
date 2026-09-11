@@ -15,8 +15,11 @@ class IsAdmin
      */
     public function handle(Request $request, Closure $next): Response
     {
-         abort_unless(Auth::user()->isAdmin(), 403, 'Sorry, you are unauthorized to view this page.');
-
+        if (!$request->user() || !$request->user()->isAdmin()) {
+                    return response()->json([
+                        'message' => 'Unauthorized.',
+                    ], 403);
+        }
         return $next($request);
     }
 }

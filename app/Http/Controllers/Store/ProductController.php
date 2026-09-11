@@ -9,16 +9,15 @@ use Illuminate\Http\Request;
 class ProductController extends Controller
 {
     public function index(){
-        $products = Product::with('category')->get();
-        // $products = Product::with('category')
-        // ->latest()
-        // ->paginate(12);
+        // $products = Product::with('category')->get();
+        $products = Product::with('category')
+        ->latest()
+        ->paginate(12);
         return view('store.shop',compact('products'));
     }
     public function show($id){
         $product = Product::with('category')->findOrFail($id);
 
 return view('store.product', compact('product'));
-        return view('store.product',compact('product'));
     }
 }
