@@ -23,7 +23,7 @@ class NewOrderNotification extends Notification
 
     public function toMail(object $notifiable): MailMessage
     {
-        $total = $this->order->orderitems->sum('price_snapshot');
+        $total = $this->order->orderItems->sum('price_snapshot');
 
         $mail = (new MailMessage)
             ->subject("New Order #{$this->order->id} - Bait El Kebash")
@@ -32,7 +32,7 @@ class NewOrderNotification extends Notification
             ->line("Customer: {$this->order->user->name}")
             ->line("Phone: {$this->order->user->phone_number}")
             ->line("Address: {$this->order->user->address}");
-        foreach ($this->order->orderitems as $item) {
+        foreach ($this->order->orderItems as $item) {
             $mail->line(
                 "{$item->product->name} — Qty: {$item->quantity} — " .
                 "Unit price: {$item->unit_price} — Total: {$item->price_snapshot}"
@@ -52,7 +52,7 @@ class NewOrderNotification extends Notification
             'customer_name' => $this->order->user->name,
             'phone' => $this->order->user->phone_number,
             'address' => $this->order->user->address,
-            'total' => $this->order->orderitems->sum('price_snapshot'),
+            'total' => $this->order->orderItems->sum('price_snapshot'),
             'message' => "New order #{$this->order->id} received.",
         ];
     }

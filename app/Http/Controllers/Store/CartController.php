@@ -129,7 +129,7 @@ class CartController extends Controller
         session()->forget('cart');
         session()->forget('total_price');
 
-        $order->load(['user', 'orderitems.product']);
+        $order->load(['user', 'orderItems.product']);
 
 $admins = User::where('role', 'admin')->get();
 

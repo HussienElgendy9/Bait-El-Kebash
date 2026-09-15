@@ -14,7 +14,7 @@ class OrderController extends Controller
     public function index(Request $request){
         $orders = $request->user()
         ->order()
-        ->with('orderitems.product')
+        ->with('orderItems.product')
         ->latest()
         ->paginate(12);
 
@@ -43,7 +43,7 @@ class OrderController extends Controller
                     $unitPrice = $product->unit_price;
                     $priceSnapshot = $unitPrice * $quantity;
 
-                    $order->orderitems()->create([
+                    $order->orderItems()->create([
                         'product_id' => $product->id,
                         'unit_price' => $unitPrice,
                         'quantity' => $quantity,
@@ -54,7 +54,7 @@ class OrderController extends Controller
                 return $order;
             });
 
-            $order->load('orderitems.product');
+            $order->load('orderItems.product');
 
             return response()->json([
                 'message' => 'Order created successfully.',
@@ -69,7 +69,7 @@ class OrderController extends Controller
             ], 403);
         }
 
-        $order->load('orderitems.product');
+        $order->load('orderItems.product');
 
         return response()->json([
             'order' => $order,

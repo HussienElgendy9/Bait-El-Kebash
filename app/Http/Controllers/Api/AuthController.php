@@ -18,7 +18,7 @@ class AuthController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
-            'phone_number'=> ['required','unique:users','regex:/^01[0-9]{9}$/'],
+            'phone_number'=> ['required','unique:users,phone_number','regex:/^01[0125][0-9]{8}$/'],
             'address' => ['required','string','max:1000'],
         ]);
 
@@ -90,7 +90,7 @@ class AuthController extends Controller
         $validated = $request->validate([
             'phone_number' => [
                 'required',
-                'regex:/^01[0-9]{9}$/',
+                'regex:/^01[0125][0-9]{8}$/',
                 'unique:users,phone_number',
             ],
         ]);

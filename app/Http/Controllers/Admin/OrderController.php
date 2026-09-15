@@ -46,7 +46,7 @@ class OrderController extends Controller
     {
         $order = Order::with([
             'user',
-            'orderitem',
+            'orderItem',
             ])->findOrFail($id);
                 dd($order->id, $order->orderitem);
 
@@ -81,7 +81,7 @@ class OrderController extends Controller
  
         $item=OrderItem::findOrFail($id);
         $order_id=$item->order->id;
-        $order = Order::with('orderitems')->findOrFail($order_id);
+        $order = Order::with('orderItems')->findOrFail($order_id);
         $order->update([
             'status'=>$request->status,
         ]);

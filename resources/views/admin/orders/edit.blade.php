@@ -2,7 +2,7 @@
 
 @section('content')
 <div class=" flex  items-center mt-3 p-5">
-    @foreach ($order->orderitems as $item)
+    @foreach ($order->orderItems as $item)
     <div class="bg-white  items-center rounded-lg shadow-md p-8">
         {{-- {{ $order->orderitem->count() }} --}}
                 {{-- <h1>HELLO</h1> --}}

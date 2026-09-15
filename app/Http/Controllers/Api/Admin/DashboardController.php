@@ -21,9 +21,11 @@ class DashboardController extends Controller
         $productsCount=Product::count();
         $categoriesCount=Category::count();
 
-        $completedOrders = Order::where('status','completed')
-        ->count();
         $pendingOrders = Order::where('status','pending')
+        ->count();
+        $processingOrders = Order::where('status','processing')
+        ->count();
+        $completedOrders = Order::where('status','completed')
         ->count();
         $cancelledOrders = Order::where('status','cancelled')
         ->count();
@@ -68,8 +70,9 @@ class DashboardController extends Controller
             'categoriesCount'=>$categoriesCount,
             'salesLabels'=>$salesLabels,
             'salesData'=>$salesData,
-            'completedOrders'=>$completedOrders,
             'pendingOrders'=>$pendingOrders,
+            'processingOrders'=>$processingOrders,
+            'completedOrders'=>$completedOrders,
             'cancelledOrders'=>$cancelledOrders,
             'categoryLabels'=>$categoryLabels,
             'categoryData'=>$categoryData
