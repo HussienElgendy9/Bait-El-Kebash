@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Order;
 use App\Models\Product;
+use App\Http\Resources\OrderResource;
 use Illuminate\Support\Facades\DB;
 
 class OrderController extends Controller
@@ -13,14 +14,15 @@ class OrderController extends Controller
     //
     public function index(Request $request){
         $orders = $request->user()
-        ->order()
+        ->orders()
         ->with('orderItems.product')
         ->latest()
         ->paginate(12);
 
-         return response()->json([
-            'orders' => $orders,
-        ]);
+        //  return response()->json([
+        //     'orders' => $orders,
+        // ]);
+        return OrderResource::collection($orders);
     }
     public function store(Request $request){
         $validated = $request->validate([
@@ -58,7 +60,8 @@ class OrderController extends Controller
 
             return response()->json([
                 'message' => 'Order created successfully.',
-                'order' => $order,
+                'order' => new OrderResource($order),
+                // 'order' => $order,
             ], 201);
     }
     public function show(Request $request, Order $order)
@@ -71,8 +74,9 @@ class OrderController extends Controller
 
         $order->load('orderItems.product');
 
-        return response()->json([
-            'order' => $order,
-        ]);
+        // return response()->json([
+        //     'order' => $order,
+        // ]);
+        return new OrderResource($order);
     }
 }

@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use Illuminate\Support\Facades\Storage;
+use App\Http\Resources\ProductResource;
+
 
 
 class ProductController extends Controller
@@ -13,11 +15,12 @@ class ProductController extends Controller
     public function index()
     {
         $products = Product::with('category')->paginate(12);
+        return ProductResource::collection($products);
 
-        return response()->json([
-            'products' => $products,
+        // return response()->json([
+        //     'products' => $products,
             
-        ]);
+        // ]);
     }
     public function store(Request $request){
        $validated = $request->validate([
@@ -25,7 +28,7 @@ class ProductController extends Controller
         // 'cat_id' => ['required', 'integer', 'exists:categories,id'],
         'category_id' => ['required', 'integer', 'exists:categories,id'],
         'unit_price' => ['required', 'numeric', 'min:100'],
-        'unit' => ['required', 'string', 'max:50'],
+        'unit' => ['sometimes', 'string', 'max:50'],
         'description' => ['nullable', 'string'],
         'image' => ['required', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048'],
         ]);
@@ -46,7 +49,7 @@ class ProductController extends Controller
             'name'=>$validated['name'],
             'category_id'=>$validated['category_id'],
             'unit_price'=>$validated['unit_price'],
-            'unit'=>$validated['unit'],
+            'unit'=>$validated['unit'] ?? '0.5kg',
             'description'=>$validated['description'],
             'image' => $imagePath,
         ]);
@@ -54,7 +57,8 @@ class ProductController extends Controller
 
         return response()->json([
         'message' => 'Product created successfully.',
-        'product' => $product,
+        'product' => new ProductResource($product),
+        // 'product' => $product,
     ], 201);
     }
     public function update(Request $request, Product $product)
@@ -89,16 +93,16 @@ class ProductController extends Controller
 
         return response()->json([
             'message' => 'Product updated successfully.',
-            'product' => $product,
+            'product' => new ProductResource($product),
         ]);
     }
     public function show(Product $product)
     {
         $product->load('category');
-
-        return response()->json([
-            'product' => $product,
-        ]);
+        return new ProductResource($product);
+        // return response()->json([
+        //     'product' => $product,
+        // ]);
     }
     public function destroy(Product $product){
         if ($product->image) {

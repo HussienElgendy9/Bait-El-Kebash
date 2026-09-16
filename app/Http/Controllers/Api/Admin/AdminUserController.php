@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Api\Admin;
+use App\Http\Resources\UserResource;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -11,10 +12,11 @@ class AdminUserController extends Controller
     public function index()
     {
         $users = User::whereIn('role', ['admin', 'super_admin'])->latest()->paginate(10);
-        
-        return response()->json([
-            'users' => $users,
-        ]);
+        return UserResource::collection($users);
+
+        // return response()->json([
+        //     'users' => $users,
+        // ]);
     }
     public function show(User $admin)
     {
@@ -23,9 +25,9 @@ class AdminUserController extends Controller
                 'message' => 'Admin user not found.',
             ], 404);
         }
-
-        return response()->json([
-            'user' => $admin,
-        ]);
+        return new UserResource($admin);
+        // return response()->json([
+        //     'user' => $admin,
+        // ]);
     }
 }

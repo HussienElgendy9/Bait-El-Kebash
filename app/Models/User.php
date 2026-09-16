@@ -58,8 +58,8 @@ class User extends Authenticatable
     public function isSuperAdmin() {
         return $this->role === 'super_admin';
     }
-    public function order(){
-        return $this->hasmany(Order::class);
+    public function orders(){
+        return $this->hasMany(Order::class);
     }
     public function phoneVerifications()
     {

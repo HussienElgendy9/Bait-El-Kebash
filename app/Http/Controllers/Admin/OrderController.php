@@ -46,9 +46,9 @@ class OrderController extends Controller
     {
         $order = Order::with([
             'user',
-            'orderItem',
+            'orderItems',
             ])->findOrFail($id);
-                dd($order->id, $order->orderitem);
+                // dd($order->id, $order->orderItems);
 
         return view('admin.orders.show',compact('order'));
     }
@@ -59,10 +59,10 @@ class OrderController extends Controller
     public function edit(string $id)
     {
         //
-        $order = Order::with('orderitems.product')->findOrFail($id);
+        $order = Order::with('orderItems.product')->findOrFail($id);
             $products = Product::all();
             
-            // dd($order->id, $order->orderitem);
+            // dd($order->id, $order->orderItems);
 
         return view('admin.orders.edit',compact('order','products'));
     }

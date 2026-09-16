@@ -14,13 +14,14 @@ class Product extends Model
         'description',
         'category_id',
         'unit_price',
+        'unit',
         'image'
     ];
     // public function product()
     // {
     //     return $this->belongsTo(Product::class);
     // }
-    public function orderitem(){
-        return $this->hasmany(OrderItem::class);
+    public function orderitems(){
+        return $this->hasMany(OrderItem::class);
     }
 }

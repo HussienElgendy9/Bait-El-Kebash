@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Api\Admin;
-
+use App\Http\Resources\CategoryResource;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use Illuminate\Http\Request;
@@ -13,9 +13,10 @@ class CategoryController extends Controller
         // $categories = Category::paginate(12);
         $categories = Category::withCount('products')->paginate(12);
 
-        return response()->json([
-            'categories' => $categories,
-        ]);
+        return CategoryResource::collection($categories);
+        // return response()->json([
+        //     'categories' => $categories,
+        // ]);
     }
     public function store(Request $request){
         $validated = $request->validate([
@@ -26,7 +27,8 @@ class CategoryController extends Controller
         ]);
         return response()->json([
             'message' => 'Category created successfully.',
-            'category' => $category,
+            'category' => new CategoryResource($category),
+            // 'category' => $category,
         ], 201);
     }
     public function update(Request $request, Category $category)
@@ -39,16 +41,17 @@ class CategoryController extends Controller
         ]);
         return response()->json([
             'message' => 'Category updated successfully.',
-            'category' => $category,
+            'category' => new CategoryResource($category),
         ], 200);
     }
     public function show(Category $category)
     {
         $category->load('products')->paginate(5);
         
-        return response()->json([
-            'category' => $category,
-        ]);
+        return new CategoryResource($category);
+        // return response()->json([
+        //     'category' => $category,
+        // ]);
     }
     public function destroy(Category $category)
     {

@@ -8,7 +8,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Validation\Rules;
-use App\Models\PhoneVerification;
+// use App\Models\PhoneVerification;
+use App\Http\Resources\UserResource;
 
 class AuthController extends Controller
 {
@@ -35,7 +36,8 @@ class AuthController extends Controller
 
         return response()->json([
             'message' => 'Registration successful.',
-            'user' => $user,
+            'user' => new UserResource($user),
+            // 'user' => $user,
             'token' => $token,
         ], 201);
     }
@@ -59,20 +61,24 @@ class AuthController extends Controller
 
         return response()->json([
             'message' => 'Login successful.',
-            'user' => $user,
+            'user' => new UserResource($user),
+            // 'user' => $user,
             'token' => $token,
         ]);
     }
 
     public function user(Request $request)
     {
-        return response()->json([
-            'user' => $request->user(),
-        ]);
+        return new UserResource($request->user());
+
+        // return response()->json([
+        //     'user' => $request->user(),
+        // ]);
     }
     public function update(Request $request)
     {
         $validated = $request->validate([
+            'phone_number' => ['sometimes', 'required', 'regex:/^01[0125][0-9]{8}$/', 'unique:users,phone_number,'.$request->user()->id],
             'address' => ['sometimes', 'required', 'string', 'max:1000'],
         ]);
 
@@ -82,111 +88,113 @@ class AuthController extends Controller
 
         return response()->json([
             'message' => 'Profile updated successfully.',
-            'user' => $user,
+            'user' => new UserResource($user),
+            // 'user' => $user,
         ]);
     }
-    public function requestPhoneChange(Request $request)
-    {
-        $validated = $request->validate([
-            'phone_number' => [
-                'required',
-                'regex:/^01[0125][0-9]{8}$/',
-                'unique:users,phone_number',
-            ],
-        ]);
+    // public function requestPhoneChange(Request $request)
+    // {
+    //     $validated = $request->validate([
+    //         'phone_number' => [
+    //             'required',
+    //             'regex:/^01[0125][0-9]{8}$/',
+    //             'unique:users,phone_number',
+    //         ],
+    //     ]);
 
-        //invalidate previous active OTPs
-        PhoneVerification::where('user_id',$request->user()->id)
-        ->whereNull('invalidated_at')
-        ->update([
-            'invalidated_at'=>now(),
-        ]);
+    //     //invalidate previous active OTPs
+    //     PhoneVerification::where('user_id',$request->user()->id)
+    //     ->whereNull('invalidated_at')
+    //     ->update([
+    //         'invalidated_at'=>now(),
+    //     ]);
 
-        $code = (string) random_int(100000, 999999);
+    //     $code = (string) random_int(100000, 999999);
 
-        $verification = PhoneVerification::create([
-            'user_id' => $request->user()->id,
-            'phone_number' => $validated['phone_number'],
-            'code' => $code,
-            'expires_at' => now()->addMinutes(10),
-        ]);
+    //     $verification = PhoneVerification::create([
+    //         'user_id' => $request->user()->id,
+    //         'phone_number' => $validated['phone_number'],
+    //         'code' => $code,
+    //         'expires_at' => now()->addMinutes(10),
+    //     ]);
 
-        return response()->json([
-            'message' => 'Verification code sent successfully.',
-            'verification_id' => $verification->id,
-            'code' => $code,
-        ]);
-    }
+    //     return response()->json([
+    //         'message' => 'Verification code sent successfully.',
+    //         'verification_id' => $verification->id,
+    //         'code' => $code,
+    //     ]);
+    // }
 
-    public function verifyPhoneChange(Request $request)
-{
-    $validated = $request->validate([
-        'verification_id' => ['required', 'integer', 'exists:phone_verifications,id'],
-        'code' => ['required', 'string', 'size:6'],
-    ]);
+    // public function verifyPhoneChange(Request $request)
+    // {
+    //     $validated = $request->validate([
+    //         'verification_id' => ['required', 'integer', 'exists:phone_verifications,id'],
+    //         'code' => ['required', 'string', 'size:6'],
+    //     ]);
 
-    $verification = PhoneVerification::where('id', $validated['verification_id'])
-        ->where('user_id', $request->user()->id)
-        ->whereNull('verified_at')
-        ->whereNull('invalidated_at')
-        ->first();
+    //     $verification = PhoneVerification::where('id', $validated['verification_id'])
+    //         ->where('user_id', $request->user()->id)
+    //         ->whereNull('verified_at')
+    //         ->whereNull('invalidated_at')
+    //         ->first();
 
-    if (!$verification) {
-        return response()->json([
-            'message' => 'Invalid verification request.',
-        ], 422);
-    }
+    //     if (!$verification) {
+    //         return response()->json([
+    //             'message' => 'Invalid verification request.',
+    //         ], 422);
+    //     }
 
-    if ($verification->expires_at->isPast()) {
-        return response()->json([
-            'message' => 'Verification code has expired.',
-        ], 422);
-    }
+    //     if ($verification->expires_at->isPast()) {
+    //         return response()->json([
+    //             'message' => 'Verification code has expired.',
+    //         ], 422);
+    //     }
 
-    if ($verification->attempts >= 5) {
-        $verification->update([
-            'invalidated_at' => now(),
-        ]);
+    //     if ($verification->attempts >= 5) {
+    //         $verification->update([
+    //             'invalidated_at' => now(),
+    //         ]);
 
-        return response()->json([
-            'message' => 'Too many attempts. Please request a new code.',
-        ], 429);
-    }
+    //         return response()->json([
+    //             'message' => 'Too many attempts. Please request a new code.',
+    //         ], 429);
+    //     }
 
-    if ($verification->code !== $validated['code']) {
-        $verification->increment('attempts');
+    //     if ($verification->code !== $validated['code']) {
+    //         $verification->increment('attempts');
 
-        if ($verification->attempts >= 5) {
-            $verification->update([
-                'invalidated_at' => now(),
-            ]);
+    //         if ($verification->attempts >= 5) {
+    //             $verification->update([
+    //                 'invalidated_at' => now(),
+    //             ]);
 
-            return response()->json([
-                'message' => 'Too many attempts. Please request a new code.',
-            ], 429);
-        }
+    //             return response()->json([
+    //                 'message' => 'Too many attempts. Please request a new code.',
+    //             ], 429);
+    //         }
 
 
-        return response()->json([
-            'message' => 'Invalid verification code.',
-        ], 422);
-    }
+    //         return response()->json([
+    //             'message' => 'Invalid verification code.',
+    //         ], 422);
+    //     }
 
-    $user = $request->user();
+    //     $user = $request->user();
 
-    $user->update([
-        'phone_number' => $verification->phone_number,
-    ]);
+    //     $user->update([
+    //         'phone_number' => $verification->phone_number,
+    //     ]);
 
-    $verification->update([
-        'verified_at' => now(),
-    ]);
+    //     $verification->update([
+    //         'verified_at' => now(),
+    //     ]);
 
-    return response()->json([
-        'message' => 'Phone number verified and updated successfully.',
-        'user' => $user,
-    ]);
-}
+    //     return response()->json([
+    //         'message' => 'Phone number verified and updated successfully.',
+    //         'user' => new UserResource($user),
+    //         // 'user' => $user,
+    //     ]);
+    // }
 
     public function logout(Request $request)
     {
