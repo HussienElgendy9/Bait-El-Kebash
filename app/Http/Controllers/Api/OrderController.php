@@ -8,6 +8,8 @@ use App\Models\Order;
 use App\Models\Product;
 use App\Http\Resources\OrderResource;
 use Illuminate\Support\Facades\DB;
+use App\Models\User;
+use App\Notifications\NewOrderNotification;
 
 class OrderController extends Controller
 {
@@ -56,7 +58,13 @@ class OrderController extends Controller
                 return $order;
             });
 
-            $order->load('orderItems.product');
+            $order->load('user','orderItems.product');
+
+            $admins = User::whereIn('role', ['admin', 'super_admin'])->get();
+
+            foreach ($admins as $admin) {
+                $admin->notify(new NewOrderNotification($order));
+            }
 
             return response()->json([
                 'message' => 'Order created successfully.',

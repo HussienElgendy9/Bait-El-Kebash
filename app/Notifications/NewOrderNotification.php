@@ -6,8 +6,8 @@ use App\Models\Order;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
-
-class NewOrderNotification extends Notification
+use Illuminate\Contracts\Queue\ShouldQueue;
+class NewOrderNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 
@@ -18,6 +18,7 @@ class NewOrderNotification extends Notification
 
     public function via(object $notifiable): array
     {
+        // return ['database'];
         return ['database', 'mail'];
     }
 
@@ -29,6 +30,7 @@ class NewOrderNotification extends Notification
             ->subject("New Order #{$this->order->id} - Bait El Kebash")
             ->greeting('New Order Received')
             ->line("Order #{$this->order->id}")
+            ->line("Customer ID: {$this->order->user->id}")
             ->line("Customer: {$this->order->user->name}")
             ->line("Phone: {$this->order->user->phone_number}")
             ->line("Address: {$this->order->user->address}");
