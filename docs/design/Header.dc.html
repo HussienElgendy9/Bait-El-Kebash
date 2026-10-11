@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>Header</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;600;700&amp;display=swap">
+<style>body{margin:0}</style>
+</helmet>
+<header dir="rtl" lang="ar" style="background: #1F4D3A; color: #FFFFFF; font-family: 'IBM Plex Sans Arabic', sans-serif; width: 100%">
+
+<sc-if value="{{m}}" hint-placeholder-val="{{ false }}">
+<div style="padding-inline: 8px 12px; padding-block: 8px; display: flex; align-items: center; gap: 8px; min-height: 48px">
+<sc-if value="{{hasBack}}" hint-placeholder-val="{{ false }}">
+<a href="{{back}}" aria-label="رجوع" style="width: 44px; height: 44px; flex-shrink: 0; border-radius: 12px; color: #FFFFFF; display: flex; align-items: center; justify-content: center"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+</sc-if>
+<sc-if value="{{noBack}}" hint-placeholder-val="{{ true }}">
+<span style="width: 40px; height: 40px; margin-inline-start: 4px; flex-shrink: 0; border-radius: 12px; background: #BDD0C6; color: #1F4D3A; display: flex; align-items: center; justify-content: center"><svg width="24" height="24" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 15c-2 0-3.5-1.6-3-3.5.4-1.5 2-2 3-1.5.5-2 2.5-3 4.5-2 1-1.5 3.5-2 5-.5 1.5-1 4-.5 4.5 1.5 2 0 3.5 2 2.5 4 1.5 1 1.5 3.5-.5 4.5-.5 2-3 3-4.5 2-1 1.5-3.5 2-5 .5-1.5 1-4 .5-4.5-1.5-2 0-3-2-2-3.5z"/><path d="M12 22v5M20 22v5"/></svg></span>
+</sc-if>
+<h1 style="margin: 0; flex-grow: 1; font-size: 18px; font-weight: 700">{{title}}</h1>
+<button type="button" aria-label="السلة، فيها 1 أضحية" style="position: relative; width: 44px; height: 44px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.25); background: transparent; color: #FFFFFF; display: flex; align-items: center; justify-content: center">
+<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="20" r="1.5"/><circle cx="18" cy="20" r="1.5"/><path d="M3 4h2l2.4 11.2a2 2 0 0 0 2 1.6h8.2a2 2 0 0 0 2-1.5L21 8H6.2"/></svg>
+<span style="position: absolute; top: -6px; inset-inline-end: -6px; min-width: 20px; height: 20px; border-radius: 999px; background: #A85431; color: #FFFFFF; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center">1</span>
+</button>
+</div>
+<sc-if value="{{search}}" hint-placeholder-val="{{ false }}">
+<div style="padding-inline: 16px; padding-bottom: 12px">
+<label style="position: relative; display: block">
+<span style="position: absolute; inset-inline-start: 14px; top: 50%; transform: translateY(-50%); color: #585850; display: flex"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></span>
+<input type="search" aria-label="ابحث عن أضحية" placeholder="ابحث: خروف برقي، ماعز…" style="box-sizing: border-box; width: 100%; height: 48px; border-radius: 12px; border: 0; background: #FFFFFF; padding-inline: 46px 14px; font-family: inherit; font-size: 16px; color: #2A1A14">
+</label>
+</div>
+</sc-if>
+</sc-if>
+
+<sc-if value="{{d}}" hint-placeholder-val="{{ true }}">
+<div style="border-bottom: 1px solid rgba(255,255,255,0.14); font-size: 14px">
+<div style="max-width: 1200px; margin-inline: auto; padding-inline: 32px; padding-block: 8px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 24px; color: #BDD0C6">
+<span dir="ltr">[رقم الهاتف]</span>
+<span>[عنوان المزرعة]</span>
+<span>[مواعيد العمل]</span>
+<span style="color: #FFFFFF; font-weight: 600">توصيل يوم العيد</span>
+</div>
+</div>
+<div style="max-width: 1200px; margin-inline: auto; padding-inline: 32px; padding-block: 12px; display: flex; align-items: center; gap: 24px">
+<a href="Main.dc.html" style="display: flex; align-items: center; gap: 10px; color: #FFFFFF; text-decoration: none; min-height: 44px">
+<span style="width: 40px; height: 40px; border-radius: 12px; background: #BDD0C6; color: #1F4D3A; display: flex; align-items: center; justify-content: center"><svg width="24" height="24" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 15c-2 0-3.5-1.6-3-3.5.4-1.5 2-2 3-1.5.5-2 2.5-3 4.5-2 1-1.5 3.5-2 5-.5 1.5-1 4-.5 4.5 1.5 2 0 3.5 2 2.5 4 1.5 1 1.5 3.5-.5 4.5-.5 2-3 3-4.5 2-1 1.5-3.5 2-5 .5-1.5 1-4 .5-4.5-1.5-2 0-3-2-2-3.5z"/><path d="M12 22v5M20 22v5"/></svg></span>
+<span style="font-size: 22px; font-weight: 700">بيت الكباش</span>
+</a>
+<nav aria-label="القائمة الرئيسية" style="display: flex; gap: 4px; font-size: 15px; font-weight: 600">
+<sc-for list="{{links}}" as="l" hint-placeholder-count="3">
+<a href="{{l.href}}" aria-current="{{l.current}}" style="{{l.style}}">{{l.label}}</a>
+</sc-for>
+</nav>
+<label style="position: relative; display: block; flex: 1 1 260px; max-width: 420px">
+<span style="position: absolute; inset-inline-start: 14px; top: 50%; transform: translateY(-50%); color: #585850; display: flex"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></span>
+<input type="search" aria-label="ابحث عن أضحية" placeholder="ابحث: خروف برقي، ماعز…" style="box-sizing: border-box; width: 100%; height: 48px; border-radius: 12px; border: 0; background: #FFFFFF; padding-inline: 46px 14px; font-family: inherit; font-size: 16px; color: #2A1A14">
+</label>
+<div style="display: flex; align-items: center; gap: 8px; margin-inline-start: auto">
+<button type="button" aria-label="السلة، فيها 1 أضحية" style="position: relative; width: 44px; height: 44px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.25); background: transparent; color: #FFFFFF; display: flex; align-items: center; justify-content: center">
+<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="20" r="1.5"/><circle cx="18" cy="20" r="1.5"/><path d="M3 4h2l2.4 11.2a2 2 0 0 0 2 1.6h8.2a2 2 0 0 0 2-1.5L21 8H6.2"/></svg>
+<span style="position: absolute; top: -6px; inset-inline-end: -6px; min-width: 20px; height: 20px; border-radius: 999px; background: #A85431; color: #FFFFFF; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center">1</span>
+</button>
+<a href="#whatsapp" style="height: 44px; padding-inline: 16px; border-radius: 12px; background: #25D366; color: #2A1A14; font-weight: 700; font-size: 15px; display: inline-flex; align-items: center; gap: 8px; text-decoration: none"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 20.5 5 16.3A8.5 8.5 0 1 1 8 19.2z"/><path d="M9 9.5c0 3 2.5 5.5 5.5 5.5l1-1.5-2-1-1 .8c-1-.5-1.8-1.3-2.3-2.3l.8-1-1-2z"/></svg>اطلب على واتساب</a>
+<a href="Auth.dc.html" aria-label="حسابي" style="width: 44px; height: 44px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.25); color: #FFFFFF; display: flex; align-items: center; justify-content: center"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></a>
+</div>
+</div>
+</sc-if>
+
+</header>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"layout":{"editor":"enum","options":["desktop","mobile"],"default":"desktop"},"title":{"editor":null},"back":{"editor":null},"search":{"editor":null},"active":{"editor":"enum","options":["home","categories","orders","none"],"default":"home"},"$preview":{"width":1280,"height":150}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const m = (this.props.layout ?? 'desktop') === 'mobile';
+    const active = this.props.active ?? 'home';
+    const back = this.props.back ?? '';
+    const links = [
+      ['home', 'الرئيسية', 'Main.dc.html'],
+      ['categories', 'الأقسام', 'Listing.dc.html'],
+      ['orders', 'طلباتي', 'Orders.dc.html']
+    ].map(([id, label, href]) => {
+      const on = id === active;
+      return {
+        label, href, current: on ? 'page' : 'false',
+        style: 'min-height: 44px; padding-inline: 12px; display: inline-flex; align-items: center; text-decoration: none; ' +
+          (on ? 'color: #FFFFFF; border-bottom: 2px solid #BDD0C6' : 'color: #BDD0C6; border-bottom: 2px solid transparent')
+      };
+    });
+    return {
+      m, d: !m, links,
+      title: this.props.title ?? 'بيت الكباش',
+      back, hasBack: !!back, noBack: !back,
+      search: !!this.props.search
+    };
+  }
+}
+</script>
+</body>
+</html>

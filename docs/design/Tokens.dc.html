@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Foundations — Bait El Kebash</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;600;700&amp;display=swap">
+<style>body{margin:0}</style>
+</helmet>
+<div style="width: 1200px; height: 1760px; box-sizing: border-box; padding: 48px; background: #F7F4EE; color: #2A1A14; font-family: 'IBM Plex Sans Arabic', sans-serif; display: flex; flex-direction: column; gap: 40px">
+
+<div style="display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; border-bottom: 1px solid #D0BFA9; padding-bottom: 24px">
+<div style="display: flex; flex-direction: column; gap: 4px">
+<span style="font-size: 14px; font-weight: 600; color: #585850">Foundations · from DESIGN_BRIEF.md</span>
+<h1 style="margin: 0; font-size: 36px; line-height: 1.3; color: #1F4D3A; font-weight: 700">Tokens</h1>
+</div>
+<span style="font-size: 28px; font-weight: 700; color: #1F4D3A" lang="ar" dir="rtl">بيت الكباش</span>
+</div>
+
+<section style="display: flex; flex-direction: column; gap: 16px">
+<h2 style="margin: 0; font-size: 20px; font-weight: 700">Color <span style="font-weight: 400; color: #585850; font-size: 14px">· 9 tokens, nothing else</span></h2>
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px">
+<sc-for list="{{colors}}" as="c" hint-placeholder-count="9">
+<div style="display: flex; align-items: center; gap: 14px; padding: 12px; background: #FFFFFF; border: 1px solid #D0BFA9; border-radius: 16px">
+<span style="{{c.sw}}"></span>
+<span style="display: flex; flex-direction: column; min-width: 0; line-height: 1.4">
+<strong style="font-size: 15px">{{c.name}}</strong>
+<span style="font-size: 13px; color: #585850">{{c.hex}}</span>
+<span style="font-size: 13px; color: #585850">{{c.use}}</span>
+</span>
+</div>
+</sc-for>
+</div>
+</section>
+
+<section style="display: flex; flex-direction: column; gap: 16px">
+<h2 style="margin: 0; font-size: 20px; font-weight: 700">Approved pairings <span style="font-weight: 400; color: #585850; font-size: 14px">· WCAG contrast</span></h2>
+<div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px">
+<sc-for list="{{pairs}}" as="p" hint-placeholder-count="8">
+<div style="{{p.box}}">
+<span lang="ar" dir="rtl" style="font-size: 18px; font-weight: 700">{{p.sample}}</span>
+<span style="font-size: 12px; font-weight: 600">{{p.label}} · {{p.ratio}}</span>
+</div>
+</sc-for>
+</div>
+<p style="margin: 0; font-size: 13px; color: #585850; line-height: 1.5">✗ White on whatsapp fails (1.98:1), so the WhatsApp button uses text-colored label and icon. ✗ border on surface is 1.8:1: fine for dividers, too faint for an input edge, so input borders use muted (7.2:1).</p>
+</section>
+
+<section style="display: flex; flex-direction: column; gap: 16px">
+<h2 style="margin: 0; font-size: 20px; font-weight: 700">shadcn mapping <span style="font-weight: 400; color: #585850; font-size: 14px">· globals.css variables → brief token</span></h2>
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px 12px">
+<sc-for list="{{vars}}" as="v" hint-placeholder-count="15">
+<div style="display: flex; align-items: center; gap: 10px; padding: 8px 10px; background: #FFFFFF; border: 1px solid #D0BFA9; border-radius: 12px">
+<span style="{{v.sw}}"></span>
+<span style="font-size: 13px; font-weight: 600; font-family: ui-monospace, monospace">--{{v.name}}</span>
+<span style="margin-inline-start: auto; font-size: 13px; color: #585850">{{v.token}}</span>
+</div>
+</sc-for>
+</div>
+</section>
+
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 32px">
+<section style="display: flex; flex-direction: column; gap: 16px">
+<h2 style="margin: 0; font-size: 20px; font-weight: 700">Type <span style="font-weight: 400; color: #585850; font-size: 14px">· IBM Plex Sans Arabic 400 / 600 / 700</span></h2>
+<div lang="ar" dir="rtl" style="background: #FFFFFF; border: 1px solid #D0BFA9; border-radius: 16px; padding: 20px; display: flex; flex-direction: column; gap: 14px">
+<div style="display: flex; justify-content: space-between; align-items: baseline; gap: 12px"><span style="font-size: 36px; line-height: 1.3; font-weight: 700; color: #1F4D3A">أضحيتك لباب بيتك</span><span dir="ltr" style="font-size: 12px; color: #585850">H1 · 700 · 28 / 36</span></div>
+<div style="display: flex; justify-content: space-between; align-items: baseline; gap: 12px"><span style="font-size: 24px; line-height: 1.35; font-weight: 700">الأكثر طلبًا</span><span dir="ltr" style="font-size: 12px; color: #585850">H2 · 700 · 22 / 24</span></div>
+<div style="display: flex; justify-content: space-between; align-items: baseline; gap: 12px"><span style="font-size: 22px; font-weight: 700; color: #A85431">4,500 ج.م</span><span dir="ltr" style="font-size: 12px; color: #585850">Price · 700 · 22 · accent</span></div>
+<div style="display: flex; justify-content: space-between; align-items: baseline; gap: 12px"><span style="font-size: 18px; font-weight: 600">خروف بلدي</span><span dir="ltr" style="font-size: 12px; color: #585850">H3 · 600 · 18</span></div>
+<div style="display: flex; justify-content: space-between; align-items: baseline; gap: 12px"><span style="font-size: 16px; line-height: 1.6">وزن 35–40 كجم، عمر 12 شهر.</span><span dir="ltr" style="font-size: 12px; color: #585850">Body · 400 · 16</span></div>
+<div style="display: flex; justify-content: space-between; align-items: baseline; gap: 12px"><span style="font-size: 14px; color: #585850">رقم الطلب 1024</span><span dir="ltr" style="font-size: 12px; color: #585850">Small · 400 · 14 · muted</span></div>
+</div>
+<p style="margin: 0; font-size: 13px; color: #585850">Western digits everywhere; currency always ج.م after the number.</p>
+</section>
+
+<section style="display: flex; flex-direction: column; gap: 16px">
+<h2 style="margin: 0; font-size: 20px; font-weight: 700">Radius · spacing · touch</h2>
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px">
+<div style="display: flex; flex-direction: column; gap: 8px"><div style="height: 88px; background: #FFFFFF; border: 1px solid #D0BFA9; border-radius: 16px"></div><span style="font-size: 13px">16 · cards, sheets</span></div>
+<div style="display: flex; flex-direction: column; gap: 8px"><div style="height: 88px; background: #1F4D3A; border-radius: 12px"></div><span style="font-size: 13px">12 · buttons, inputs</span></div>
+<div style="display: flex; flex-direction: column; gap: 8px; justify-content: space-between"><div style="height: 44px; margin-top: 22px; background: #BDD0C6; border-radius: 999px"></div><span style="font-size: 13px">full · chips, pills</span></div>
+</div>
+<div style="display: flex; align-items: flex-end; gap: 10px; padding-top: 8px">
+<sc-for list="{{space}}" as="s" hint-placeholder-count="8">
+<div style="display: flex; flex-direction: column; align-items: center; gap: 6px"><span style="{{s.box}}"></span><span style="font-size: 12px; color: #585850">{{s.v}}</span></div>
+</sc-for>
+</div>
+<div style="display: flex; align-items: center; gap: 12px; font-size: 13px; color: #585850">
+<span style="width: 44px; height: 44px; border-radius: 12px; border: 1.5px dashed #1F4D3A; flex-shrink: 0"></span>
+Every tap target ≥ 44 × 44px, icon buttons included.
+</div>
+</section>
+</div>
+
+<section style="display: flex; flex-direction: column; gap: 16px">
+<h2 style="margin: 0; font-size: 20px; font-weight: 700">Status pill <span style="font-weight: 400; color: #585850; font-size: 14px">· backend values, icon + text (never color alone)</span></h2>
+<div lang="ar" dir="rtl" style="display: flex; flex-wrap: wrap; gap: 24px">
+<sc-for list="{{statuses}}" as="s" hint-placeholder-count="4">
+<div style="display: flex; flex-direction: column; align-items: center; gap: 6px">
+<span style="{{s.style}}">{{s.icon}} {{s.label}}</span>
+<span dir="ltr" style="font-size: 12px; color: #585850">{{s.value}} · {{s.token}}</span>
+</div>
+</sc-for>
+</div>
+</section>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1200,"height":1760}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const T = {
+      primary: '#1F4D3A', 'primary-soft': '#BDD0C6', accent: '#A85431', bg: '#F7F4EE', surface: '#FFFFFF',
+      border: '#D0BFA9', text: '#2A1A14', muted: '#585850', whatsapp: '#25D366'
+    };
+    const uses = {
+      primary: 'buttons, header, active nav', 'primary-soft': 'selected chip, badge bg', accent: 'price, Eid banner, sale tag',
+      bg: 'page background (cream)', surface: 'cards, sheets', border: 'dividers (inputs: muted)', text: 'body',
+      muted: 'secondary text, input border', whatsapp: 'WhatsApp button only'
+    };
+    const colors = Object.keys(T).map((name) => ({
+      name, hex: T[name], use: uses[name],
+      sw: 'width: 64px; height: 64px; flex-shrink: 0; border-radius: 12px; background: ' + T[name] + '; border: 1px solid rgba(42,26,20,0.12)'
+    }));
+
+    const pair = (fg, bg, label, ratio, sample) => ({
+      label, ratio, sample,
+      box: 'height: 96px; border-radius: 16px; padding: 14px; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; color: ' + T[fg] + '; background: ' + T[bg] + '; border: 1px solid ' + (bg === 'surface' || bg === 'bg' ? T.border : T[bg])
+    });
+    const pairs = [
+      pair('surface', 'primary', 'surface / primary', '9.6:1', 'أضف للسلة'),
+      pair('primary', 'primary-soft', 'primary / primary-soft', '6.0:1', 'خراف'),
+      pair('accent', 'surface', 'accent / surface', '5.3:1', '4,500 ج.م'),
+      pair('surface', 'accent', 'surface / accent', '5.3:1', 'اطلب قبل العيد'),
+      pair('text', 'bg', 'text / bg', '15.2:1', 'نص أساسي'),
+      pair('muted', 'bg', 'muted / bg', '6.5:1', 'نص ثانوي'),
+      pair('text', 'whatsapp', 'text / whatsapp', '8.4:1', 'واتساب'),
+      pair('text', 'border', 'text / border', '9.3:1', 'قيد الانتظار')
+    ];
+
+    const sw = (hex) => 'width: 24px; height: 24px; flex-shrink: 0; border-radius: 8px; background: ' + hex + '; border: 1px solid rgba(42,26,20,0.15)';
+    const vars = [
+      ['background', 'bg'], ['foreground', 'text'], ['card', 'surface'],
+      ['popover', 'surface'], ['primary', 'primary'], ['primary-foreground', 'surface'],
+      ['secondary', 'primary-soft'], ['secondary-foreground', 'primary'], ['accent', 'primary-soft'],
+      ['muted', 'bg'], ['muted-foreground', 'muted'], ['border', 'border'],
+      ['input', 'muted'], ['ring', 'primary'], ['destructive', 'accent'],
+      ['price', 'accent'], ['whatsapp', 'whatsapp'], ['radius', '12px']
+    ].map(([name, token]) => ({ name, token, sw: T[token] ? sw(T[token]) : 'display: none' }));
+
+    const space = [4, 8, 12, 16, 24, 32, 48, 64].map((v) => ({
+      v, box: 'display: block; width: ' + v + 'px; height: ' + v + 'px; background: #BDD0C6; border-radius: 4px'
+    }));
+
+    const pill = (bg, fg) => 'display: inline-flex; align-items: center; gap: 6px; height: 32px; padding-inline: 14px; border-radius: 999px; font-size: 14px; font-weight: 600; background: ' + bg + '; color: ' + fg;
+    const statuses = [
+      { value: 'pending', token: 'border (sand)', label: 'قيد الانتظار', icon: '◷', style: pill(T.border, T.text) },
+      { value: 'processing', token: 'primary-soft', label: 'جاري التجهيز', icon: '↻', style: pill(T['primary-soft'], T.primary) },
+      { value: 'completed', token: 'primary', label: 'تم التسليم', icon: '✓', style: pill(T.primary, T.surface) },
+      { value: 'cancelled', token: 'muted', label: 'ملغي', icon: '✕', style: pill(T.muted, T.surface) }
+    ];
+
+    return { colors, pairs, vars, space, statuses };
+  }
+}
+</script>
+</body>
+</html>

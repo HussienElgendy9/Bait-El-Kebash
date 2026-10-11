@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>بيت الكباش — خروف برقي</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;600;700&amp;display=swap">
+<style>body{margin:0}</style>
+</helmet>
+<div dir="rtl" lang="ar" style="{{rootStyle}}">
+
+<sc-if value="{{d}}" hint-placeholder-val="{{ true }}">
+<dc-import name="Header" layout="desktop" active="categories" hint-size="100%,110px"></dc-import>
+</sc-if>
+
+<!-- Mobile gallery: full bleed, back + heart over photo -->
+<sc-if value="{{m}}" hint-placeholder-val="{{ false }}">
+<div style="position: relative; aspect-ratio: 4 / 3; background: #BDD0C6">
+<div role="img" aria-label="{{photoAlt}}" style="position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; color: #1F4D3A; font-size: 13px; font-weight: 600"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg><span dir="ltr">real sheep photo</span></div>
+<a href="Listing-mobile.dc.html" aria-label="رجوع" style="position: absolute; top: 12px; inset-inline-start: 12px; width: 44px; height: 44px; border-radius: 999px; background: #FFFFFF; color: #2A1A14; display: flex; align-items: center; justify-content: center"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+<button type="button" onClick="{{toggleFav}}" aria-pressed="{{favPressed}}" aria-label="أضف للمفضلة" style="position: absolute; top: 12px; inset-inline-end: 12px; width: 44px; height: 44px; border-radius: 999px; border: 0; background: #FFFFFF; color: #A85431; display: flex; align-items: center; justify-content: center; cursor: pointer"><svg width="20" height="20" viewBox="0 0 24 24" fill="{{heartFill}}" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg></button>
+<span style="position: absolute; bottom: 12px; inset-inline-end: 12px; height: 28px; padding-inline: 10px; border-radius: 999px; background: #FFFFFF; font-size: 13px; font-weight: 700; display: inline-flex; align-items: center" dir="ltr">{{counter}}</span>
+</div>
+<div role="group" aria-label="صور الأضحية" style="display: flex; gap: 8px; padding: 12px 16px 0; overflow-x: auto">
+<sc-for list="{{thumbs}}" as="t" hint-placeholder-count="4">
+<button type="button" onClick="{{t.pick}}" aria-pressed="{{t.pressed}}" aria-label="{{t.label}}" style="{{t.style}}">{{t.n}}</button>
+</sc-for>
+</div>
+</sc-if>
+
+<main style="max-width: 1200px; margin-inline: auto; padding-inline: clamp(16px, 4vw, 32px); padding-block: 16px 48px; display: flex; flex-direction: column; gap: 32px">
+
+<sc-if value="{{d}}" hint-placeholder-val="{{ true }}">
+<nav aria-label="مسار التصفح" style="font-size: 14px; color: #585850; display: flex; gap: 6px"><a href="Main.dc.html" style="color: #585850">الرئيسية</a><span aria-hidden="true">/</span><a href="Listing.dc.html" style="color: #585850">خراف</a><span aria-hidden="true">/</span><span aria-current="page" style="color: #2A1A14; font-weight: 600">{{name}}</span></nav>
+</sc-if>
+
+<div style="display: flex; flex-wrap: wrap; gap: 32px; align-items: flex-start">
+
+<!-- Desktop gallery -->
+<sc-if value="{{d}}" hint-placeholder-val="{{ true }}">
+<div style="flex: 1 1 520px; min-width: 0; display: flex; flex-direction: column; gap: 12px">
+<div style="position: relative; aspect-ratio: 4 / 3; border-radius: 16px; overflow: hidden; background: #BDD0C6">
+<div role="img" aria-label="{{photoAlt}}" style="position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; color: #1F4D3A; font-size: 14px; font-weight: 600"><svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg><span dir="ltr">real sheep photo</span></div>
+<button type="button" onClick="{{toggleFav}}" aria-pressed="{{favPressed}}" aria-label="أضف للمفضلة" style="position: absolute; top: 12px; inset-inline-end: 12px; width: 44px; height: 44px; border-radius: 999px; border: 0; background: #FFFFFF; color: #A85431; display: flex; align-items: center; justify-content: center; cursor: pointer"><svg width="20" height="20" viewBox="0 0 24 24" fill="{{heartFill}}" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg></button>
+<span style="position: absolute; bottom: 12px; inset-inline-end: 12px; height: 28px; padding-inline: 10px; border-radius: 999px; background: #FFFFFF; font-size: 13px; font-weight: 700; display: inline-flex; align-items: center" dir="ltr">{{counter}}</span>
+</div>
+<div role="group" aria-label="صور الأضحية" style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px">
+<sc-for list="{{thumbs}}" as="t" hint-placeholder-count="4">
+<button type="button" onClick="{{t.pick}}" aria-pressed="{{t.pressed}}" aria-label="{{t.label}}" style="{{t.styleD}}">{{t.n}}</button>
+</sc-for>
+</div>
+</div>
+</sc-if>
+
+<!-- Info -->
+<div style="flex: 1 1 400px; min-width: 0; display: flex; flex-direction: column; gap: 16px">
+<div style="display: flex; flex-wrap: wrap; gap: 8px">
+<span style="display: inline-flex; align-items: center; gap: 4px; height: 28px; padding-inline: 10px; border-radius: 999px; background: #BDD0C6; color: #1F4D3A; font-size: 13px; font-weight: 700"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 4 6v6c0 4.5 3.4 8 8 9 4.6-1 8-4.5 8-9V6z"/><path d="m9 12 2 2 4-4"/></svg>فحص بيطري</span>
+<span style="display: inline-flex; align-items: center; gap: 4px; height: 28px; padding-inline: 10px; border-radius: 999px; background: #FFFFFF; border: 1px solid #1F4D3A; color: #1F4D3A; font-size: 13px; font-weight: 700">✓ متاح للحجز</span>
+</div>
+<div style="display: flex; flex-direction: column; gap: 2px">
+<h1 style="margin: 0; font-size: clamp(1.75rem, 1.2rem + 1.6vw, 2.25rem); line-height: 1.3; font-weight: 700">{{name}}</h1>
+<span style="font-size: 16px; color: #585850">سلالة {{breed}} · القسم: خراف</span>
+</div>
+<div style="display: flex; align-items: baseline; gap: 8px"><span style="font-size: 30px; font-weight: 700; color: #A85431">{{price}} ج.م</span><span style="font-size: 15px; color: #585850">/ {{unit}}</span></div>
+
+<dl style="margin: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px">
+<div style="background: #FFFFFF; border: 1px solid #D0BFA9; border-radius: 16px; padding: 12px; display: flex; flex-direction: column; gap: 2px"><dt style="font-size: 13px; color: #585850">الوزن</dt><dd style="margin: 0; font-size: 16px; font-weight: 700">{{weight}}</dd></div>
+<div style="background: #FFFFFF; border: 1px solid #D0BFA9; border-radius: 16px; padding: 12px; display: flex; flex-direction: column; gap: 2px"><dt style="font-size: 13px; color: #585850">العمر</dt><dd style="margin: 0; font-size: 16px; font-weight: 700">{{age}}</dd></div>
+<div style="background: #FFFFFF; border: 1px solid #D0BFA9; border-radius: 16px; padding: 12px; display: flex; flex-direction: column; gap: 2px"><dt style="font-size: 13px; color: #585850">السلالة</dt><dd style="margin: 0; font-size: 16px; font-weight: 700">{{breed}}</dd></div>
+</dl>
+
+<section aria-labelledby="inc-title" style="background: #FFFFFF; border: 1px solid #D0BFA9; border-radius: 16px; padding: 16px; display: flex; flex-direction: column; gap: 10px">
+<h2 id="inc-title" style="margin: 0; font-size: 16px; font-weight: 700">السعر يشمل</h2>
+<ul style="margin: 0; padding: 0; list-style: none; display: flex; flex-wrap: wrap; gap: 8px 20px; font-size: 15px">
+<li style="display: flex; align-items: center; gap: 6px"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1F4D3A" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>الرأس</li>
+<li style="display: flex; align-items: center; gap: 6px"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1F4D3A" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>الكرشة</li>
+<li style="display: flex; align-items: center; gap: 6px"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1F4D3A" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>الذبح والتقطيع</li>
+</ul>
+</section>
+
+<div style="display: flex; align-items: flex-start; gap: 12px; font-size: 15px">
+<span style="width: 44px; height: 44px; flex-shrink: 0; border-radius: 999px; background: #BDD0C6; color: #1F4D3A; display: flex; align-items: center; justify-content: center"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7h11v9H3zM14 10h4l3 3v3h-7"/><circle cx="7" cy="18" r="2"/><circle cx="17" cy="18" r="2"/></svg></span>
+<span style="display: flex; flex-direction: column"><strong>التوصيل يوم العيد</strong><span style="color: #585850">تختار أول أو تاني أو تالت يوم. الدفع عند الاستلام.</span></span>
+</div>
+
+<p style="margin: 0; font-size: 16px; color: #2A1A14">[description: وصف قصير من المزرعة عن الأضحية]</p>
+
+<sc-if value="{{d}}" hint-placeholder-val="{{ true }}">
+<a href="Order.dc.html" style="height: 52px; border-radius: 12px; background: #1F4D3A; color: #FFFFFF; font-size: 17px; font-weight: 700; display: flex; align-items: center; justify-content: center; text-decoration: none">اطلب الأضحية دي</a>
+<a href="#whatsapp" style="height: 48px; border-radius: 12px; border: 1.5px solid #1F4D3A; color: #1F4D3A; font-size: 16px; font-weight: 600; display: flex; align-items: center; justify-content: center; text-decoration: none">عندك سؤال؟ اسألنا على واتساب</a>
+</sc-if>
+</div>
+</div>
+
+<section aria-labelledby="sim-title" style="display: flex; flex-direction: column; gap: 16px">
+<h2 id="sim-title" style="margin: 0; font-size: clamp(1.375rem, 1.1rem + 0.8vw, 1.75rem); font-weight: 700">أضاحي بنفس الوزن تقريبًا</h2>
+<div style="{{gridStyle}}">
+<sc-for list="{{similar}}" as="p" hint-placeholder-count="4">
+<dc-import name="AnimalCard" item="{{p}}" href="{{selfHref}}" hint-size="100%,400px"></dc-import>
+</sc-for>
+</div>
+</section>
+</main>
+
+<!-- Mobile sticky CTA -->
+<sc-if value="{{m}}" hint-placeholder-val="{{ false }}">
+<div style="position: fixed; bottom: 0; inset-inline: 0; z-index: 30; background: #FFFFFF; border-top: 1px solid #D0BFA9; padding: 12px 16px; display: flex; align-items: center; gap: 12px">
+<span style="display: flex; flex-direction: column; line-height: 1.3"><span style="font-size: 13px; color: #585850">السعر / {{unit}}</span><strong style="font-size: 22px; color: #A85431">{{price}} ج.م</strong></span>
+<a href="Order-mobile.dc.html" style="flex-grow: 1; height: 52px; border-radius: 12px; background: #1F4D3A; color: #FFFFFF; font-size: 17px; font-weight: 700; display: flex; align-items: center; justify-content: center; text-decoration: none">اطلب الأضحية دي</a>
+</div>
+</sc-if>
+
+<dc-import name="Dock" layout="{{layout}}" nav="{{ false }}" fab-bottom="{{fabBottom}}" hint-size="100%,0px"></dc-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"layout":{"editor":"enum","options":["auto","mobile","desktop"],"default":"auto"},"$preview":{"width":1280,"height":1500}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { w: (typeof window !== 'undefined' ? window.innerWidth : 1280), photo: 0, fav: false };
+    this.onResize = () => this.setState({ w: window.innerWidth });
+  }
+  componentDidMount() { window.addEventListener('resize', this.onResize); this.onResize(); }
+  componentWillUnmount() { window.removeEventListener('resize', this.onResize); }
+  renderVals() {
+    const L = this.props.layout ?? 'auto';
+    const m = L === 'mobile' || (L === 'auto' && this.state.w < 768);
+    // GET /products/1 — images[] is planned; 4 shown
+    const p = { name: 'خروف برقي', breed: 'برقي', weight_min: 45, weight_max: 50, age: '12 شهر', unit_price: 17800, unit: 'الرأس', is_available: true, images: 4 };
+    const weight = p.weight_min + '–' + p.weight_max + ' كجم';
+    const thumb = (on, d) => 'flex-shrink: 0; ' + (d ? 'aspect-ratio: 4 / 3;' : 'width: 72px; height: 56px;') + ' border-radius: 12px; background: #F7F4EE; color: #585850; font-family: inherit; font-size: 13px; font-weight: 700; cursor: pointer; ' +
+      (on ? 'border: 2px solid #1F4D3A; box-shadow: 0 0 0 3px #BDD0C6' : 'border: 1px solid #D0BFA9');
+    const thumbs = Array.from({ length: p.images }, (_, i) => ({
+      n: String(i + 1), label: 'صورة ' + (i + 1) + ' من ' + p.images,
+      pressed: String(this.state.photo === i),
+      style: thumb(this.state.photo === i, false), styleD: thumb(this.state.photo === i, true),
+      pick: () => this.setState({ photo: i })
+    }));
+    const similar = [
+      { name: 'خروف برقي كبير', breed: 'برقي', weight_min: 50, weight_max: 55, age: '13 شهر', unit_price: 19500, unit: 'الرأس', is_available: true },
+      { name: 'خروف فلاحي', breed: 'فلاحي', weight_min: 40, weight_max: 45, age: '11 شهر', unit_price: 15900, unit: 'الرأس', is_available: true },
+      { name: 'خروف رحماني', breed: 'رحماني', weight_min: 35, weight_max: 40, age: '10 شهور', unit_price: 14500, unit: 'الرأس', is_available: true },
+      { name: 'خروف أوسيمي', breed: 'أوسيمي', weight_min: 55, weight_max: 60, age: '14 شهر', unit_price: 21000, unit: 'الرأس', is_available: false }
+    ];
+    const fav = this.state.fav;
+    return {
+      m, d: !m, layout: m ? 'mobile' : 'desktop',
+      rootStyle: 'font-family: \'IBM Plex Sans Arabic\', sans-serif; color: #2A1A14; background: #F7F4EE; min-height: 100vh; font-size: 16px; line-height: 1.6' + (m ? '; padding-bottom: 88px' : ''),
+      name: p.name, breed: p.breed, age: p.age, unit: p.unit, weight,
+      price: p.unit_price.toLocaleString('en-US'),
+      photoAlt: p.name + '، وزن ' + weight + '، صورة ' + (this.state.photo + 1),
+      counter: (this.state.photo + 1) + '/' + p.images,
+      thumbs,
+      similar: m ? similar.slice(0, 2) : similar,
+      selfHref: m ? 'Product-mobile.dc.html' : 'Product.dc.html',
+      gridStyle: 'display: grid; gap: ' + (m ? '12px' : '20px') + '; grid-template-columns: repeat(' + (m ? 2 : 4) + ', minmax(0, 1fr))',
+      fabBottom: m ? 92 : 24,
+      heartFill: fav ? 'currentColor' : 'none', favPressed: String(fav),
+      toggleFav: () => this.setState({ fav: !fav })
+    };
+  }
+}
+</script>
+</body>
+</html>

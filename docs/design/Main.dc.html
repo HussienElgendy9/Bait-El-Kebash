@@ -1,0 +1,316 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>بيت الكباش — الرئيسية</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;600;700&amp;display=swap">
+<style>body{margin:0}</style>
+</helmet>
+<div dir="rtl" lang="ar" style="{{rootStyle}}">
+
+<!-- Header (primary) -->
+<header style="background: #1F4D3A; color: #FFFFFF">
+<sc-if value="{{d}}" hint-placeholder-val="{{ true }}">
+<div style="border-bottom: 1px solid rgba(255,255,255,0.14); font-size: 14px">
+<div style="max-width: 1200px; margin-inline: auto; padding-inline: clamp(16px, 4vw, 32px); padding-block: 8px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 24px; color: #BDD0C6">
+<span style="display: inline-flex; align-items: center; gap: 6px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"></path></svg><span dir="ltr">[رقم الهاتف]</span></span>
+<span style="display: inline-flex; align-items: center; gap: 6px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z"></path><circle cx="12" cy="10" r="2.5"></circle></svg>[عنوان المزرعة]</span>
+<span style="display: inline-flex; align-items: center; gap: 6px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg>[مواعيد العمل]</span>
+<span style="display: inline-flex; align-items: center; gap: 6px; color: #FFFFFF; font-weight: 600"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7h11v9H3zM14 10h4l3 3v3h-7"></path><circle cx="7" cy="18" r="2"></circle><circle cx="17" cy="18" r="2"></circle></svg>توصيل يوم العيد</span>
+</div>
+</div>
+</sc-if>
+<div style="max-width: 1200px; margin-inline: auto; padding-inline: clamp(16px, 4vw, 32px); padding-block: 12px; display: flex; flex-wrap: wrap; align-items: center; gap: 12px 24px">
+<a href="#top" style="display: flex; align-items: center; gap: 10px; color: #FFFFFF; text-decoration: none; min-height: 44px">
+<span style="width: 40px; height: 40px; border-radius: 12px; background: #BDD0C6; color: #1F4D3A; display: flex; align-items: center; justify-content: center"><svg width="24" height="24" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 15c-2 0-3.5-1.6-3-3.5.4-1.5 2-2 3-1.5.5-2 2.5-3 4.5-2 1-1.5 3.5-2 5-.5 1.5-1 4-.5 4.5 1.5 2 0 3.5 2 2.5 4 1.5 1 1.5 3.5-.5 4.5-.5 2-3 3-4.5 2-1 1.5-3.5 2-5 .5-1.5 1-4 .5-4.5-1.5-2 0-3-2-2-3.5z"></path><path d="M12 22v5M20 22v5"></path></svg></span>
+<span style="font-size: 22px; font-weight: 700">بيت الكباش</span>
+</a>
+<sc-if value="{{d}}" hint-placeholder-val="{{ true }}">
+<nav aria-label="القائمة الرئيسية" style="display: flex; gap: 4px; font-size: 15px; font-weight: 600">
+<a href="#top" aria-current="page" style="min-height: 44px; padding-inline: 12px; display: inline-flex; align-items: center; color: #FFFFFF; text-decoration: none; border-bottom: 2px solid #BDD0C6">الرئيسية</a>
+<a href="#categories" style="min-height: 44px; padding-inline: 12px; display: inline-flex; align-items: center; color: #BDD0C6; text-decoration: none">الأقسام</a>
+<a href="#orders" style="min-height: 44px; padding-inline: 12px; display: inline-flex; align-items: center; color: #BDD0C6; text-decoration: none">طلباتي</a>
+</nav>
+</sc-if>
+<div style="{{searchWrap}}">
+<label style="position: relative; display: block">
+<span style="position: absolute; inset-inline-start: 14px; top: 50%; transform: translateY(-50%); color: #585850; display: flex"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg></span>
+<input type="search" aria-label="ابحث عن أضحية" placeholder="ابحث: خروف برقي، ماعز…" style="box-sizing: border-box; width: 100%; height: 48px; border-radius: 12px; border: 0; background: #FFFFFF; padding-inline: 46px 14px; font-family: inherit; font-size: 16px; color: #2A1A14">
+</label>
+</div>
+<div style="display: flex; align-items: center; gap: 8px; margin-inline-start: auto">
+<button type="button" aria-label="السلة، فيها 1 أضحية" style="position: relative; width: 44px; height: 44px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.25); background: transparent; color: #FFFFFF; display: flex; align-items: center; justify-content: center; cursor: pointer">
+<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="20" r="1.5"></circle><circle cx="18" cy="20" r="1.5"></circle><path d="M3 4h2l2.4 11.2a2 2 0 0 0 2 1.6h8.2a2 2 0 0 0 2-1.5L21 8H6.2"></path></svg>
+<span style="position: absolute; top: -6px; inset-inline-end: -6px; min-width: 20px; height: 20px; border-radius: 999px; background: #A85431; color: #FFFFFF; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center">1</span>
+</button>
+<sc-if value="{{d}}" hint-placeholder-val="{{ true }}">
+<a href="#whatsapp" style="height: 44px; padding-inline: 16px; border-radius: 12px; background: #25D366; color: #2A1A14; font-weight: 700; font-size: 15px; display: inline-flex; align-items: center; gap: 8px; text-decoration: none">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 20.5 5 16.3A8.5 8.5 0 1 1 8 19.2z"></path><path d="M9 9.5c0 3 2.5 5.5 5.5 5.5l1-1.5-2-1-1 .8c-1-.5-1.8-1.3-2.3-2.3l.8-1-1-2z"></path></svg>
+اطلب على واتساب
+</a>
+<a href="#account" aria-label="حسابي" style="width: 44px; height: 44px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.25); color: #FFFFFF; display: flex; align-items: center; justify-content: center"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"></circle><path d="M4 21a8 8 0 0 1 16 0"></path></svg></a>
+</sc-if>
+</div>
+</div>
+</header>
+
+<main id="top" style="max-width: 1200px; margin-inline: auto; padding-inline: clamp(16px, 4vw, 32px); padding-block: 20px 56px; display: flex; flex-direction: column; gap: clamp(28px, 4vw, 48px)">
+
+<!-- Eid banner -->
+<section aria-labelledby="eid-title" style="background: #1F4D3A; color: #FFFFFF; border-radius: 16px; overflow: hidden; display: flex; flex-wrap: wrap; align-items: stretch">
+<div style="flex: 1 1 340px; padding: clamp(20px, 4vw, 48px); display: flex; flex-direction: column; align-items: flex-start; gap: 14px">
+<span style="display: inline-flex; align-items: center; gap: 6px; height: 32px; padding-inline: 12px; border-radius: 999px; background: #A85431; color: #FFFFFF; font-size: 14px; font-weight: 700"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"></rect><path d="M3 10h18M8 3v4M16 3v4"></path></svg>اطلب قبل [التاريخ]</span>
+<h1 id="eid-title" style="margin: 0; font-size: clamp(1.75rem, 1.2rem + 1.6vw, 2.25rem); line-height: 1.3; font-weight: 700">أضحية العيد من مزرعتنا<br>لحد باب بيتك</h1>
+<p style="margin: 0; color: #BDD0C6; font-size: 16px; line-height: 1.6">كل أضحية بصورتها الحقيقية ووزنها وسعرها. والدفع عند الاستلام.</p>
+<span style="font-size: 16px; color: #BDD0C6">تبدأ من <strong style="color: #FFFFFF; font-size: 22px">{{minPrice}} ج.م</strong></span>
+<a href="#popular" style="margin-top: 4px; height: 48px; padding-inline: 24px; border-radius: 12px; background: #FFFFFF; color: #1F4D3A; font-weight: 700; font-size: 16px; display: inline-flex; align-items: center; gap: 8px; text-decoration: none">اختار أضحيتك<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"></path></svg></a>
+</div>
+<div role="img" aria-label="real sheep photo" style="flex: 1 1 340px; min-height: 220px; background: rgba(189,208,198,0.14); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; color: #BDD0C6; font-size: 14px; font-weight: 600">
+<svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h3l2-3h6l2 3h3v11H4z"></path><circle cx="12" cy="13" r="3.5"></circle></svg>
+<span dir="ltr">real sheep photo</span>
+</div>
+</section>
+
+<!-- Category chips -->
+<section id="categories" aria-labelledby="cat-title" style="display: flex; flex-direction: column; gap: 12px">
+<h2 id="cat-title" style="margin: 0; font-size: 20px; font-weight: 700">الأقسام</h2>
+<div role="group" aria-label="تصفية حسب القسم" style="display: flex; gap: 8px; overflow-x: auto; padding-bottom: 4px">
+<sc-for list="{{categories}}" as="cat" hint-placeholder-count="4">
+<button type="button" onClick="{{cat.pick}}" aria-pressed="{{cat.pressed}}" style="{{cat.style}}">{{cat.label}}</button>
+</sc-for>
+</div>
+</section>
+
+<!-- Trust strip -->
+<section aria-label="ليه تشتري مننا">
+
+</section>
+
+<!-- Most ordered -->
+<section id="popular" aria-labelledby="pop-title" style="display: flex; flex-direction: column; gap: 16px">
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 12px">
+<h2 id="pop-title" style="margin: 0; font-size: clamp(1.375rem, 1.1rem + 0.8vw, 1.75rem); font-weight: 700">الأكثر طلبًا</h2>
+<a href="#listing" style="min-height: 44px; display: inline-flex; align-items: center; gap: 4px; color: #1F4D3A; font-weight: 600; font-size: 15px; text-decoration: none">عرض الكل<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"></path></svg></a>
+</div>
+
+<sc-if value="{{showGrid}}" hint-placeholder-val="{{ true }}">
+<div style="{{gridStyle}}">
+<sc-for list="{{products}}" as="p" hint-placeholder-count="4">
+<article style="background: #FFFFFF; border: 1px solid #D0BFA9; border-radius: 16px; overflow: hidden; display: flex; flex-direction: column">
+<div style="position: relative; aspect-ratio: 4 / 3; background: #F7F4EE">
+<div role="img" aria-label="{{p.alt}}" style="{{p.photoStyle}}">
+<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h3l2-3h6l2 3h3v11H4z"></path><circle cx="12" cy="13" r="3.5"></circle></svg>
+<span dir="ltr">real sheep photo</span>
+</div>
+<span style="position: absolute; top: 8px; inset-inline-start: 8px; display: inline-flex; align-items: center; gap: 4px; height: 26px; padding-inline: 8px; border-radius: 999px; background: #BDD0C6; color: #1F4D3A; font-size: 12px; font-weight: 700"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 4 6v6c0 4.5 3.4 8 8 9 4.6-1 8-4.5 8-9V6z"></path><path d="m9 12 2 2 4-4"></path></svg>فحص بيطري</span>
+<button type="button" onClick="{{p.toggleFav}}" aria-pressed="{{p.favPressed}}" aria-label="{{p.favLabel}}" style="position: absolute; top: 4px; inset-inline-end: 4px; width: 44px; height: 44px; border-radius: 999px; border: 0; background: transparent; display: flex; align-items: center; justify-content: center; cursor: pointer; color: #A85431">
+<span style="width: 34px; height: 34px; border-radius: 999px; background: #FFFFFF; display: flex; align-items: center; justify-content: center"><svg width="18" height="18" viewBox="0 0 24 24" fill="{{p.heartFill}}" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"></path></svg></span>
+</button>
+<sc-if value="{{p.soldOut}}" hint-placeholder-val="{{ false }}">
+<div style="position: absolute; inset: 0; background: rgba(88,88,80,0.6); display: flex; align-items: center; justify-content: center">
+<span style="height: 32px; padding-inline: 14px; border-radius: 999px; background: #FFFFFF; color: #2A1A14; font-size: 14px; font-weight: 700; display: inline-flex; align-items: center">نفدت الكمية</span>
+</div>
+</sc-if>
+</div>
+<div style="padding: 12px; display: flex; flex-direction: column; gap: 8px; flex-grow: 1">
+<div style="display: flex; flex-direction: column">
+<h3 style="margin: 0; font-size: 16px; line-height: 1.4; font-weight: 600">{{p.name}}</h3>
+<span style="font-size: 14px; color: #585850">سلالة {{p.breed}}</span>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 6px; font-size: 13px; font-weight: 600">
+<span style="display: inline-flex; align-items: center; gap: 4px; height: 28px; padding-inline: 8px; border-radius: 999px; background: #F7F4EE; color: #2A1A14"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#585850" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 8h14l1.5 12h-17z"></path><path d="M9 8a3 3 0 0 1 6 0"></path></svg>{{p.weight}}</span>
+<span style="display: inline-flex; align-items: center; gap: 4px; height: 28px; padding-inline: 8px; border-radius: 999px; background: #F7F4EE; color: #2A1A14"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#585850" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg>{{p.age}}</span>
+</div>
+<div style="margin-top: auto; display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 6px">
+<span style="font-size: 22px; line-height: 1.3; font-weight: 700; color: #A85431">{{p.price}} ج.م</span>
+<span style="font-size: 13px; color: #585850">/ {{p.unit}}</span>
+</div>
+<sc-if value="{{p.available}}" hint-placeholder-val="{{ true }}">
+<button type="button" style="height: 44px; border-radius: 12px; border: 0; background: #1F4D3A; color: #FFFFFF; font-family: inherit; font-size: 15px; font-weight: 600; display: inline-flex; align-items: center; justify-content: center; gap: 6px; cursor: pointer"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg>أضف للسلة</button>
+</sc-if>
+<sc-if value="{{p.soldOut}}" hint-placeholder-val="{{ false }}">
+<button type="button" disabled="" style="height: 44px; border-radius: 12px; border: 1px solid #D0BFA9; background: #F7F4EE; color: #585850; font-family: inherit; font-size: 15px; font-weight: 600; cursor: not-allowed">غير متاح</button>
+</sc-if>
+</div>
+</article>
+</sc-for>
+</div>
+</sc-if>
+
+<sc-if value="{{showLoading}}" hint-placeholder-val="{{ false }}">
+<div aria-busy="true" aria-label="جاري تحميل الأضاحي" style="{{gridStyle}}">
+<sc-for list="{{skeletons}}" as="s" hint-placeholder-count="4">
+<div style="background: #FFFFFF; border: 1px solid #D0BFA9; border-radius: 16px; overflow: hidden; display: flex; flex-direction: column">
+<div style="aspect-ratio: 4 / 3; background: rgba(208,191,169,0.35)"></div>
+<div style="padding: 12px; display: flex; flex-direction: column; gap: 10px">
+<span style="height: 14px; width: 70%; border-radius: 6px; background: rgba(208,191,169,0.45)"></span>
+<span style="height: 12px; width: 45%; border-radius: 6px; background: rgba(208,191,169,0.35)"></span>
+<span style="height: 20px; width: 55%; border-radius: 6px; background: rgba(208,191,169,0.45)"></span>
+<span style="height: 44px; border-radius: 12px; background: rgba(208,191,169,0.35)"></span>
+</div>
+</div>
+</sc-for>
+</div>
+</sc-if>
+
+<sc-if value="{{showEmpty}}" hint-placeholder-val="{{ false }}">
+<div style="background: #FFFFFF; border: 1.5px dashed #D0BFA9; border-radius: 16px; padding: 40px 20px; display: flex; flex-direction: column; align-items: center; gap: 10px; text-align: center">
+<span style="width: 56px; height: 56px; border-radius: 999px; background: #F7F4EE; color: #585850; display: flex; align-items: center; justify-content: center"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5M8 11h6"></path></svg></span>
+<strong style="font-size: 18px">مفيش أضاحي في القسم ده دلوقتي</strong>
+<span style="color: #585850; font-size: 15px">جرّب قسم تاني، أو اسألنا على واتساب ونبلّغك أول ما يتوفر.</span>
+<button type="button" onClick="{{showAll}}" style="margin-top: 6px; height: 44px; padding-inline: 20px; border-radius: 12px; border: 1.5px solid #1F4D3A; background: transparent; color: #1F4D3A; font-family: inherit; font-size: 15px; font-weight: 600; cursor: pointer">عرض كل الأقسام</button>
+</div>
+</sc-if>
+
+<sc-if value="{{showError}}" hint-placeholder-val="{{ false }}">
+<div role="alert" style="background: #FFFFFF; border: 1.5px solid #A85431; border-radius: 16px; padding: 40px 20px; display: flex; flex-direction: column; align-items: center; gap: 10px; text-align: center">
+<span style="width: 56px; height: 56px; border-radius: 999px; background: #F7F4EE; color: #A85431; display: flex; align-items: center; justify-content: center"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v6M12 16.5h.01"></path></svg></span>
+<strong style="font-size: 18px">مقدرناش نحمّل الأضاحي</strong>
+<span style="color: #585850; font-size: 15px">اتأكد إنك متصل بالإنترنت وجرّب تاني.</span>
+<button type="button" onClick="{{retry}}" style="margin-top: 6px; height: 44px; padding-inline: 20px; border-radius: 12px; border: 0; background: #1F4D3A; color: #FFFFFF; font-family: inherit; font-size: 15px; font-weight: 600; display: inline-flex; align-items: center; gap: 8px; cursor: pointer"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 11a8 8 0 1 0-2.3 5.7"></path><path d="M20 5v6h-6"></path></svg>حاول تاني</button>
+</div>
+</sc-if>
+</section>
+
+<!-- 3 steps -->
+<section aria-labelledby="steps-title" style="display: flex; flex-direction: column; gap: 16px">
+<h2 id="steps-title" style="margin: 0; font-size: clamp(1.375rem, 1.1rem + 0.8vw, 1.75rem); font-weight: 700">3 خطوات بس</h2>
+<ol style="margin: 0; padding: 0; list-style: none; display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px">
+<li style="background: #FFFFFF; border: 1px solid #D0BFA9; border-radius: 16px; padding: 20px; display: flex; align-items: flex-start; gap: 14px">
+<span style="width: 44px; height: 44px; flex-shrink: 0; border-radius: 999px; background: #1F4D3A; color: #FFFFFF; font-weight: 700; font-size: 18px; display: flex; align-items: center; justify-content: center">1</span>
+<span style="display: flex; flex-direction: column; gap: 4px"><strong style="font-size: 18px">اختار</strong><span style="color: #585850; font-size: 15px">الأضحية بصورتها ووزنها وسعرها.</span></span>
+</li>
+<li style="background: #FFFFFF; border: 1px solid #D0BFA9; border-radius: 16px; padding: 20px; display: flex; align-items: flex-start; gap: 14px">
+<span style="width: 44px; height: 44px; flex-shrink: 0; border-radius: 999px; background: #1F4D3A; color: #FFFFFF; font-weight: 700; font-size: 18px; display: flex; align-items: center; justify-content: center">2</span>
+<span style="display: flex; flex-direction: column; gap: 4px"><strong style="font-size: 18px">حدد التقطيع</strong><span style="color: #585850; font-size: 15px">كاملة، أنصاف، أرباع أو قطع صغيرة.</span></span>
+</li>
+<li style="background: #FFFFFF; border: 1px solid #D0BFA9; border-radius: 16px; padding: 20px; display: flex; align-items: flex-start; gap: 14px">
+<span style="width: 44px; height: 44px; flex-shrink: 0; border-radius: 999px; background: #1F4D3A; color: #FFFFFF; font-weight: 700; font-size: 18px; display: flex; align-items: center; justify-content: center">3</span>
+<span style="display: flex; flex-direction: column; gap: 4px"><strong style="font-size: 18px">استلم</strong><span style="color: #585850; font-size: 15px">أول أو تاني أو تالت يوم العيد، وادفع عند الاستلام.</span></span>
+</li>
+</ol>
+</section>
+</main>
+
+<!-- Footer -->
+<footer id="contact" style="background: #1F4D3A; color: #BDD0C6">
+<div style="max-width: 1200px; margin-inline: auto; padding-inline: clamp(16px, 4vw, 32px); padding-block: 40px 24px; display: flex; flex-direction: column; gap: 28px">
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 24px; font-size: 15px">
+<div style="display: flex; flex-direction: column; gap: 8px">
+<span style="font-size: 22px; font-weight: 700; color: #FFFFFF">بيت الكباش</span>
+<span>أضاحي من مزرعتنا لبيتك.</span>
+</div>
+<div style="display: flex; flex-direction: column; gap: 8px">
+<strong style="color: #FFFFFF">تواصل معنا</strong>
+<span>تليفون: <span dir="ltr">[رقم الهاتف]</span></span>
+<span>العنوان: [عنوان المزرعة]</span>
+</div>
+<div style="display: flex; flex-direction: column; gap: 8px">
+<strong style="color: #FFFFFF">مواعيد العمل</strong>
+<span>[الأيام]</span>
+<span>[الساعات]</span>
+</div>
+<div style="display: flex; flex-direction: column; gap: 8px; align-items: flex-start">
+<strong style="color: #FFFFFF">عندك سؤال؟</strong>
+<a href="#whatsapp" style="height: 48px; padding-inline: 18px; border-radius: 12px; background: #25D366; color: #2A1A14; font-weight: 700; display: inline-flex; align-items: center; gap: 8px; text-decoration: none"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 20.5 5 16.3A8.5 8.5 0 1 1 8 19.2z"></path><path d="M9 9.5c0 3 2.5 5.5 5.5 5.5l1-1.5-2-1-1 .8c-1-.5-1.8-1.3-2.3-2.3l.8-1-1-2z"></path></svg>كلّمنا على واتساب</a>
+</div>
+</div>
+<div style="border-top: 1px solid rgba(255,255,255,0.14); padding-top: 16px; font-size: 14px">© 2026 بيت الكباش</div>
+</div>
+</footer>
+
+<!-- WhatsApp FAB: bottom-start -->
+<a href="#whatsapp" aria-label="تواصل معنا على واتساب" style="{{fabStyle}}">
+<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 20.5 5 16.3A8.5 8.5 0 1 1 8 19.2z"></path><path d="M9 9.5c0 3 2.5 5.5 5.5 5.5l1-1.5-2-1-1 .8c-1-.5-1.8-1.3-2.3-2.3l.8-1-1-2z"></path></svg>
+</a>
+
+<!-- Bottom nav (mobile) -->
+<sc-if value="{{m}}" hint-placeholder-val="{{ false }}">
+<nav aria-label="التنقل السفلي" style="position: fixed; bottom: 0; inset-inline: 0; z-index: 30; background: #FFFFFF; border-top: 1px solid #D0BFA9; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); padding-block: 6px">
+<a href="#top" aria-current="page" style="min-height: 52px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; color: #1F4D3A; font-size: 12px; font-weight: 700; text-decoration: none"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11 12 4l9 7"></path><path d="M5 10v10h14V10"></path></svg>الرئيسية</a>
+<a href="#categories" style="min-height: 52px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; color: #585850; font-size: 12px; font-weight: 600; text-decoration: none"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="7" height="7" rx="1.5"></rect><rect x="13" y="4" width="7" height="7" rx="1.5"></rect><rect x="4" y="13" width="7" height="7" rx="1.5"></rect><rect x="13" y="13" width="7" height="7" rx="1.5"></rect></svg>الأقسام</a>
+<a href="#cart" style="position: relative; min-height: 52px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; color: #585850; font-size: 12px; font-weight: 600; text-decoration: none"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="20" r="1.5"></circle><circle cx="18" cy="20" r="1.5"></circle><path d="M3 4h2l2.4 11.2a2 2 0 0 0 2 1.6h8.2a2 2 0 0 0 2-1.5L21 8H6.2"></path></svg>السلة (1)</a>
+<a href="#orders" style="min-height: 52px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; color: #585850; font-size: 12px; font-weight: 600; text-decoration: none"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2z"></path><path d="M9 8h6M9 12h6"></path></svg>طلباتي</a>
+<a href="#account" style="min-height: 52px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; color: #585850; font-size: 12px; font-weight: 600; text-decoration: none"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"></circle><path d="M4 21a8 8 0 0 1 16 0"></path></svg>حسابي</a>
+</nav>
+</sc-if>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"layout":{"editor":"enum","options":["auto","mobile","desktop"],"default":"auto"},"gridState":{"editor":"enum","options":["loaded","loading","empty","error"],"default":"loaded"},"$preview":{"width":1440,"height":2100}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { w: (typeof window !== 'undefined' ? window.innerWidth : 1280), cat: 'all', fav: {}, gs: null };
+    this.onResize = () => this.setState({ w: window.innerWidth });
+  }
+  componentDidMount() { window.addEventListener('resize', this.onResize); this.onResize(); }
+  componentWillUnmount() { window.removeEventListener('resize', this.onResize); clearTimeout(this.t); }
+  renderVals() {
+    const layout = this.props.layout ?? 'auto';
+    const m = layout === 'mobile' || (layout === 'auto' && this.state.w < 768);
+
+    // sample data shaped like the API: name, breed, category, unit_price, unit, weight_min/max, age, is_available
+    const all = [
+      { id: 1, name: 'خروف برقي', breed: 'برقي', category: 'sheep', weight_min: 45, weight_max: 50, age: '12 شهر', unit_price: 17800, unit: 'الرأس', is_available: true },
+      { id: 2, name: 'خروف رحماني', breed: 'رحماني', category: 'sheep', weight_min: 35, weight_max: 40, age: '10 شهور', unit_price: 14500, unit: 'الرأس', is_available: true },
+      { id: 3, name: 'ماعز زرايبي', breed: 'زرايبي', category: 'goat', weight_min: 25, weight_max: 30, age: '9 شهور', unit_price: 9900, unit: 'الرأس', is_available: true },
+      { id: 4, name: 'خروف أوسيمي', breed: 'أوسيمي', category: 'sheep', weight_min: 55, weight_max: 60, age: '14 شهر', unit_price: 21000, unit: 'الرأس', is_available: false }
+    ];
+    const fmt = (n) => n.toLocaleString('en-US');
+    const cat = this.state.cat;
+    const list = all.filter((p) => cat === 'all' || p.category === cat);
+
+    const gs = this.state.gs ?? this.props.gridState ?? 'loaded';
+    const empty = gs === 'empty' || (gs === 'loaded' && list.length === 0);
+
+    const photo = (ok) => 'position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; color: #585850; font-size: 12px; font-weight: 600' + (ok ? '' : '; filter: grayscale(1)');
+    const products = list.map((p) => {
+      const fav = !!this.state.fav[p.id];
+      const weight = p.weight_min + '–' + p.weight_max + ' كجم';
+      return {
+        name: p.name, breed: p.breed, age: p.age, unit: p.unit, weight,
+        price: fmt(p.unit_price),
+        available: p.is_available, soldOut: !p.is_available,
+        alt: p.name + '، وزن ' + weight,
+        photoStyle: photo(p.is_available),
+        heartFill: fav ? 'currentColor' : 'none',
+        favPressed: String(fav),
+        favLabel: fav ? 'شيل من المفضلة' : 'أضف للمفضلة',
+        toggleFav: () => this.setState({ fav: { ...this.state.fav, [p.id]: !fav } })
+      };
+    });
+
+    const chip = (on) => 'flex-shrink: 0; height: 44px; padding-inline: 20px; border-radius: 999px; font-family: inherit; font-size: 15px; font-weight: 600; cursor: pointer; ' +
+      (on ? 'background: #BDD0C6; color: #1F4D3A; border: 1.5px solid #1F4D3A' : 'background: #FFFFFF; color: #2A1A14; border: 1px solid #D0BFA9');
+    const categories = [['all', 'الكل'], ['sheep', 'خراف'], ['goat', 'ماعز'], ['calf', 'عجول']].map(([id, label]) => ({
+      label, pressed: String(cat === id), style: chip(cat === id),
+      pick: () => this.setState({ cat: id, gs: null })
+    }));
+
+    return {
+      m, d: !m,
+      rootStyle: 'font-family: \'IBM Plex Sans Arabic\', sans-serif; color: #2A1A14; background: #F7F4EE; min-height: 100vh; font-size: 16px; line-height: 1.6' + (m ? '; padding-bottom: 72px' : ''),
+      searchWrap: m ? 'order: 3; flex: 1 1 100%' : 'flex: 1 1 280px; max-width: 420px',
+      gridStyle: 'display: grid; gap: ' + (m ? '12px' : '20px') + '; grid-template-columns: repeat(' + (m ? 2 : 4) + ', minmax(0, 1fr))',
+      fabStyle: 'position: fixed; z-index: 40; inset-inline-start: 16px; bottom: ' + (m ? '84px' : '24px') + '; width: 56px; height: 56px; border-radius: 999px; background: #25D366; color: #2A1A14; display: flex; align-items: center; justify-content: center; box-shadow: 0 8px 24px -8px rgba(42,26,20,0.45)',
+      minPrice: fmt(Math.min(...all.filter((p) => p.is_available).map((p) => p.unit_price))),
+      categories, products,
+      skeletons: [1, 2, 3, 4],
+      showGrid: gs === 'loaded' && !empty,
+      showLoading: gs === 'loading',
+      showEmpty: empty,
+      showError: gs === 'error',
+      showAll: () => this.setState({ cat: 'all', gs: 'loaded' }),
+      retry: () => { this.setState({ gs: 'loading' }); clearTimeout(this.t); this.t = setTimeout(() => this.setState({ gs: 'loaded' }), 900); }
+    };
+  }
+}
+</script>
+</body>
+</html>

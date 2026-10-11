@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>AnimalCard</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;600;700&amp;display=swap">
+<style>body{margin:0}</style>
+</helmet>
+<article dir="rtl" lang="ar" style="font-family: 'IBM Plex Sans Arabic', sans-serif; color: #2A1A14; height: 100%; box-sizing: border-box; background: #FFFFFF; border: 1px solid #D0BFA9; border-radius: 16px; overflow: hidden; display: flex; flex-direction: column">
+<div style="position: relative; aspect-ratio: 4 / 3; background: #F7F4EE">
+<a href="{{href}}" aria-label="{{alt}}" style="{{photoStyle}}"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg><span dir="ltr">real sheep photo</span></a>
+<span style="position: absolute; top: 8px; inset-inline-start: 8px; display: inline-flex; align-items: center; gap: 4px; height: 26px; padding-inline: 8px; border-radius: 999px; background: #BDD0C6; color: #1F4D3A; font-size: 12px; font-weight: 700"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 4 6v6c0 4.5 3.4 8 8 9 4.6-1 8-4.5 8-9V6z"/><path d="m9 12 2 2 4-4"/></svg>فحص بيطري</span>
+<button type="button" onClick="{{toggleFav}}" aria-pressed="{{favPressed}}" aria-label="{{favLabel}}" style="position: absolute; top: 4px; inset-inline-end: 4px; width: 44px; height: 44px; border: 0; background: transparent; color: #A85431; display: flex; align-items: center; justify-content: center; cursor: pointer">
+<span style="width: 34px; height: 34px; border-radius: 999px; background: #FFFFFF; display: flex; align-items: center; justify-content: center"><svg width="18" height="18" viewBox="0 0 24 24" fill="{{heartFill}}" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg></span>
+</button>
+<sc-if value="{{soldOut}}" hint-placeholder-val="{{ false }}">
+<div style="position: absolute; inset: 0; background: rgba(88,88,80,0.6); display: flex; align-items: center; justify-content: center; pointer-events: none"><span style="height: 32px; padding-inline: 14px; border-radius: 999px; background: #FFFFFF; font-size: 14px; font-weight: 700; display: inline-flex; align-items: center">نفدت الكمية</span></div>
+</sc-if>
+</div>
+<div style="padding: 12px; display: flex; flex-direction: column; gap: 8px; flex-grow: 1">
+<div style="display: flex; flex-direction: column">
+<h3 style="margin: 0; font-size: 16px; line-height: 1.4; font-weight: 600"><a href="{{href}}" style="color: #2A1A14; text-decoration: none">{{name}}</a></h3>
+<span style="font-size: 14px; color: #585850">سلالة {{breed}}</span>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 6px; font-size: 13px; font-weight: 600">
+<span style="display: inline-flex; align-items: center; gap: 4px; height: 28px; padding-inline: 8px; border-radius: 999px; background: #F7F4EE"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#585850" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 8h14l1.5 12h-17z"/><path d="M9 8a3 3 0 0 1 6 0"/></svg>{{weight}}</span>
+<span style="display: inline-flex; align-items: center; gap: 4px; height: 28px; padding-inline: 8px; border-radius: 999px; background: #F7F4EE"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#585850" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>{{age}}</span>
+</div>
+<div style="margin-top: auto; display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 6px">
+<span style="font-size: 22px; line-height: 1.3; font-weight: 700; color: #A85431">{{price}} ج.م</span>
+<span style="font-size: 13px; color: #585850">/ {{unit}}</span>
+</div>
+<button type="button" disabled="{{soldOut}}" style="{{btnStyle}}">{{btnLabel}}</button>
+</div>
+</article>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"item":{"editor":null},"href":{"editor":null},"$preview":{"width":280,"height":430}}'>
+class Component extends DCLogic {
+  constructor(props) { super(props); this.state = { fav: false }; }
+  renderVals() {
+    // API fields: name, breed, weight_min, weight_max, age, unit_price, unit, image, is_available
+    const p = this.props.item ?? { name: 'خروف برقي', breed: 'برقي', weight_min: 45, weight_max: 50, age: '12 شهر', unit_price: 17800, unit: 'الرأس', is_available: true };
+    const ok = p.is_available !== false;
+    const fav = this.state.fav;
+    const weight = p.weight_min + '–' + p.weight_max + ' كجم';
+    return {
+      name: p.name, breed: p.breed, age: p.age, unit: p.unit, weight,
+      price: Number(p.unit_price).toLocaleString('en-US'),
+      href: this.props.href ?? 'Product.dc.html',
+      alt: p.name + '، وزن ' + weight,
+      soldOut: !ok,
+      photoStyle: 'position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; color: #585850; font-size: 12px; font-weight: 600; text-decoration: none' + (ok ? '' : '; filter: grayscale(1)'),
+      btnStyle: 'height: 44px; border-radius: 12px; font-family: inherit; font-size: 15px; font-weight: 600; ' + (ok ? 'background: #1F4D3A; color: #FFFFFF; border: 0; cursor: pointer' : 'background: #F7F4EE; color: #585850; border: 1px solid #D0BFA9; cursor: not-allowed'),
+      btnLabel: ok ? '+ أضف للسلة' : 'غير متاح',
+      heartFill: fav ? 'currentColor' : 'none',
+      favPressed: String(fav),
+      favLabel: fav ? 'شيل من المفضلة' : 'أضف للمفضلة',
+      toggleFav: () => this.setState({ fav: !fav })
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>Dock</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;600;700&amp;display=swap">
+<style>body{margin:0}</style>
+</helmet>
+<div dir="rtl" lang="ar" style="font-family: 'IBM Plex Sans Arabic', sans-serif; color: #2A1A14">
+<a href="#whatsapp" aria-label="تواصل معنا على واتساب" style="{{fabStyle}}">
+<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 20.5 5 16.3A8.5 8.5 0 1 1 8 19.2z"/><path d="M9 9.5c0 3 2.5 5.5 5.5 5.5l1-1.5-2-1-1 .8c-1-.5-1.8-1.3-2.3-2.3l.8-1-1-2z"/></svg>
+</a>
+<sc-if value="{{showNav}}" hint-placeholder-val="{{ true }}">
+<nav aria-label="التنقل السفلي" style="position: fixed; bottom: 0; inset-inline: 0; z-index: 30; background: #FFFFFF; border-top: 1px solid #D0BFA9; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); padding-block: 6px">
+<sc-for list="{{items}}" as="n" hint-placeholder-count="5">
+<a href="{{n.href}}" aria-current="{{n.current}}" style="{{n.style}}"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{n.d}}"/></svg>{{n.label}}</a>
+</sc-for>
+</nav>
+</sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"layout":{"editor":"enum","options":["mobile","desktop"],"default":"mobile"},"active":{"editor":"enum","options":["home","categories","cart","orders","account","none"],"default":"home"},"nav":{"editor":"boolean","default":true},"fabBottom":{"editor":null},"$preview":{"width":375,"height":220}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const m = (this.props.layout ?? 'mobile') === 'mobile';
+    const showNav = m && (this.props.nav ?? true);
+    const active = this.props.active ?? 'home';
+    const bottom = this.props.fabBottom ?? (showNav ? 84 : 24);
+    const items = [
+      ['home', 'الرئيسية', 'Home-mobile.dc.html', 'M3 11 12 4l9 7M5 10v10h14V10'],
+      ['categories', 'الأقسام', 'Listing-mobile.dc.html', 'M4 4h7v7H4zM13 4h7v7h-7zM4 13h7v7H4zM13 13h7v7h-7z'],
+      ['cart', 'السلة (1)', '#cart', 'M3 4h2l2.4 11.2a2 2 0 0 0 2 1.6h8.2a2 2 0 0 0 2-1.5L21 8H6.2M9 20h.01M18 20h.01'],
+      ['orders', 'طلباتي', 'Orders-mobile.dc.html', 'M6 3h12v18l-3-2-3 2-3-2-3 2zM9 8h6M9 12h6'],
+      ['account', 'حسابي', 'Auth-mobile.dc.html', 'M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM4 21a8 8 0 0 1 16 0']
+    ].map(([id, label, href, d]) => {
+      const on = id === active;
+      return {
+        label, href, d, current: on ? 'page' : 'false',
+        style: 'min-height: 52px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; font-size: 12px; text-decoration: none; ' +
+          (on ? 'color: #1F4D3A; font-weight: 700' : 'color: #585850; font-weight: 600')
+      };
+    });
+    return {
+      showNav, items,
+      fabStyle: 'position: fixed; z-index: 40; inset-inline-start: 16px; bottom: ' + bottom + 'px; width: 56px; height: 56px; border-radius: 999px; background: #25D366; color: #2A1A14; display: flex; align-items: center; justify-content: center; box-shadow: 0 8px 24px -8px rgba(42,26,20,0.45)'
+    };
+  }
+}
+</script>
+</body>
+</html>

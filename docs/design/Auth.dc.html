@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>بيت الكباش — تسجيل الدخول</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;600;700&amp;display=swap">
+<style>body{margin:0}</style>
+</helmet>
+<div dir="rtl" lang="ar" style="font-family: 'IBM Plex Sans Arabic', sans-serif; color: #2A1A14; background: #F7F4EE; min-height: 100vh; font-size: 16px; line-height: 1.6; display: flex; flex-direction: column">
+
+<header style="background: #1F4D3A; padding-block: 12px; padding-inline: clamp(16px, 4vw, 32px)">
+<a href="{{homeHref}}" style="max-width: 1200px; margin-inline: auto; display: flex; align-items: center; gap: 10px; color: #FFFFFF; text-decoration: none; min-height: 44px">
+<span style="width: 40px; height: 40px; border-radius: 12px; background: #BDD0C6; color: #1F4D3A; display: flex; align-items: center; justify-content: center"><svg width="24" height="24" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 15c-2 0-3.5-1.6-3-3.5.4-1.5 2-2 3-1.5.5-2 2.5-3 4.5-2 1-1.5 3.5-2 5-.5 1.5-1 4-.5 4.5 1.5 2 0 3.5 2 2.5 4 1.5 1 1.5 3.5-.5 4.5-.5 2-3 3-4.5 2-1 1.5-3.5 2-5 .5-1.5 1-4 .5-4.5-1.5-2 0-3-2-2-3.5z"/><path d="M12 22v5M20 22v5"/></svg></span>
+<span style="font-size: 22px; font-weight: 700">بيت الكباش</span>
+</a>
+</header>
+
+<main style="flex-grow: 1; display: flex; align-items: flex-start; justify-content: center; padding: clamp(24px, 6vw, 72px) 16px 48px">
+<section style="width: 100%; max-width: 420px; box-sizing: border-box; background: #FFFFFF; border: 1px solid #D0BFA9; border-radius: 16px; padding: 24px; display: flex; flex-direction: column; gap: 16px">
+
+<!-- Phone -->
+<sc-if value="{{sPhone}}" hint-placeholder-val="{{ true }}">
+<div style="display: flex; flex-direction: column; gap: 4px">
+<h1 style="margin: 0; font-size: 28px; line-height: 1.3; font-weight: 700">سجّل دخولك</h1>
+<p style="margin: 0; color: #585850; font-size: 15px">هنبعتلك كود على موبايلك. مش محتاج كلمة سر.</p>
+</div>
+<div style="display: flex; flex-direction: column; gap: 6px">
+<label for="a-phone" style="font-size: 14px; font-weight: 600">رقم الموبايل</label>
+<div dir="ltr" style="{{phoneBox}}">
+<span style="display: flex; align-items: center; padding-inline: 12px; background: #F7F4EE; color: #585850; font-size: 16px; border-inline-end: 1px solid #D0BFA9">+20</span>
+<input id="a-phone" type="tel" inputmode="numeric" autocomplete="tel-national" placeholder="10 0000 0000" value="{{phone}}" onChange="{{onPhone}}" aria-invalid="{{phoneInvalid}}" aria-describedby="a-phone-e" style="flex-grow: 1; min-width: 0; border: 0; padding-inline: 12px; font-family: inherit; font-size: 18px; letter-spacing: 0.04em; color: #2A1A14; background: transparent">
+</div>
+<sc-if value="{{phoneErr}}" hint-placeholder-val="{{ false }}"><span id="a-phone-e" style="font-size: 14px; color: #A85431; font-weight: 600">⚠ اكتب رقم مصري صحيح، مثلًا 01001234567.</span></sc-if>
+</div>
+<button type="button" onClick="{{sendCode}}" disabled="{{busy}}" style="{{primaryStyle}}">{{sendLabel}}</button>
+<span style="font-size: 13px; color: #585850; text-align: center">بالدخول إنت موافق على <a href="#terms" style="color: #1F4D3A">الشروط</a>.</span>
+</sc-if>
+
+<!-- OTP -->
+<sc-if value="{{sOtp}}" hint-placeholder-val="{{ false }}">
+<button type="button" onClick="{{changePhone}}" style="align-self: flex-start; min-height: 44px; padding: 0; border: 0; background: transparent; color: #1F4D3A; font-family: inherit; font-size: 15px; font-weight: 600; display: inline-flex; align-items: center; gap: 6px; cursor: pointer"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>غيّر الرقم</button>
+<div style="display: flex; flex-direction: column; gap: 4px">
+<h1 style="margin: 0; font-size: 28px; line-height: 1.3; font-weight: 700">دخّل الكود</h1>
+<p style="margin: 0; color: #585850; font-size: 15px">بعتنا كود من 4 أرقام على <span dir="ltr" style="color: #2A1A14; font-weight: 600">{{maskedPhone}}</span></p>
+</div>
+<div style="display: flex; flex-direction: column; gap: 6px">
+<label for="a-code" style="font-size: 14px; font-weight: 600">كود التحقق</label>
+<input id="a-code" type="text" inputmode="numeric" autocomplete="one-time-code" maxlength="4" value="{{code}}" onChange="{{onCode}}" aria-invalid="{{codeInvalid}}" aria-describedby="a-code-e" dir="ltr" style="{{codeStyle}}">
+<sc-if value="{{codeErr}}" hint-placeholder-val="{{ false }}"><span id="a-code-e" role="alert" style="font-size: 14px; color: #A85431; font-weight: 600">⚠ {{codeMsg}}</span></sc-if>
+</div>
+<button type="button" onClick="{{verify}}" disabled="{{busy}}" style="{{primaryStyle}}">{{verifyLabel}}</button>
+<sc-if value="{{canResend}}" hint-placeholder-val="{{ false }}">
+<button type="button" onClick="{{resend}}" style="min-height: 44px; border: 0; background: transparent; color: #1F4D3A; font-family: inherit; font-size: 15px; font-weight: 600; cursor: pointer">ابعت الكود تاني</button>
+</sc-if>
+<sc-if value="{{waiting}}" hint-placeholder-val="{{ true }}">
+<span aria-live="polite" style="font-size: 14px; color: #585850; text-align: center">تقدر تطلب كود جديد بعد <span dir="ltr">{{timer}}</span></span>
+</sc-if>
+</sc-if>
+
+<!-- Done -->
+<sc-if value="{{sDone}}" hint-placeholder-val="{{ false }}">
+<div role="status" style="display: flex; flex-direction: column; align-items: center; gap: 12px; text-align: center; padding-block: 12px">
+<span style="width: 72px; height: 72px; border-radius: 999px; background: #BDD0C6; color: #1F4D3A; display: flex; align-items: center; justify-content: center"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></span>
+<h1 style="margin: 0; font-size: 24px; font-weight: 700">أهلًا بيك!</h1>
+<span style="color: #585850; font-size: 15px">دخلت بنجاح. هنرجّعك للصفحة اللي كنت فيها.</span>
+<a href="{{ordersHref}}" style="width: 100%; height: 48px; border-radius: 12px; background: #1F4D3A; color: #FFFFFF; font-weight: 600; display: flex; align-items: center; justify-content: center; text-decoration: none">طلباتي</a>
+<a href="{{homeHref}}" style="width: 100%; height: 48px; border-radius: 12px; border: 1.5px solid #1F4D3A; color: #1F4D3A; font-weight: 600; display: flex; align-items: center; justify-content: center; text-decoration: none">الرئيسية</a>
+</div>
+</sc-if>
+</section>
+</main>
+
+<dc-import name="Dock" layout="{{layout}}" nav="{{ false }}" hint-size="100%,0px"></dc-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"layout":{"editor":"enum","options":["auto","mobile","desktop"],"default":"auto"},"$preview":{"width":1280,"height":800}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { w: (typeof window !== 'undefined' ? window.innerWidth : 1280), step: 'phone', phone: '', code: '', tried: false, busy: false, left: 0, codeMsg: '' };
+    this.onResize = () => this.setState({ w: window.innerWidth });
+  }
+  componentDidMount() { window.addEventListener('resize', this.onResize); this.onResize(); }
+  componentWillUnmount() { window.removeEventListener('resize', this.onResize); clearTimeout(this.t); clearInterval(this.iv); }
+  startTimer() {
+    clearInterval(this.iv);
+    this.setState({ left: 45 });
+    this.iv = setInterval(() => {
+      const left = this.state.left - 1;
+      this.setState({ left: Math.max(0, left) });
+      if (left <= 0) clearInterval(this.iv);
+    }, 1000);
+  }
+  renderVals() {
+    const L = this.props.layout ?? 'auto';
+    const m = L === 'mobile' || (L === 'auto' && this.state.w < 768);
+    const s = this.state;
+    const national = s.phone.replace(/\D/g, '').replace(/^0/, '');
+    const phoneOk = /^1[0-9]{9}$/.test(national);
+    const phoneErr = s.tried && s.step === 'phone' && !phoneOk;
+    const codeErr = !!s.codeMsg;
+    const fx = (bad) => 'display: flex; height: 52px; border-radius: 12px; overflow: hidden; background: #FFFFFF; ' + (bad ? 'border: 2px solid #A85431' : 'border: 1px solid #585850');
+    const later = (fn) => { this.setState({ busy: true }); clearTimeout(this.t); this.t = setTimeout(fn, 800); };
+    return {
+      layout: m ? 'mobile' : 'desktop',
+      homeHref: m ? 'Home-mobile.dc.html' : 'Main.dc.html',
+      ordersHref: m ? 'Orders-mobile.dc.html' : 'Orders.dc.html',
+      sPhone: s.step === 'phone', sOtp: s.step === 'otp', sDone: s.step === 'done',
+      phone: s.phone, onPhone: (e) => this.setState({ phone: e.target.value }),
+      phoneBox: fx(phoneErr), phoneErr, phoneInvalid: String(phoneErr),
+      busy: s.busy,
+      primaryStyle: 'height: 52px; border-radius: 12px; border: 0; background: #1F4D3A; color: #FFFFFF; font-family: inherit; font-size: 17px; font-weight: 700; cursor: pointer' + (s.busy ? '; opacity: 0.75; cursor: progress' : ''),
+      sendLabel: s.busy ? 'جاري الإرسال…' : 'ابعت الكود',
+      // POST /auth/otp/send { phone } → POST /auth/otp/verify { phone, code } → { token, user } (endpoints to confirm)
+      sendCode: () => {
+        if (!phoneOk) return this.setState({ tried: true });
+        later(() => { this.setState({ busy: false, step: 'otp', code: '', codeMsg: '' }); this.startTimer(); });
+      },
+      maskedPhone: '+20 ' + national.slice(0, 2) + '•• ••• ' + national.slice(-3),
+      changePhone: () => { clearInterval(this.iv); this.setState({ step: 'phone', tried: false }); },
+      code: s.code, onCode: (e) => this.setState({ code: e.target.value.replace(/\D/g, '').slice(0, 4), codeMsg: '' }),
+      codeErr, codeMsg: s.codeMsg, codeInvalid: String(codeErr),
+      codeStyle: 'height: 64px; border-radius: 12px; background: #FFFFFF; text-align: center; font-family: inherit; font-size: 32px; font-weight: 700; letter-spacing: 0.6em; padding-inline-start: 0.6em; color: #2A1A14; ' + (codeErr ? 'border: 2px solid #A85431' : 'border: 1px solid #585850'),
+      verifyLabel: s.busy ? 'جاري التأكد…' : 'تأكيد',
+      verify: () => {
+        if (s.code.length < 4) return this.setState({ codeMsg: 'الكود 4 أرقام.' });
+        later(() => s.code === '0000'
+          ? this.setState({ busy: false, codeMsg: 'الكود غلط. جرّب تاني أو اطلب كود جديد.' })
+          : (clearInterval(this.iv), this.setState({ busy: false, step: 'done' })));
+      },
+      waiting: s.left > 0, canResend: s.step === 'otp' && s.left === 0,
+      timer: '0:' + String(s.left).padStart(2, '0'),
+      resend: () => { this.setState({ code: '', codeMsg: '' }); this.startTimer(); }
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>بيت الكباش — الأضاحي</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;600;700&amp;display=swap">
+<style>body{margin:0}</style>
+</helmet>
+<div dir="rtl" lang="ar" style="{{rootStyle}}">
+<dc-import name="Header" layout="{{layout}}" title="الأضاحي" search="{{m}}" active="categories" hint-size="100%,120px"></dc-import>
+
+<main style="max-width: 1200px; margin-inline: auto; padding-inline: clamp(16px, 4vw, 32px); padding-block: 16px 48px; display: flex; flex-direction: column; gap: 16px">
+
+<sc-if value="{{d}}" hint-placeholder-val="{{ true }}">
+<nav aria-label="مسار التصفح" style="font-size: 14px; color: #585850; display: flex; gap: 6px"><a href="Main.dc.html" style="color: #585850">الرئيسية</a><span aria-hidden="true">/</span><span aria-current="page" style="color: #2A1A14; font-weight: 600">الأضاحي</span></nav>
+<h1 style="margin: 0; font-size: 36px; line-height: 1.3; font-weight: 700; color: #1F4D3A">كل الأضاحي</h1>
+</sc-if>
+
+<div role="group" aria-label="تصفية حسب القسم" style="display: flex; gap: 8px; overflow-x: auto; padding-bottom: 4px">
+<sc-for list="{{categories}}" as="c" hint-placeholder-count="4">
+<button type="button" onClick="{{c.pick}}" aria-pressed="{{c.pressed}}" style="{{c.style}}">{{c.label}}</button>
+</sc-for>
+</div>
+
+<!-- Desktop filter panel -->
+<sc-if value="{{d}}" hint-placeholder-val="{{ true }}">
+<section aria-label="الفلاتر" style="background: #FFFFFF; border: 1px solid #D0BFA9; border-radius: 16px; padding: 16px 20px; display: flex; flex-wrap: wrap; align-items: flex-end; gap: 16px 32px">
+<sc-for list="{{groups}}" as="g" hint-placeholder-count="2">
+<fieldset style="border: 0; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px">
+<legend style="padding: 0; margin-bottom: 8px; font-size: 14px; font-weight: 700">{{g.title}}</legend>
+<div style="display: flex; flex-wrap: wrap; gap: 6px">
+<sc-for list="{{g.options}}" as="o" hint-placeholder-count="5">
+<button type="button" onClick="{{o.pick}}" aria-pressed="{{o.pressed}}" style="{{o.style}}">{{o.label}}</button>
+</sc-for>
+</div>
+</fieldset>
+</sc-for>
+<label style="margin-inline-start: auto; display: flex; flex-direction: column; gap: 8px; font-size: 14px; font-weight: 700">ترتيب حسب
+<select value="{{sort}}" onChange="{{onSort}}" style="height: 44px; min-width: 180px; border-radius: 12px; border: 1px solid #585850; background: #FFFFFF; padding-inline: 12px; font-family: inherit; font-size: 15px; color: #2A1A14">
+<option value="price_asc">الأقل سعرًا</option>
+<option value="price_desc">الأعلى سعرًا</option>
+<option value="newest">الأحدث</option>
+</select>
+</label>
+</section>
+</sc-if>
+
+<!-- Mobile toolbar -->
+<sc-if value="{{m}}" hint-placeholder-val="{{ false }}">
+<div style="display: flex; align-items: center; gap: 8px">
+<button type="button" onClick="{{openSheet}}" style="height: 44px; padding-inline: 14px; border-radius: 12px; border: 1px solid #585850; background: #FFFFFF; color: #2A1A14; font-family: inherit; font-size: 15px; font-weight: 600; display: inline-flex; align-items: center; gap: 6px; cursor: pointer">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h16M7 12h10M10 18h4"/></svg>فلترة<sc-if value="{{hasActive}}" hint-placeholder-val="{{ false }}"><span style="min-width: 20px; height: 20px; border-radius: 999px; background: #1F4D3A; color: #FFFFFF; font-size: 12px; display: inline-flex; align-items: center; justify-content: center">{{activeCount}}</span></sc-if>
+</button>
+<label style="flex-grow: 1; min-width: 0">
+<span style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0)">ترتيب حسب</span>
+<select value="{{sort}}" onChange="{{onSort}}" style="width: 100%; height: 44px; border-radius: 12px; border: 1px solid #585850; background: #FFFFFF; padding-inline: 10px; font-family: inherit; font-size: 15px; color: #2A1A14">
+<option value="price_asc">الأقل سعرًا</option>
+<option value="price_desc">الأعلى سعرًا</option>
+<option value="newest">الأحدث</option>
+</select>
+</label>
+</div>
+</sc-if>
+
+<p aria-live="polite" style="margin: 0; font-size: 14px; color: #585850">{{countText}}</p>
+
+<sc-if value="{{hasResults}}" hint-placeholder-val="{{ true }}">
+<div style="{{gridStyle}}">
+<sc-for list="{{products}}" as="p" hint-placeholder-count="8">
+<dc-import name="AnimalCard" item="{{p}}" href="{{productHref}}" hint-size="100%,400px"></dc-import>
+</sc-for>
+</div>
+<div style="display: flex; flex-direction: column; align-items: center; gap: 8px; padding-top: 8px">
+<sc-if value="{{moreIdle}}" hint-placeholder-val="{{ true }}">
+<button type="button" onClick="{{loadMore}}" style="height: 48px; padding-inline: 28px; border-radius: 12px; border: 1.5px solid #1F4D3A; background: transparent; color: #1F4D3A; font-family: inherit; font-size: 16px; font-weight: 600; cursor: pointer">عرض المزيد</button>
+</sc-if>
+<sc-if value="{{moreLoading}}" hint-placeholder-val="{{ false }}">
+<button type="button" disabled aria-busy="true" style="height: 48px; padding-inline: 28px; border-radius: 12px; border: 1px solid #D0BFA9; background: #F7F4EE; color: #585850; font-family: inherit; font-size: 16px; font-weight: 600">جاري التحميل…</button>
+</sc-if>
+<sc-if value="{{moreDone}}" hint-placeholder-val="{{ false }}">
+<span style="font-size: 14px; color: #585850">ده كل المتاح دلوقتي.</span>
+</sc-if>
+</div>
+</sc-if>
+
+<sc-if value="{{noResults}}" hint-placeholder-val="{{ false }}">
+<div style="background: #FFFFFF; border: 1.5px dashed #D0BFA9; border-radius: 16px; padding: 40px 20px; display: flex; flex-direction: column; align-items: center; gap: 10px; text-align: center">
+<span style="width: 56px; height: 56px; border-radius: 999px; background: #F7F4EE; color: #585850; display: flex; align-items: center; justify-content: center"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h16M7 12h10M10 18h4"/></svg></span>
+<strong style="font-size: 18px">مفيش أضاحي بالفلاتر دي</strong>
+<span style="color: #585850; font-size: 15px">جرّب وزن أو سعر تاني، أو اسألنا على واتساب.</span>
+<button type="button" onClick="{{clearAll}}" style="margin-top: 6px; height: 44px; padding-inline: 20px; border-radius: 12px; border: 1.5px solid #1F4D3A; background: transparent; color: #1F4D3A; font-family: inherit; font-size: 15px; font-weight: 600; cursor: pointer">مسح الفلاتر</button>
+</div>
+</sc-if>
+</main>
+
+<!-- Mobile filter sheet -->
+<sc-if value="{{sheetOpen}}" hint-placeholder-val="{{ false }}">
+<div style="position: fixed; inset: 0; z-index: 50; background: rgba(42,26,20,0.5); display: flex; align-items: flex-end">
+<section role="dialog" aria-modal="true" aria-labelledby="sheet-title" style="width: 100%; max-height: 85vh; overflow-y: auto; box-sizing: border-box; background: #FFFFFF; border-radius: 16px 16px 0 0; padding: 8px 16px 16px; display: flex; flex-direction: column; gap: 16px">
+<span aria-hidden="true" style="align-self: center; width: 40px; height: 4px; border-radius: 999px; background: #D0BFA9"></span>
+<div style="display: flex; align-items: center; justify-content: space-between">
+<h2 id="sheet-title" style="margin: 0; font-size: 20px; font-weight: 700">فلترة</h2>
+<button type="button" onClick="{{closeSheet}}" aria-label="إغلاق" style="width: 44px; height: 44px; border: 0; border-radius: 12px; background: #F7F4EE; color: #2A1A14; display: flex; align-items: center; justify-content: center; cursor: pointer"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+</div>
+<sc-for list="{{groups}}" as="g" hint-placeholder-count="2">
+<fieldset style="border: 0; margin: 0; padding: 0">
+<legend style="padding: 0; margin-bottom: 8px; font-size: 15px; font-weight: 700">{{g.title}}</legend>
+<div style="display: flex; flex-wrap: wrap; gap: 8px">
+<sc-for list="{{g.options}}" as="o" hint-placeholder-count="5">
+<button type="button" onClick="{{o.pick}}" aria-pressed="{{o.pressed}}" style="{{o.style}}">{{o.label}}</button>
+</sc-for>
+</div>
+</fieldset>
+</sc-for>
+<div style="display: flex; gap: 8px; padding-top: 8px; border-top: 1px solid #D0BFA9">
+<button type="button" onClick="{{clearAll}}" style="height: 48px; padding-inline: 18px; border-radius: 12px; border: 0; background: transparent; color: #1F4D3A; font-family: inherit; font-size: 16px; font-weight: 600; cursor: pointer">مسح</button>
+<button type="button" onClick="{{closeSheet}}" style="flex-grow: 1; height: 48px; border-radius: 12px; border: 0; background: #1F4D3A; color: #FFFFFF; font-family: inherit; font-size: 16px; font-weight: 600; cursor: pointer">{{applyLabel}}</button>
+</div>
+</section>
+</div>
+</sc-if>
+
+<dc-import name="Dock" layout="{{layout}}" active="categories" hint-size="100%,0px"></dc-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"layout":{"editor":"enum","options":["auto","mobile","desktop"],"default":"auto"},"$preview":{"width":1280,"height":1500}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { w: (typeof window !== 'undefined' ? window.innerWidth : 1280), cat: 'all', weight: 'any', price: 'any', sort: 'price_asc', sheet: false, more: 'idle' };
+    this.onResize = () => this.setState({ w: window.innerWidth });
+  }
+  componentDidMount() { window.addEventListener('resize', this.onResize); this.onResize(); }
+  componentWillUnmount() { window.removeEventListener('resize', this.onResize); clearTimeout(this.t); }
+  renderVals() {
+    const L = this.props.layout ?? 'auto';
+    const m = L === 'mobile' || (L === 'auto' && this.state.w < 768);
+    const s = this.state;
+
+    // GET /products?category=&min_price=&max_price=&sort=&page= — weight filter needs weight_min/max (planned)
+    const all = [
+      { id: 1, name: 'خروف برقي', breed: 'برقي', category: 'sheep', weight_min: 45, weight_max: 50, age: '12 شهر', unit_price: 17800, unit: 'الرأس', is_available: true },
+      { id: 2, name: 'خروف رحماني', breed: 'رحماني', category: 'sheep', weight_min: 35, weight_max: 40, age: '10 شهور', unit_price: 14500, unit: 'الرأس', is_available: true },
+      { id: 3, name: 'ماعز زرايبي', breed: 'زرايبي', category: 'goat', weight_min: 25, weight_max: 30, age: '9 شهور', unit_price: 9900, unit: 'الرأس', is_available: true },
+      { id: 4, name: 'خروف أوسيمي', breed: 'أوسيمي', category: 'sheep', weight_min: 55, weight_max: 60, age: '14 شهر', unit_price: 21000, unit: 'الرأس', is_available: false },
+      { id: 5, name: 'خروف فلاحي', breed: 'فلاحي', category: 'sheep', weight_min: 40, weight_max: 45, age: '11 شهر', unit_price: 15900, unit: 'الرأس', is_available: true },
+      { id: 6, name: 'خروف برقي كبير', breed: 'برقي', category: 'sheep', weight_min: 50, weight_max: 55, age: '13 شهر', unit_price: 19500, unit: 'الرأس', is_available: true },
+      { id: 7, name: 'ماعز بلدي', breed: 'بلدي', category: 'goat', weight_min: 20, weight_max: 25, age: '8 شهور', unit_price: 8200, unit: 'الرأس', is_available: true },
+      { id: 8, name: 'خروف رحماني صغير', breed: 'رحماني', category: 'sheep', weight_min: 30, weight_max: 35, age: '9 شهور', unit_price: 12900, unit: 'الرأس', is_available: true }
+    ];
+    const weights = { any: [0, 999], lt35: [0, 35], w35: [35, 45], w45: [45, 55], gt55: [55, 999] };
+    const prices = { any: [0, 1e9], lt10: [0, 10000], p10: [10000, 15000], p15: [15000, 20000], gt20: [20000, 1e9] };
+    const [wl, wh] = weights[s.weight];
+    const [pl, ph] = prices[s.price];
+    let list = all.filter((p) =>
+      (s.cat === 'all' || p.category === s.cat) &&
+      p.weight_min >= wl && p.weight_max <= wh &&
+      p.unit_price >= pl && p.unit_price <= ph);
+    list = list.slice().sort((a, b) => s.sort === 'price_desc' ? b.unit_price - a.unit_price : s.sort === 'newest' ? b.id - a.id : a.unit_price - b.unit_price);
+
+    const pill = (on, h) => 'flex-shrink: 0; height: ' + h + 'px; padding-inline: 16px; border-radius: 999px; font-family: inherit; font-size: 15px; font-weight: 600; cursor: pointer; ' +
+      (on ? 'background: #BDD0C6; color: #1F4D3A; border: 1.5px solid #1F4D3A' : 'background: #FFFFFF; color: #2A1A14; border: 1px solid #D0BFA9');
+    const categories = [['all', 'الكل'], ['sheep', 'خراف'], ['goat', 'ماعز'], ['calf', 'عجول']].map(([id, label]) => ({
+      label, pressed: String(s.cat === id), style: pill(s.cat === id, 44), pick: () => this.setState({ cat: id, more: 'idle' })
+    }));
+    const opt = (key, id, label) => ({ label, pressed: String(s[key] === id), style: pill(s[key] === id, 44), pick: () => this.setState({ [key]: s[key] === id ? 'any' : id, more: 'idle' }) });
+    const groups = [
+      { title: 'الوزن', options: [opt('weight', 'lt35', 'أقل من 35 كجم'), opt('weight', 'w35', '35–45 كجم'), opt('weight', 'w45', '45–55 كجم'), opt('weight', 'gt55', 'أكتر من 55 كجم')] },
+      { title: 'السعر', options: [opt('price', 'lt10', 'أقل من 10,000'), opt('price', 'p10', '10,000–15,000'), opt('price', 'p15', '15,000–20,000'), opt('price', 'gt20', 'أكتر من 20,000')] }
+    ];
+    const activeCount = (s.weight !== 'any') + (s.price !== 'any');
+
+    return {
+      m, d: !m, layout: m ? 'mobile' : 'desktop',
+      rootStyle: 'font-family: \'IBM Plex Sans Arabic\', sans-serif; color: #2A1A14; background: #F7F4EE; min-height: 100vh; font-size: 16px; line-height: 1.6' + (m ? '; padding-bottom: 72px' : ''),
+      gridStyle: 'display: grid; gap: ' + (m ? '12px' : '20px') + '; grid-template-columns: repeat(' + (m ? 2 : 4) + ', minmax(0, 1fr))',
+      productHref: m ? 'Product-mobile.dc.html' : 'Product.dc.html',
+      categories, groups,
+      activeCount, hasActive: activeCount > 0,
+      sort: s.sort,
+      onSort: (e) => this.setState({ sort: e.target.value }),
+      products: list,
+      countText: list.length + ' أضحية',
+      hasResults: list.length > 0, noResults: list.length === 0,
+      applyLabel: 'عرض ' + list.length + ' نتيجة',
+      sheetOpen: m && s.sheet,
+      openSheet: () => this.setState({ sheet: true }),
+      closeSheet: () => this.setState({ sheet: false }),
+      clearAll: () => this.setState({ cat: 'all', weight: 'any', price: 'any', more: 'idle' }),
+      moreIdle: s.more === 'idle', moreLoading: s.more === 'loading', moreDone: s.more === 'done',
+      loadMore: () => { this.setState({ more: 'loading' }); clearTimeout(this.t); this.t = setTimeout(() => this.setState({ more: 'done' }), 900); }
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Components — Bait El Kebash</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;600;700&amp;display=swap">
+<style>body{margin:0}</style>
+</helmet>
+<div style="width: 1200px; height: 2240px; box-sizing: border-box; padding: 48px; background: #F7F4EE; color: #2A1A14; font-family: 'IBM Plex Sans Arabic', sans-serif; display: flex; flex-direction: column; gap: 36px">
+
+<div style="display: flex; flex-direction: column; gap: 4px; border-bottom: 1px solid #D0BFA9; padding-bottom: 20px">
+<span style="font-size: 14px; font-weight: 600; color: #585850">shadcn/ui primitives · brief tokens only</span>
+<h1 style="margin: 0; font-size: 36px; line-height: 1.3; color: #1F4D3A; font-weight: 700">Components</h1>
+</div>
+
+<!-- Buttons -->
+<section style="display: flex; flex-direction: column; gap: 14px">
+<h2 style="margin: 0; font-size: 20px; font-weight: 700">Button <span style="font-weight: 400; color: #585850; font-size: 14px">· h 48 (lg) / 44 (default) · radius 12</span></h2>
+<div dir="rtl" lang="ar" style="display: flex; flex-wrap: wrap; gap: 16px; align-items: flex-end">
+<sc-for list="{{buttons}}" as="b" hint-placeholder-count="8">
+<div style="display: flex; flex-direction: column; align-items: center; gap: 6px">
+<button type="button" disabled="{{b.disabled}}" style="{{b.style}}">{{b.label}}</button>
+<span dir="ltr" style="font-size: 12px; color: #585850">{{b.name}}</span>
+</div>
+</sc-for>
+</div>
+</section>
+
+<!-- Inputs -->
+<section style="display: flex; flex-direction: column; gap: 14px">
+<h2 style="margin: 0; font-size: 20px; font-weight: 700">Input · Phone · OTP <span style="font-weight: 400; color: #585850; font-size: 14px">· label always visible, border = muted</span></h2>
+<div dir="rtl" lang="ar" style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 20px">
+<div style="display: flex; flex-direction: column; gap: 6px">
+<label for="c-name" style="font-size: 14px; font-weight: 600">الاسم</label>
+<input id="c-name" value="أحمد علي" style="height: 48px; border-radius: 12px; border: 1px solid #585850; background: #FFFFFF; padding-inline: 14px; font: 16px 'IBM Plex Sans Arabic', sans-serif; color: #2A1A14">
+<span dir="ltr" style="font-size: 12px; color: #585850; text-align: end">default</span>
+</div>
+<div style="display: flex; flex-direction: column; gap: 6px">
+<label for="c-addr" style="font-size: 14px; font-weight: 600">العنوان</label>
+<input id="c-addr" value="مدينة نصر، القاهرة" style="height: 48px; border-radius: 12px; border: 2px solid #1F4D3A; background: #FFFFFF; padding-inline: 13px; font: 16px 'IBM Plex Sans Arabic', sans-serif; color: #2A1A14; box-shadow: 0 0 0 4px #BDD0C6">
+<span dir="ltr" style="font-size: 12px; color: #585850; text-align: end">focus · ring primary-soft</span>
+</div>
+<div style="display: flex; flex-direction: column; gap: 6px">
+<label for="c-phone" style="font-size: 14px; font-weight: 600">رقم الموبايل</label>
+<div style="display: flex; height: 48px; border-radius: 12px; border: 2px solid #A85431; background: #FFFFFF; overflow: hidden">
+<span dir="ltr" style="display: flex; align-items: center; padding-inline: 12px; background: #F7F4EE; border-inline-start: 0; color: #585850; font-size: 16px">+20</span>
+<input id="c-phone" dir="ltr" value="10012" aria-invalid="true" aria-describedby="c-phone-err" style="flex-grow: 1; min-width: 0; border: 0; padding-inline: 12px; font: 16px 'IBM Plex Sans Arabic', sans-serif; color: #2A1A14; text-align: right">
+</div>
+<span id="c-phone-err" style="display: flex; align-items: center; gap: 4px; font-size: 14px; color: #A85431; font-weight: 600"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v6M12 16.5h.01"/></svg>رقم الموبايل لازم يكون 11 رقم.</span>
+</div>
+<div style="display: flex; flex-direction: column; gap: 6px">
+<label for="c-dis" style="font-size: 14px; font-weight: 600; color: #585850">المحافظة</label>
+<input id="c-dis" value="القاهرة" disabled style="height: 48px; border-radius: 12px; border: 1px solid #D0BFA9; background: #F7F4EE; padding-inline: 14px; font: 16px 'IBM Plex Sans Arabic', sans-serif; color: #585850">
+<span dir="ltr" style="font-size: 12px; color: #585850; text-align: end">disabled</span>
+</div>
+</div>
+<div dir="rtl" lang="ar" style="display: flex; align-items: center; gap: 24px">
+<span style="font-size: 14px; font-weight: 600">كود التحقق</span>
+<div role="group" aria-label="كود التحقق، 4 أرقام" dir="ltr" style="display: flex; gap: 10px">
+<input aria-label="رقم 1" value="4" maxlength="1" inputmode="numeric" style="width: 52px; height: 56px; text-align: center; border-radius: 12px; border: 1px solid #585850; background: #FFFFFF; font: 700 22px 'IBM Plex Sans Arabic', sans-serif; color: #2A1A14">
+<input aria-label="رقم 2" value="7" maxlength="1" inputmode="numeric" style="width: 52px; height: 56px; text-align: center; border-radius: 12px; border: 1px solid #585850; background: #FFFFFF; font: 700 22px 'IBM Plex Sans Arabic', sans-serif; color: #2A1A14">
+<input aria-label="رقم 3" value="" maxlength="1" inputmode="numeric" style="width: 52px; height: 56px; text-align: center; border-radius: 12px; border: 2px solid #1F4D3A; background: #FFFFFF; font: 700 22px 'IBM Plex Sans Arabic', sans-serif; color: #2A1A14; box-shadow: 0 0 0 4px #BDD0C6">
+<input aria-label="رقم 4" value="" maxlength="1" inputmode="numeric" style="width: 52px; height: 56px; text-align: center; border-radius: 12px; border: 1px solid #585850; background: #FFFFFF; font: 700 22px 'IBM Plex Sans Arabic', sans-serif; color: #2A1A14">
+</div>
+<span style="font-size: 14px; color: #585850">إعادة الإرسال بعد <span dir="ltr">0:42</span></span>
+</div>
+</section>
+
+<!-- Chips, pills, badges -->
+<section style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px">
+<div style="display: flex; flex-direction: column; gap: 12px">
+<h2 style="margin: 0; font-size: 20px; font-weight: 700">Category chips <span style="font-weight: 400; color: #585850; font-size: 14px">· scroll-x</span></h2>
+<div dir="rtl" lang="ar" style="display: flex; gap: 8px; overflow-x: auto">
+<span style="flex-shrink: 0; height: 44px; padding-inline: 20px; border-radius: 999px; background: #BDD0C6; color: #1F4D3A; border: 1.5px solid #1F4D3A; font-weight: 600; display: inline-flex; align-items: center">الكل</span>
+<span style="flex-shrink: 0; height: 44px; padding-inline: 20px; border-radius: 999px; background: #FFFFFF; border: 1px solid #D0BFA9; font-weight: 600; display: inline-flex; align-items: center">خراف</span>
+<span style="flex-shrink: 0; height: 44px; padding-inline: 20px; border-radius: 999px; background: #FFFFFF; border: 1px solid #D0BFA9; font-weight: 600; display: inline-flex; align-items: center">ماعز</span>
+<span style="flex-shrink: 0; height: 44px; padding-inline: 20px; border-radius: 999px; background: #FFFFFF; border: 1px solid #D0BFA9; font-weight: 600; display: inline-flex; align-items: center">عجول</span>
+</div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 12px">
+<h2 style="margin: 0; font-size: 20px; font-weight: 700">Status pill <span style="font-weight: 400; color: #585850; font-size: 14px">· order.status</span></h2>
+<div dir="rtl" lang="ar" style="display: flex; flex-wrap: wrap; gap: 8px">
+<span style="display: inline-flex; align-items: center; gap: 6px; height: 32px; padding-inline: 12px; border-radius: 999px; background: #D0BFA9; color: #2A1A14; font-size: 14px; font-weight: 600">◷ قيد الانتظار</span>
+<span style="display: inline-flex; align-items: center; gap: 6px; height: 32px; padding-inline: 12px; border-radius: 999px; background: #BDD0C6; color: #1F4D3A; font-size: 14px; font-weight: 600">↻ جاري التجهيز</span>
+<span style="display: inline-flex; align-items: center; gap: 6px; height: 32px; padding-inline: 12px; border-radius: 999px; background: #1F4D3A; color: #FFFFFF; font-size: 14px; font-weight: 600">✓ تم التسليم</span>
+<span style="display: inline-flex; align-items: center; gap: 6px; height: 32px; padding-inline: 12px; border-radius: 999px; background: #585850; color: #FFFFFF; font-size: 14px; font-weight: 600">✕ ملغي</span>
+</div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 12px">
+<h2 style="margin: 0; font-size: 20px; font-weight: 700">Badge</h2>
+<div dir="rtl" lang="ar" style="display: flex; flex-wrap: wrap; gap: 8px">
+<span style="display: inline-flex; align-items: center; gap: 4px; height: 26px; padding-inline: 8px; border-radius: 999px; background: #BDD0C6; color: #1F4D3A; font-size: 12px; font-weight: 700"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 4 6v6c0 4.5 3.4 8 8 9 4.6-1 8-4.5 8-9V6z"/><path d="m9 12 2 2 4-4"/></svg>فحص بيطري</span>
+<span style="display: inline-flex; align-items: center; height: 26px; padding-inline: 10px; border-radius: 999px; background: #A85431; color: #FFFFFF; font-size: 12px; font-weight: 700">عرض العيد</span>
+<span style="display: inline-flex; align-items: center; height: 26px; padding-inline: 10px; border-radius: 999px; background: #FFFFFF; color: #2A1A14; border: 1px solid #585850; font-size: 12px; font-weight: 700">نفدت الكمية</span>
+</div>
+</div>
+</section>
+
+<!-- Animal card -->
+<section style="display: flex; flex-direction: column; gap: 14px">
+<h2 style="margin: 0; font-size: 20px; font-weight: 700">Animal card <span style="font-weight: 400; color: #585850; font-size: 14px">· available · favourited · sold out · loading — fields: name, breed, weight_min/max, age, unit_price, unit, image, is_available</span></h2>
+<div dir="rtl" lang="ar" style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 20px">
+<sc-for list="{{cards}}" as="p" hint-placeholder-count="3">
+<article style="background: #FFFFFF; border: 1px solid #D0BFA9; border-radius: 16px; overflow: hidden; display: flex; flex-direction: column">
+<div style="position: relative; aspect-ratio: 4 / 3; background: #F7F4EE">
+<div role="img" aria-label="{{p.alt}}" style="{{p.photoStyle}}"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg><span dir="ltr">real sheep photo</span></div>
+<span style="position: absolute; top: 8px; inset-inline-start: 8px; display: inline-flex; align-items: center; gap: 4px; height: 26px; padding-inline: 8px; border-radius: 999px; background: #BDD0C6; color: #1F4D3A; font-size: 12px; font-weight: 700"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 4 6v6c0 4.5 3.4 8 8 9 4.6-1 8-4.5 8-9V6z"/><path d="m9 12 2 2 4-4"/></svg>فحص بيطري</span>
+<button type="button" aria-label="أضف للمفضلة" aria-pressed="{{p.fav}}" style="position: absolute; top: 4px; inset-inline-end: 4px; width: 44px; height: 44px; border: 0; background: transparent; color: #A85431; display: flex; align-items: center; justify-content: center"><span style="width: 34px; height: 34px; border-radius: 999px; background: #FFFFFF; display: flex; align-items: center; justify-content: center"><svg width="18" height="18" viewBox="0 0 24 24" fill="{{p.heartFill}}" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg></span></button>
+<sc-if value="{{p.soldOut}}" hint-placeholder-val="{{ false }}"><div style="position: absolute; inset: 0; background: rgba(88,88,80,0.6); display: flex; align-items: center; justify-content: center"><span style="height: 32px; padding-inline: 14px; border-radius: 999px; background: #FFFFFF; font-size: 14px; font-weight: 700; display: inline-flex; align-items: center">نفدت الكمية</span></div></sc-if>
+</div>
+<div style="padding: 12px; display: flex; flex-direction: column; gap: 8px">
+<div style="display: flex; flex-direction: column"><h3 style="margin: 0; font-size: 16px; font-weight: 600">{{p.name}}</h3><span style="font-size: 14px; color: #585850">سلالة {{p.breed}}</span></div>
+<div style="display: flex; flex-wrap: wrap; gap: 6px; font-size: 13px; font-weight: 600">
+<span style="height: 28px; padding-inline: 8px; border-radius: 999px; background: #F7F4EE; display: inline-flex; align-items: center">{{p.weight}}</span>
+<span style="height: 28px; padding-inline: 8px; border-radius: 999px; background: #F7F4EE; display: inline-flex; align-items: center">{{p.age}}</span>
+</div>
+<div style="display: flex; align-items: baseline; gap: 6px"><span style="font-size: 22px; font-weight: 700; color: #A85431">{{p.price}} ج.م</span><span style="font-size: 13px; color: #585850">/ {{p.unit}}</span></div>
+<button type="button" disabled="{{p.soldOut}}" style="{{p.btnStyle}}">{{p.btnLabel}}</button>
+</div>
+</article>
+</sc-for>
+<div aria-hidden="true" style="background: #FFFFFF; border: 1px solid #D0BFA9; border-radius: 16px; overflow: hidden; display: flex; flex-direction: column">
+<div style="aspect-ratio: 4 / 3; background: rgba(208,191,169,0.35)"></div>
+<div style="padding: 12px; display: flex; flex-direction: column; gap: 10px">
+<span style="height: 14px; width: 70%; border-radius: 6px; background: rgba(208,191,169,0.45)"></span>
+<span style="height: 12px; width: 45%; border-radius: 6px; background: rgba(208,191,169,0.35)"></span>
+<span style="height: 28px; width: 60%; border-radius: 999px; background: rgba(208,191,169,0.35)"></span>
+<span style="height: 22px; width: 55%; border-radius: 6px; background: rgba(208,191,169,0.45)"></span>
+<span style="height: 44px; border-radius: 12px; background: rgba(208,191,169,0.35)"></span>
+</div>
+</div>
+</div>
+</section>
+
+<!-- Order flow parts -->
+<section style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 32px">
+<div style="display: flex; flex-direction: column; gap: 14px">
+<h2 style="margin: 0; font-size: 20px; font-weight: 700">Step indicator <span style="font-weight: 400; color: #585850; font-size: 14px">· top of order flow</span></h2>
+<ol dir="rtl" lang="ar" aria-label="خطوات الطلب" style="margin: 0; padding: 16px; list-style: none; background: #FFFFFF; border: 1px solid #D0BFA9; border-radius: 16px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px">
+<li style="display: flex; flex-direction: column; align-items: center; gap: 6px"><span style="width: 32px; height: 32px; border-radius: 999px; background: #1F4D3A; color: #FFFFFF; display: flex; align-items: center; justify-content: center; font-weight: 700">✓</span><span style="font-size: 14px; font-weight: 600; color: #1F4D3A">التقطيع</span></li>
+<li aria-current="step" style="display: flex; flex-direction: column; align-items: center; gap: 6px"><span style="width: 32px; height: 32px; border-radius: 999px; background: #BDD0C6; color: #1F4D3A; border: 2px solid #1F4D3A; box-sizing: border-box; display: flex; align-items: center; justify-content: center; font-weight: 700">2</span><span style="font-size: 14px; font-weight: 700; color: #1F4D3A">التوصيل</span></li>
+<li style="display: flex; flex-direction: column; align-items: center; gap: 6px"><span style="width: 32px; height: 32px; border-radius: 999px; background: #FFFFFF; color: #585850; border: 1.5px solid #585850; box-sizing: border-box; display: flex; align-items: center; justify-content: center; font-weight: 700">3</span><span style="font-size: 14px; font-weight: 600; color: #585850">التأكيد</span></li>
+</ol>
+<h2 style="margin: 8px 0 0; font-size: 20px; font-weight: 700">Delivery day <span style="font-weight: 400; color: #585850; font-size: 14px">· radio chips</span></h2>
+<div dir="rtl" lang="ar" role="radiogroup" aria-label="يوم التوصيل" style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px">
+<button type="button" role="radio" aria-checked="true" style="height: 56px; border-radius: 12px; background: #BDD0C6; color: #1F4D3A; border: 2px solid #1F4D3A; font: 700 15px 'IBM Plex Sans Arabic', sans-serif">أول يوم العيد</button>
+<button type="button" role="radio" aria-checked="false" style="height: 56px; border-radius: 12px; background: #FFFFFF; color: #2A1A14; border: 1px solid #D0BFA9; font: 600 15px 'IBM Plex Sans Arabic', sans-serif">تاني يوم</button>
+<button type="button" role="radio" aria-checked="false" style="height: 56px; border-radius: 12px; background: #FFFFFF; color: #2A1A14; border: 1px solid #D0BFA9; font: 600 15px 'IBM Plex Sans Arabic', sans-serif">تالت يوم</button>
+</div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 14px">
+<h2 style="margin: 0; font-size: 20px; font-weight: 700">Cut options <span style="font-weight: 400; color: #585850; font-size: 14px">· big selectable cards</span></h2>
+<div dir="rtl" lang="ar" role="radiogroup" aria-label="طريقة التقطيع" style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px">
+<sc-for list="{{cuts}}" as="c" hint-placeholder-count="4">
+<button type="button" role="radio" aria-checked="{{c.checked}}" style="{{c.style}}">
+<span style="{{c.iconStyle}}"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="{{c.path}}"/></svg></span>
+<span style="display: flex; flex-direction: column; align-items: flex-start; gap: 2px"><strong style="font-size: 16px">{{c.label}}</strong><span style="font-size: 13px; color: #585850; font-weight: 400">{{c.hint}}</span></span>
+</button>
+</sc-for>
+</div>
+</div>
+</section>
+
+<!-- Product parts + nav -->
+<section style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 32px">
+<div style="display: flex; flex-direction: column; gap: 14px">
+<h2 style="margin: 0; font-size: 20px; font-weight: 700">Info tiles · My-orders row</h2>
+<div dir="rtl" lang="ar" style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px">
+<div style="background: #FFFFFF; border: 1px solid #D0BFA9; border-radius: 16px; padding: 12px; display: flex; flex-direction: column; gap: 2px"><span style="font-size: 13px; color: #585850">الوزن</span><strong style="font-size: 16px">45–50 كجم</strong></div>
+<div style="background: #FFFFFF; border: 1px solid #D0BFA9; border-radius: 16px; padding: 12px; display: flex; flex-direction: column; gap: 2px"><span style="font-size: 13px; color: #585850">العمر</span><strong style="font-size: 16px">12 شهر</strong></div>
+<div style="background: #FFFFFF; border: 1px solid #D0BFA9; border-radius: 16px; padding: 12px; display: flex; flex-direction: column; gap: 2px"><span style="font-size: 13px; color: #585850">السلالة</span><strong style="font-size: 16px">برقي</strong></div>
+</div>
+<div dir="rtl" lang="ar" style="background: #FFFFFF; border: 1px solid #D0BFA9; border-radius: 16px; padding: 12px; display: flex; align-items: center; gap: 12px">
+<div role="img" aria-label="real sheep photo" style="width: 64px; height: 64px; flex-shrink: 0; border-radius: 12px; background: #F7F4EE; color: #585850; font-size: 10px; display: flex; align-items: center; justify-content: center; text-align: center" dir="ltr">real sheep photo</div>
+<div style="flex-grow: 1; display: flex; flex-direction: column"><strong style="font-size: 16px">خروف برقي</strong><span style="font-size: 14px; color: #585850">طلب <span dir="ltr">#1024</span> · 2 يونيو 2026</span></div>
+<span style="display: inline-flex; align-items: center; gap: 6px; height: 32px; padding-inline: 12px; border-radius: 999px; background: #BDD0C6; color: #1F4D3A; font-size: 14px; font-weight: 600">↻ جاري التجهيز</span>
+</div>
+<div dir="rtl" lang="ar" role="radiogroup" aria-label="طريقة الدفع" style="display: flex; gap: 8px">
+<button type="button" role="radio" aria-checked="true" style="height: 48px; padding-inline: 16px; border-radius: 999px; background: #BDD0C6; color: #1F4D3A; border: 2px solid #1F4D3A; font: 700 15px 'IBM Plex Sans Arabic', sans-serif; display: inline-flex; align-items: center; gap: 8px">✓ الدفع عند الاستلام</button>
+</div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 14px">
+<h2 style="margin: 0; font-size: 20px; font-weight: 700">Bottom nav · WhatsApp FAB <span style="font-weight: 400; color: #585850; font-size: 14px">· mobile</span></h2>
+<div dir="rtl" lang="ar" style="position: relative; width: 375px; height: 200px; background: #F7F4EE; border: 1px solid #D0BFA9; border-radius: 16px; overflow: hidden">
+<span style="position: absolute; bottom: 80px; inset-inline-start: 16px; width: 56px; height: 56px; border-radius: 999px; background: #25D366; color: #2A1A14; display: flex; align-items: center; justify-content: center"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 20.5 5 16.3A8.5 8.5 0 1 1 8 19.2z"/><path d="M9 9.5c0 3 2.5 5.5 5.5 5.5l1-1.5-2-1-1 .8c-1-.5-1.8-1.3-2.3-2.3l.8-1-1-2z"/></svg></span>
+<nav aria-label="التنقل السفلي" style="position: absolute; bottom: 0; inset-inline: 0; background: #FFFFFF; border-top: 1px solid #D0BFA9; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); padding-block: 6px">
+<sc-for list="{{nav}}" as="n" hint-placeholder-count="5">
+<span style="{{n.style}}">{{n.dot}}<span>{{n.label}}</span></span>
+</sc-for>
+</nav>
+</div>
+<span style="font-size: 13px; color: #585850">FAB sits bottom-start (right in RTL), 16px above the nav. Active tab = primary + bold; others muted.</span>
+</div>
+</section>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1200,"height":2240}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const base = 'height: 48px; padding-inline: 20px; border-radius: 12px; font: 600 16px \'IBM Plex Sans Arabic\', sans-serif; display: inline-flex; align-items: center; gap: 8px; ';
+    const buttons = [
+      ['default', 'أضف للسلة', 'background: #1F4D3A; color: #FFFFFF; border: 0'],
+      ['secondary', 'التفاصيل', 'background: #BDD0C6; color: #1F4D3A; border: 0'],
+      ['outline', 'عرض الكل', 'background: transparent; color: #1F4D3A; border: 1.5px solid #1F4D3A'],
+      ['ghost', 'رجوع', 'background: transparent; color: #1F4D3A; border: 0'],
+      ['whatsapp', 'اطلب على واتساب', 'background: #25D366; color: #2A1A14; border: 0; font-weight: 700'],
+      ['destructive', 'إلغاء الطلب', 'background: #FFFFFF; color: #A85431; border: 1.5px solid #A85431'],
+      ['disabled', 'غير متاح', 'background: #F7F4EE; color: #585850; border: 1px solid #D0BFA9', true],
+      ['loading', 'جاري التأكيد…', 'background: #1F4D3A; color: #FFFFFF; border: 0; opacity: 0.75', true]
+    ].map(([name, label, s, disabled]) => ({ name, label, style: base + s, disabled: !!disabled }));
+
+    const photo = (ok) => 'position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; color: #585850; font-size: 12px; font-weight: 600' + (ok ? '' : '; filter: grayscale(1)');
+    const btn = (ok) => 'height: 44px; border-radius: 12px; font: 600 15px \'IBM Plex Sans Arabic\', sans-serif; ' +
+      (ok ? 'background: #1F4D3A; color: #FFFFFF; border: 0' : 'background: #F7F4EE; color: #585850; border: 1px solid #D0BFA9');
+    const cards = [
+      { name: 'خروف برقي', breed: 'برقي', weight: '45–50 كجم', age: '12 شهر', price: '17,800', unit: 'الرأس', ok: true, fav: false },
+      { name: 'خروف رحماني', breed: 'رحماني', weight: '35–40 كجم', age: '10 شهور', price: '14,500', unit: 'الرأس', ok: true, fav: true },
+      { name: 'خروف أوسيمي', breed: 'أوسيمي', weight: '55–60 كجم', age: '14 شهر', price: '21,000', unit: 'الرأس', ok: false, fav: false }
+    ].map((p) => ({
+      ...p, soldOut: !p.ok, alt: p.name + '، وزن ' + p.weight,
+      photoStyle: photo(p.ok), btnStyle: btn(p.ok), btnLabel: p.ok ? '+ أضف للسلة' : 'غير متاح',
+      heartFill: p.fav ? 'currentColor' : 'none', fav: String(p.fav)
+    }));
+
+    const cut = (on) => 'min-height: 88px; padding: 14px; border-radius: 16px; display: flex; align-items: center; gap: 12px; text-align: start; font-family: \'IBM Plex Sans Arabic\', sans-serif; color: #2A1A14; cursor: pointer; ' +
+      (on ? 'background: #FFFFFF; border: 2px solid #1F4D3A; box-shadow: 0 0 0 4px #BDD0C6' : 'background: #FFFFFF; border: 1px solid #D0BFA9');
+    const cutIcon = (on) => 'width: 48px; height: 48px; flex-shrink: 0; border-radius: 12px; display: flex; align-items: center; justify-content: center; ' + (on ? 'background: #1F4D3A; color: #FFFFFF' : 'background: #F7F4EE; color: #1F4D3A');
+    const cuts = [
+      ['كاملة', 'من غير تقطيع', '', false],
+      ['أنصاف', 'نصين', 'M12 4v16', false],
+      ['أرباع', '4 أجزاء', 'M12 4v16M4 12h16', true],
+      ['قطع صغيرة', 'جاهزة للطبخ', 'M9.3 4v16M14.7 4v16M4 9.3h16M4 14.7h16', false]
+    ].map(([label, hint, path, on]) => ({ label, hint, path: path || 'M12 12h0', checked: String(on), style: cut(on), iconStyle: cutIcon(on) }));
+
+    const navItem = (on) => 'min-height: 52px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; font-size: 12px; ' + (on ? 'color: #1F4D3A; font-weight: 700' : 'color: #585850; font-weight: 600');
+    const nav = ['الرئيسية', 'الأقسام', 'السلة', 'طلباتي', 'حسابي'].map((label, i) => ({ label, dot: i === 0 ? '●' : '○', style: navItem(i === 0) }));
+
+    return { buttons, cards, cuts, nav };
+  }
+}
+</script>
+</body>
+</html>

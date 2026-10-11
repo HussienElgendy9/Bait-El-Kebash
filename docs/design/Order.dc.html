@@ -1,0 +1,270 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>بيت الكباش — إتمام الطلب</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;600;700&amp;display=swap">
+<style>body{margin:0}</style>
+</helmet>
+<div dir="rtl" lang="ar" style="{{rootStyle}}">
+<dc-import name="Header" layout="{{layout}}" title="إتمام الطلب" back="{{productHref}}" active="none" hint-size="100%,64px"></dc-import>
+
+<main style="max-width: 1040px; margin-inline: auto; padding-inline: clamp(16px, 4vw, 32px); padding-block: 16px 40px; display: flex; flex-direction: column; gap: 16px">
+
+<sc-if value="{{inFlow}}" hint-placeholder-val="{{ true }}">
+<ol aria-label="خطوات الطلب" style="margin: 0; padding: 12px; list-style: none; background: #FFFFFF; border: 1px solid #D0BFA9; border-radius: 16px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px">
+<sc-for list="{{steps}}" as="s" hint-placeholder-count="3">
+<li aria-current="{{s.current}}" style="display: flex; flex-direction: column; align-items: center; gap: 6px">
+<span style="{{s.dot}}">{{s.mark}}</span>
+<span style="{{s.label}}">{{s.text}}</span>
+</li>
+</sc-for>
+</ol>
+
+<div style="display: flex; flex-wrap: wrap; gap: 24px; align-items: flex-start">
+<section style="flex: 1 1 520px; min-width: 0; background: #FFFFFF; border: 1px solid #D0BFA9; border-radius: 16px; padding: clamp(16px, 3vw, 28px); display: flex; flex-direction: column; gap: 16px">
+
+<!-- Step 1: cut -->
+<sc-if value="{{s1}}" hint-placeholder-val="{{ true }}">
+<h1 style="margin: 0; font-size: 22px; font-weight: 700">تحب نقطّعها إزاي؟</h1>
+<div role="radiogroup" aria-label="طريقة التقطيع" style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px">
+<sc-for list="{{cuts}}" as="c" hint-placeholder-count="4">
+<button type="button" role="radio" aria-checked="{{c.checked}}" onClick="{{c.pick}}" style="{{c.style}}">
+<span style="{{c.iconStyle}}"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="{{c.path}}"/></svg></span>
+<span style="display: flex; flex-direction: column; align-items: flex-start; gap: 2px"><strong style="font-size: 16px">{{c.label}}</strong><span style="font-size: 13px; color: #585850; font-weight: 400">{{c.hint}}</span></span>
+</button>
+</sc-for>
+</div>
+</sc-if>
+
+<!-- Step 2: address + day -->
+<sc-if value="{{s2}}" hint-placeholder-val="{{ false }}">
+<h1 style="margin: 0; font-size: 22px; font-weight: 700">التوصيل فين وإمتى؟</h1>
+<sc-if value="{{hasErrors}}" hint-placeholder-val="{{ false }}">
+<div role="alert" style="border: 1.5px solid #A85431; border-radius: 12px; padding: 12px; display: flex; gap: 10px">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#A85431" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink: 0"><circle cx="12" cy="12" r="9"/><path d="M12 7v6M12 16.5h.01"/></svg>
+<span style="display: flex; flex-direction: column; gap: 2px; font-size: 14px"><strong style="color: #A85431">{{errorTitle}}</strong><span>راجع الحقول المعلّمة تحت.</span></span>
+</div>
+</sc-if>
+<div style="display: flex; flex-direction: column; gap: 6px">
+<label for="o-name" style="font-size: 14px; font-weight: 600">الاسم</label>
+<input id="o-name" autocomplete="name" value="{{form.name}}" onChange="{{onName}}" aria-invalid="{{err.nameInvalid}}" aria-describedby="o-name-e" style="{{err.nameStyle}}">
+<sc-if value="{{err.name}}" hint-placeholder-val="{{ false }}"><span id="o-name-e" style="font-size: 14px; color: #A85431; font-weight: 600">⚠ اكتب اسمك.</span></sc-if>
+</div>
+<div style="display: flex; flex-direction: column; gap: 6px">
+<label for="o-phone" style="font-size: 14px; font-weight: 600">رقم الموبايل</label>
+<input id="o-phone" type="tel" inputmode="numeric" autocomplete="tel" dir="ltr" placeholder="01xxxxxxxxx" value="{{form.phone}}" onChange="{{onPhone}}" aria-invalid="{{err.phoneInvalid}}" aria-describedby="o-phone-e" style="{{err.phoneStyle}}">
+<sc-if value="{{err.phone}}" hint-placeholder-val="{{ false }}"><span id="o-phone-e" style="font-size: 14px; color: #A85431; font-weight: 600">⚠ رقم الموبايل لازم يكون 11 رقم ويبدأ بـ 01.</span></sc-if>
+</div>
+<div style="display: flex; flex-direction: column; gap: 6px">
+<label for="o-addr" style="font-size: 14px; font-weight: 600">العنوان بالتفصيل</label>
+<input id="o-addr" autocomplete="street-address" value="{{form.address}}" onChange="{{onAddress}}" aria-invalid="{{err.addressInvalid}}" aria-describedby="o-addr-e" style="{{err.addressStyle}}">
+<sc-if value="{{err.address}}" hint-placeholder-val="{{ false }}"><span id="o-addr-e" style="font-size: 14px; color: #A85431; font-weight: 600">⚠ اكتب المنطقة والشارع ورقم العمارة.</span></sc-if>
+</div>
+<fieldset style="border: 0; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px">
+<legend style="padding: 0; margin-bottom: 8px; font-size: 14px; font-weight: 600">يوم التوصيل</legend>
+<div role="radiogroup" aria-label="يوم التوصيل" style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px">
+<sc-for list="{{days}}" as="dy" hint-placeholder-count="3">
+<button type="button" role="radio" aria-checked="{{dy.checked}}" onClick="{{dy.pick}}" style="{{dy.style}}">{{dy.label}}</button>
+</sc-for>
+</div>
+<sc-if value="{{err.day}}" hint-placeholder-val="{{ false }}"><span style="font-size: 14px; color: #A85431; font-weight: 600">⚠ اختار يوم التوصيل.</span></sc-if>
+</fieldset>
+<div style="display: flex; flex-direction: column; gap: 6px">
+<label for="o-notes" style="font-size: 14px; font-weight: 600">ملاحظات <span style="font-weight: 400; color: #585850">(اختياري)</span></label>
+<textarea id="o-notes" rows="2" value="{{form.notes}}" onChange="{{onNotes}}" style="border-radius: 12px; border: 1px solid #585850; background: #FFFFFF; padding: 10px 12px; font-family: inherit; font-size: 16px; color: #2A1A14; resize: vertical"></textarea>
+</div>
+</sc-if>
+
+<!-- Step 3: review -->
+<sc-if value="{{s3}}" hint-placeholder-val="{{ false }}">
+<h1 style="margin: 0; font-size: 22px; font-weight: 700">راجع طلبك</h1>
+<dl style="margin: 0; display: flex; flex-direction: column">
+<sc-for list="{{review}}" as="r" hint-placeholder-count="4">
+<div style="display: flex; align-items: center; gap: 12px; padding-block: 12px; border-bottom: 1px solid #D0BFA9">
+<dt style="width: 96px; flex-shrink: 0; font-size: 14px; color: #585850">{{r.k}}</dt>
+<dd style="margin: 0; flex-grow: 1; font-size: 15px; font-weight: 600">{{r.v}}</dd>
+<button type="button" onClick="{{r.edit}}" aria-label="{{r.editLabel}}" style="min-height: 44px; padding-inline: 10px; border: 0; background: transparent; color: #1F4D3A; font-family: inherit; font-size: 14px; font-weight: 600; cursor: pointer">تعديل</button>
+</div>
+</sc-for>
+</dl>
+<fieldset style="border: 0; margin: 0; padding: 0">
+<legend style="padding: 0; margin-bottom: 8px; font-size: 14px; font-weight: 600">طريقة الدفع</legend>
+<div role="radiogroup" aria-label="طريقة الدفع" style="display: flex">
+<button type="button" role="radio" aria-checked="true" style="height: 48px; padding-inline: 16px; border-radius: 999px; background: #BDD0C6; color: #1F4D3A; border: 2px solid #1F4D3A; font-family: inherit; font-size: 15px; font-weight: 700">✓ الدفع عند الاستلام (كاش)</button>
+</div>
+</fieldset>
+</sc-if>
+
+<sc-if value="{{showBack}}" hint-placeholder-val="{{ false }}">
+<button type="button" onClick="{{back}}" style="align-self: flex-start; min-height: 44px; padding-inline: 4px; border: 0; background: transparent; color: #1F4D3A; font-family: inherit; font-size: 15px; font-weight: 600; display: inline-flex; align-items: center; gap: 6px; cursor: pointer"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>الخطوة اللي فاتت</button>
+</sc-if>
+</section>
+
+<!-- Summary (desktop aside) -->
+<sc-if value="{{d}}" hint-placeholder-val="{{ true }}">
+<aside aria-label="ملخص الطلب" style="flex: 0 1 340px; position: sticky; top: 16px; background: #FFFFFF; border: 1px solid #D0BFA9; border-radius: 16px; padding: 20px; display: flex; flex-direction: column; gap: 14px">
+<div style="display: flex; align-items: center; gap: 12px">
+<div role="img" aria-label="real sheep photo" dir="ltr" style="width: 64px; height: 64px; flex-shrink: 0; border-radius: 12px; background: #F7F4EE; color: #585850; font-size: 10px; display: flex; align-items: center; justify-content: center; text-align: center">real sheep photo</div>
+<span style="display: flex; flex-direction: column"><strong style="font-size: 16px">خروف برقي</strong><span style="font-size: 14px; color: #585850">45–50 كجم · 12 شهر</span></span>
+</div>
+<div style="display: flex; flex-direction: column; gap: 6px; font-size: 14px; border-top: 1px solid #D0BFA9; padding-top: 12px">
+<div style="display: flex; justify-content: space-between"><span style="color: #585850">التقطيع</span><span style="font-weight: 600">{{cutLabel}}</span></div>
+<div style="display: flex; justify-content: space-between"><span style="color: #585850">يوم التوصيل</span><span style="font-weight: 600">{{dayLabel}}</span></div>
+<div style="display: flex; justify-content: space-between"><span style="color: #585850">سعر الأضحية</span><span style="font-weight: 600">17,800 ج.م</span></div>
+<div style="display: flex; justify-content: space-between"><span style="color: #585850">التوصيل</span><span style="font-weight: 600">[حسب المنطقة]</span></div>
+</div>
+<div style="display: flex; justify-content: space-between; align-items: baseline; border-top: 1px solid #D0BFA9; padding-top: 12px"><span style="font-weight: 700">الإجمالي</span><strong style="font-size: 22px; color: #A85431">17,800 ج.م</strong></div>
+<button type="button" onClick="{{next}}" disabled="{{busy}}" style="{{primaryStyle}}">{{primaryLabel}}</button>
+<span style="font-size: 13px; color: #585850; text-align: center">الدفع كاش عند الاستلام</span>
+</aside>
+</sc-if>
+</div>
+</sc-if>
+
+<!-- Success -->
+<sc-if value="{{done}}" hint-placeholder-val="{{ false }}">
+<section role="status" style="max-width: 520px; margin-inline: auto; width: 100%; box-sizing: border-box; background: #FFFFFF; border: 1px solid #D0BFA9; border-radius: 16px; padding: 32px 20px; display: flex; flex-direction: column; align-items: center; gap: 12px; text-align: center">
+<span style="width: 72px; height: 72px; border-radius: 999px; background: #BDD0C6; color: #1F4D3A; display: flex; align-items: center; justify-content: center"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></span>
+<h1 style="margin: 0; font-size: 24px; font-weight: 700">تم تسجيل طلبك</h1>
+<span style="font-size: 15px; color: #585850">رقم الطلب <strong dir="ltr" style="color: #2A1A14">#1025</strong> · هيوصلك إيميل بالتفاصيل.</span>
+<span style="display: inline-flex; align-items: center; gap: 6px; height: 32px; padding-inline: 12px; border-radius: 999px; background: #D0BFA9; color: #2A1A14; font-size: 14px; font-weight: 600">◷ قيد الانتظار</span>
+<div style="width: 100%; display: flex; flex-direction: column; gap: 8px; padding-top: 8px">
+<a href="{{ordersHref}}" style="height: 48px; border-radius: 12px; background: #1F4D3A; color: #FFFFFF; font-weight: 600; display: flex; align-items: center; justify-content: center; text-decoration: none">تابع طلبك</a>
+<a href="{{homeHref}}" style="height: 48px; border-radius: 12px; border: 1.5px solid #1F4D3A; color: #1F4D3A; font-weight: 600; display: flex; align-items: center; justify-content: center; text-decoration: none">الرجوع للرئيسية</a>
+</div>
+</section>
+</sc-if>
+</main>
+
+<!-- Mobile sticky action -->
+<sc-if value="{{mobileBar}}" hint-placeholder-val="{{ false }}">
+<div style="position: fixed; bottom: 0; inset-inline: 0; z-index: 30; background: #FFFFFF; border-top: 1px solid #D0BFA9; padding: 12px 16px; display: flex; align-items: center; gap: 12px">
+<span style="display: flex; flex-direction: column; line-height: 1.3"><span style="font-size: 13px; color: #585850">الإجمالي</span><strong style="font-size: 20px; color: #A85431">17,800 ج.م</strong></span>
+<button type="button" onClick="{{next}}" disabled="{{busy}}" style="{{primaryStyle}}">{{primaryLabel}}</button>
+</div>
+</sc-if>
+
+<dc-import name="Dock" layout="{{layout}}" nav="{{ false }}" fab-bottom="{{fabBottom}}" hint-size="100%,0px"></dc-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"layout":{"editor":"enum","options":["auto","mobile","desktop"],"default":"auto"},"$preview":{"width":1280,"height":1100}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { w: (typeof window !== 'undefined' ? window.innerWidth : 1280), step: 1, cut: 'quarters', day: null, form: { name: '', phone: '', address: '', notes: '' }, tried: false, busy: false };
+    this.onResize = () => this.setState({ w: window.innerWidth });
+  }
+  componentDidMount() { window.addEventListener('resize', this.onResize); this.onResize(); }
+  componentWillUnmount() { window.removeEventListener('resize', this.onResize); clearTimeout(this.t); }
+  errors() {
+    const f = this.state.form;
+    return {
+      name: !f.name.trim(),
+      phone: !/^01[0-9]{9}$/.test(f.phone.replace(/\s/g, '')),
+      address: f.address.trim().length < 8,
+      day: !this.state.day
+    };
+  }
+  renderVals() {
+    const L = this.props.layout ?? 'auto';
+    const m = L === 'mobile' || (L === 'auto' && this.state.w < 768);
+    const s = this.state;
+    const set = (k) => (e) => this.setState({ form: { ...this.state.form, [k]: e.target.value } });
+
+    const cutList = [
+      ['whole', 'كاملة', 'من غير تقطيع', 'M12 12h0'],
+      ['halves', 'أنصاف', 'نصين', 'M12 4v16'],
+      ['quarters', 'أرباع', '4 أجزاء', 'M12 4v16M4 12h16'],
+      ['small', 'قطع صغيرة', 'جاهزة للطبخ', 'M9.3 4v16M14.7 4v16M4 9.3h16M4 14.7h16']
+    ];
+    const cuts = cutList.map(([id, label, hint, path]) => {
+      const on = s.cut === id;
+      return {
+        label, hint, path, checked: String(on), pick: () => this.setState({ cut: id }),
+        style: 'min-height: 88px; padding: 14px; border-radius: 16px; display: flex; align-items: center; gap: 12px; text-align: start; font-family: inherit; color: #2A1A14; cursor: pointer; background: #FFFFFF; ' + (on ? 'border: 2px solid #1F4D3A; box-shadow: 0 0 0 4px #BDD0C6' : 'border: 1px solid #D0BFA9'),
+        iconStyle: 'width: 48px; height: 48px; flex-shrink: 0; border-radius: 12px; display: flex; align-items: center; justify-content: center; ' + (on ? 'background: #1F4D3A; color: #FFFFFF' : 'background: #F7F4EE; color: #1F4D3A')
+      };
+    });
+    const dayList = [['d1', 'أول يوم العيد'], ['d2', 'تاني يوم'], ['d3', 'تالت يوم']];
+    const days = dayList.map(([id, label]) => {
+      const on = s.day === id;
+      return {
+        label, checked: String(on), pick: () => this.setState({ day: id }),
+        style: 'min-height: 56px; border-radius: 12px; font-family: inherit; font-size: 15px; cursor: pointer; ' + (on ? 'background: #BDD0C6; color: #1F4D3A; border: 2px solid #1F4D3A; font-weight: 700' : 'background: #FFFFFF; color: #2A1A14; border: 1px solid #D0BFA9; font-weight: 600')
+      };
+    });
+
+    const e = this.errors();
+    const show = s.tried && s.step === 2;
+    const input = (bad) => 'height: 48px; border-radius: 12px; background: #FFFFFF; padding-inline: 12px; font-family: inherit; font-size: 16px; color: #2A1A14; ' + (bad ? 'border: 2px solid #A85431' : 'border: 1px solid #585850');
+    const errCount = show ? Object.values(e).filter(Boolean).length : 0;
+    const err = {
+      name: show && e.name, phone: show && e.phone, address: show && e.address, day: show && e.day,
+      nameInvalid: String(show && e.name), phoneInvalid: String(show && e.phone), addressInvalid: String(show && e.address),
+      nameStyle: input(show && e.name), phoneStyle: input(show && e.phone), addressStyle: input(show && e.address)
+    };
+
+    const cutLabel = cutList.find((c) => c[0] === s.cut)[1];
+    const dayLabel = s.day ? dayList.find((d) => d[0] === s.day)[1] : '—';
+    const go = (n) => () => this.setState({ step: n });
+    const review = [
+      { k: 'التقطيع', v: cutLabel, edit: go(1), editLabel: 'تعديل التقطيع' },
+      { k: 'يوم التوصيل', v: dayLabel, edit: go(2), editLabel: 'تعديل يوم التوصيل' },
+      { k: 'العنوان', v: s.form.address, edit: go(2), editLabel: 'تعديل العنوان' },
+      { k: 'الاسم والموبايل', v: s.form.name + ' · ' + s.form.phone, edit: go(2), editLabel: 'تعديل الاسم والموبايل' }
+    ];
+
+    const next = () => {
+      if (s.step === 1) return this.setState({ step: 2 });
+      if (s.step === 2) {
+        if (Object.values(this.errors()).some(Boolean)) return this.setState({ tried: true });
+        return this.setState({ step: 3, tried: false });
+      }
+      if (s.step === 3) {
+        // POST /orders { items:[{product_id:1, quantity:1}], customer_name, phone, address, notes } + cut, delivery_day (planned)
+        this.setState({ busy: true });
+        clearTimeout(this.t);
+        this.t = setTimeout(() => this.setState({ busy: false, step: 4 }), 900);
+      }
+    };
+
+    const stepNames = ['التقطيع', 'التوصيل', 'التأكيد'];
+    const steps = stepNames.map((text, i) => {
+      const n = i + 1, doneStep = n < s.step, cur = n === s.step;
+      return {
+        text, mark: doneStep ? '✓' : String(n), current: cur ? 'step' : 'false',
+        dot: 'width: 32px; height: 32px; box-sizing: border-box; border-radius: 999px; display: flex; align-items: center; justify-content: center; font-weight: 700; ' +
+          (doneStep ? 'background: #1F4D3A; color: #FFFFFF' : cur ? 'background: #BDD0C6; color: #1F4D3A; border: 2px solid #1F4D3A' : 'background: #FFFFFF; color: #585850; border: 1.5px solid #585850'),
+        label: 'font-size: 14px; ' + (cur ? 'font-weight: 700; color: #1F4D3A' : doneStep ? 'font-weight: 600; color: #1F4D3A' : 'font-weight: 600; color: #585850')
+      };
+    });
+
+    const inFlow = s.step < 4;
+    return {
+      m, d: !m, layout: m ? 'mobile' : 'desktop',
+      rootStyle: 'font-family: \'IBM Plex Sans Arabic\', sans-serif; color: #2A1A14; background: #F7F4EE; min-height: 100vh; font-size: 16px; line-height: 1.6' + (m && inFlow ? '; padding-bottom: 88px' : ''),
+      productHref: m ? 'Product-mobile.dc.html' : 'Product.dc.html',
+      ordersHref: m ? 'Orders-mobile.dc.html' : 'Orders.dc.html',
+      homeHref: m ? 'Home-mobile.dc.html' : 'Main.dc.html',
+      inFlow, done: !inFlow, mobileBar: m && inFlow,
+      s1: s.step === 1, s2: s.step === 2, s3: s.step === 3, showBack: s.step > 1 && inFlow,
+      steps, cuts, days, review, form: s.form, err,
+      hasErrors: errCount > 0, errorTitle: errCount === 1 ? 'فيه حقل محتاج تعديل' : 'فيه ' + errCount + ' حقول محتاجة تعديل',
+      onName: set('name'), onPhone: set('phone'), onAddress: set('address'), onNotes: set('notes'),
+      cutLabel, dayLabel,
+      next, back: () => this.setState({ step: Math.max(1, s.step - 1) }), busy: s.busy,
+      primaryLabel: s.busy ? 'جاري التأكيد…' : s.step === 3 ? 'تأكيد الطلب' : 'التالي',
+      primaryStyle: (m ? 'flex-grow: 1; ' : '') + 'height: 52px; border-radius: 12px; border: 0; background: #1F4D3A; color: #FFFFFF; font-family: inherit; font-size: 17px; font-weight: 700; cursor: pointer' + (s.busy ? '; opacity: 0.75; cursor: progress' : ''),
+      fabBottom: m ? 92 : 24
+    };
+  }
+}
+</script>
+</body>
+</html>
