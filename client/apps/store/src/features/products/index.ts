@@ -1,5 +1,5 @@
-export type { Product, Category } from "./types"
-export { productKeys, useProducts, useProduct } from "./queries"
+export type { Product } from "./types"
+export { useProducts, useProduct } from "./queries"
 export { CATEGORIES, categoryBySlug, type CategorySlug } from "./categories"
 export { ProductCard, ProductImage, weightLabel } from "./components/product-card"
 export { ProductGrid } from "./components/product-grid"
