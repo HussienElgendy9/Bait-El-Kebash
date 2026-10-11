@@ -8,10 +8,11 @@ use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         // $categories = Category::paginate(12);
-        $categories = Category::withCount('products')->paginate(12);
+        // per_page lets the dashboard load every category for the product form's select.
+        $categories = Category::withCount('products')->paginate(min($request->integer('per_page', 12), 100));
 
         return CategoryResource::collection($categories);
         // return response()->json([
@@ -55,6 +56,12 @@ class CategoryController extends Controller
     }
     public function destroy(Category $category)
     {
+        // products.category_id is a restricting FK; fail cleanly instead of a 500.
+        if ($category->products()->exists()) {
+            return response()->json([
+                'message' => 'Category has products. Move or delete them first.',
+            ], 422);
+        }
         $category->delete();
  
         return response()->json([

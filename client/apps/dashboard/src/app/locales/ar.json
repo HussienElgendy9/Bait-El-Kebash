@@ -1,0 +1,122 @@
+{
+  "appName": "بيت الكباش",
+  "dashboard": "لوحة التحكم",
+  "currency": "{{value}} ج.م",
+  "nav": {
+    "overview": "نظرة عامة",
+    "orders": "الطلبات",
+    "products": "المنتجات",
+    "categories": "الأقسام",
+    "users": "العملاء",
+    "roles": "الصلاحيات"
+  },
+  "actions": {
+    "retry": "حاول تاني",
+    "logout": "تسجيل الخروج",
+    "language": "English",
+    "cancel": "إلغاء",
+    "save": "حفظ",
+    "edit": "تعديل",
+    "delete": "حذف",
+    "view": "عرض"
+  },
+  "auth": {
+    "title": "دخول المشرفين",
+    "description": "سجّل دخولك بحساب مشرف",
+    "email": "الإيميل",
+    "password": "كلمة السر",
+    "submit": "دخول",
+    "submitting": "جاري الدخول…",
+    "notAdmin": "الحساب ده مش حساب مشرف.",
+    "errors": {
+      "email": "اكتب إيميل صحيح",
+      "password": "اكتب كلمة السر"
+    }
+  },
+  "overview": {
+    "users": "المستخدمين",
+    "orders": "الطلبات",
+    "products": "المنتجات",
+    "categories": "الأقسام",
+    "sales": "المبيعات",
+    "salesDescription": "الطلبات المكتملة، آخر 6 شهور",
+    "byCategory": "المنتجات حسب القسم",
+    "orderStatus": "حالة الطلبات",
+    "status": {
+      "pending": "قيد الانتظار",
+      "processing": "قيد التنفيذ",
+      "completed": "مكتملة",
+      "cancelled": "ملغية"
+    }
+  },
+  "errors": {
+    "load": "مقدرناش نحمّل البيانات.",
+    "tryLater": "جرّب تاني بعد شوية.",
+    "generic": "حصلت مشكلة عندنا. جرّب تاني.",
+    "network": "مفيش اتصال بالإنترنت.",
+    "notFound": "الصفحة دي مش موجودة"
+  },
+  "table": {
+    "total_zero": "{{value}} عنصر",
+    "total_one": "عنصر واحد",
+    "total_two": "عنصرين",
+    "total_few": "{{value}} عناصر",
+    "total_many": "{{value}} عنصر",
+    "total_other": "{{value}} عنصر",
+    "empty": "مفيش حاجة هنا لسه.",
+    "actions": "إجراءات",
+    "page": "صفحة {{page}} من {{last}}",
+    "prev": "الصفحة اللي فاتت",
+    "next": "الصفحة الجاية"
+  },
+  "fields": {
+    "name": "الاسم",
+    "email": "الإيميل",
+    "phone": "الموبايل",
+    "address": "العنوان",
+    "category": "القسم",
+    "price": "السعر",
+    "unit": "الوحدة",
+    "description": "الوصف",
+    "image": "الصورة"
+  },
+  "categories": {
+    "new": "قسم جديد",
+    "edit": "تعديل القسم",
+    "deleteTitle": "تحذف \"{{name}}\"؟"
+  },
+  "products": {
+    "new": "منتج جديد",
+    "edit": "تعديل المنتج",
+    "deleteTitle": "تحذف \"{{name}}\"؟"
+  },
+  "orders": {
+    "all": "كل الطلبات",
+    "customer": "العميل",
+    "items": "الأصناف",
+    "total": "الإجمالي",
+    "status": "الحالة",
+    "date": "التاريخ",
+    "title": "طلب #{{id}}",
+    "cancel": "إلغاء الطلب",
+    "cancelTitle": "تلغي طلب #{{id}}؟ مش هتقدر ترجع فيها.",
+    "to": {
+      "processing": "ابدأ التنفيذ",
+      "completed": "اتعمل"
+    }
+  },
+  "users": {
+    "promote": "اجعله مشرف",
+    "promoteTitle": "تخلي {{name}} مشرف؟"
+  },
+  "roles": {
+    "role": "الصلاحية",
+    "admin": "مشرف",
+    "super_admin": "مشرف عام",
+    "customer": "عميل",
+    "demote": "شيل الإشراف",
+    "demoteTitle": "تشيل صلاحية الإشراف من {{name}}؟",
+    "hint": "ترقية العملاء من صفحة العملاء.",
+    "readOnly": "المشرف العام بس اللي يقدر يغيّر الصلاحيات."
+  }
+}

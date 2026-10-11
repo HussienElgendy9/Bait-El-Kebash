@@ -1,0 +1,118 @@
+{
+  "appName": "Bait El Kebash",
+  "dashboard": "Dashboard",
+  "currency": "EGP {{value}}",
+  "nav": {
+    "overview": "Overview",
+    "orders": "Orders",
+    "products": "Products",
+    "categories": "Categories",
+    "users": "Customers",
+    "roles": "Roles"
+  },
+  "actions": {
+    "retry": "Retry",
+    "logout": "Log out",
+    "language": "العربية",
+    "cancel": "Cancel",
+    "save": "Save",
+    "edit": "Edit",
+    "delete": "Delete",
+    "view": "View"
+  },
+  "auth": {
+    "title": "Admin login",
+    "description": "Sign in with an admin account",
+    "email": "Email",
+    "password": "Password",
+    "submit": "Log in",
+    "submitting": "Logging in…",
+    "notAdmin": "This account is not an admin.",
+    "errors": {
+      "email": "Enter a valid email",
+      "password": "Enter your password"
+    }
+  },
+  "overview": {
+    "users": "Users",
+    "orders": "Orders",
+    "products": "Products",
+    "categories": "Categories",
+    "sales": "Sales",
+    "salesDescription": "Completed orders, last 6 months",
+    "byCategory": "Products by category",
+    "orderStatus": "Order status",
+    "status": {
+      "pending": "Pending",
+      "processing": "Processing",
+      "completed": "Completed",
+      "cancelled": "Cancelled"
+    }
+  },
+  "errors": {
+    "load": "Couldn't load the data.",
+    "tryLater": "Try again in a moment.",
+    "generic": "Something went wrong. Try again.",
+    "network": "No internet connection.",
+    "notFound": "Page not found"
+  },
+  "table": {
+    "total_one": "{{value}} item",
+    "total_other": "{{value}} items",
+    "empty": "Nothing here yet.",
+    "actions": "Actions",
+    "page": "Page {{page}} of {{last}}",
+    "prev": "Previous page",
+    "next": "Next page"
+  },
+  "fields": {
+    "name": "Name",
+    "email": "Email",
+    "phone": "Phone",
+    "address": "Address",
+    "category": "Category",
+    "price": "Price",
+    "unit": "Unit",
+    "description": "Description",
+    "image": "Image"
+  },
+  "categories": {
+    "new": "New category",
+    "edit": "Edit category",
+    "deleteTitle": "Delete \"{{name}}\"?"
+  },
+  "products": {
+    "new": "New product",
+    "edit": "Edit product",
+    "deleteTitle": "Delete \"{{name}}\"?"
+  },
+  "orders": {
+    "all": "All orders",
+    "customer": "Customer",
+    "items": "Items",
+    "total": "Total",
+    "status": "Status",
+    "date": "Date",
+    "title": "Order #{{id}}",
+    "cancel": "Cancel order",
+    "cancelTitle": "Cancel order #{{id}}? This can't be undone.",
+    "to": {
+      "processing": "Start processing",
+      "completed": "Mark completed"
+    }
+  },
+  "users": {
+    "promote": "Make admin",
+    "promoteTitle": "Make {{name}} an admin?"
+  },
+  "roles": {
+    "role": "Role",
+    "admin": "Admin",
+    "super_admin": "Super admin",
+    "customer": "Customer",
+    "demote": "Remove admin",
+    "demoteTitle": "Remove admin access from {{name}}?",
+    "hint": "Promote customers from the Customers page.",
+    "readOnly": "Only super admins can change roles."
+  }
+}
