@@ -9,9 +9,20 @@ use App\Models\User;
 
 class CustomerController extends Controller
 {
-    public function index(){
-        $customers = User::where('role', 'customer')->latest()->withCount('orders')->paginate(10);
+    public function index(Request $request){
+        // $customers = User::where('role', 'customer')->latest()->withCount('orders')->paginate(10);
+        $query = User::where('role', 'customer')->withCount('orders');
         
+        if ($request->search) {
+            $query->where(function ($q) use ($request) {
+                $q->where('name', 'like', "%{$request->search}%")
+                  ->orWhere('email', 'like', "%{$request->search}%")
+                  ->orWhere('phone_number', 'like', "%{$request->search}%");
+            });
+        }
+        $customers = $query->latest()->paginate(10);
+
+
         return UserResource::collection($customers);
         // return response()->json([
         //     'customers' => $customers,

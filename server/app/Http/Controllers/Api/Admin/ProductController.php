@@ -43,6 +43,7 @@ class ProductController extends Controller
         'category_id' => ['required', 'integer', 'exists:categories,id'],
         'unit_price' => ['required', 'numeric', 'min:100'],
         'unit' => ['sometimes', 'string', 'max:50'],
+        'is_available' => ['sometimes', 'boolean'],
         'description' => ['nullable', 'string'],
         'image' => ['required', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048'],
         ]);
@@ -65,6 +66,7 @@ class ProductController extends Controller
             'unit_price'=>$validated['unit_price'],
             'unit'=>$validated['unit'] ?? '0.5kg',
             'description'=>$validated['description']?? null,
+            'is_available'=>$validated['is_available'] ?? true,
             'image' => $imagePath,
         ]);
             $product->load('category');
@@ -82,6 +84,7 @@ class ProductController extends Controller
             'category_id' => ['sometimes', 'integer', 'exists:categories,id'],
             'unit_price' => ['sometimes', 'numeric', 'min:100'],
             'unit' => ['sometimes', 'string', 'max:50'],
+            'is_available' => ['sometimes', 'boolean'],
             'description' => ['sometimes','nullable', 'string'],
             'image' => ['sometimes', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048'],
         ]);

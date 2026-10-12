@@ -32,8 +32,8 @@ class NewOrderNotification extends Notification implements ShouldQueue
             ->line("Order #{$this->order->id}")
             ->line("Customer ID: {$this->order->user->id}")
             ->line("Customer: {$this->order->user->name}")
-            ->line("Phone: {$this->order->user->phone_number}")
-            ->line("Address: {$this->order->user->address}");
+            ->line("Phone: {$this->order->phone_number}")
+            ->line("Address: {$this->order->address}");
         foreach ($this->order->orderItems as $item) {
             $mail->line(
                 "{$item->product->name} — Qty: {$item->quantity} — " .
@@ -52,8 +52,8 @@ class NewOrderNotification extends Notification implements ShouldQueue
         return [
             'order_id' => $this->order->id,
             'customer_name' => $this->order->user->name,
-            'phone' => $this->order->user->phone_number,
-            'address' => $this->order->user->address,
+            'phone' => $this->order->phone_number,
+            'address' => $this->order->address,
             'total' => $this->order->orderItems->sum('price_snapshot'),
             'message' => "New order #{$this->order->id} received.",
         ];

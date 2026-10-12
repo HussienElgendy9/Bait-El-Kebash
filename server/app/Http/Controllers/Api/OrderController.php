@@ -10,6 +10,7 @@ use App\Http\Resources\OrderResource;
 use Illuminate\Support\Facades\DB;
 use App\Models\User;
 use App\Notifications\NewOrderNotification;
+use Illuminate\Validation\Rule;
 
 class OrderController extends Controller
 {
@@ -29,7 +30,7 @@ class OrderController extends Controller
     public function store(Request $request){
         $validated = $request->validate([
             'items' => ['required','array','min:1'],
-            'items.*.product_id' => ['required', 'integer', 'distinct','exists:products,id'],
+            'items.*.product_id' => ['required', 'integer', 'distinct', Rule::exists('products', 'id')->where('is_available', true),],
             'items.*.quantity'=>['required','integer','min:1','max:100'],
         ]);
         $order = DB::transaction(function () use ($validated, $request) {
@@ -37,11 +38,18 @@ class OrderController extends Controller
                 $order = Order::create([
                     'user_id' => $request->user()->id,
                     'status' => 'pending',
+                    'address' => $request->user()->address,
+                    'phone_number' =>$request->user()->phone_number,
                 ]);
+                
+                $ids = collect($validated['items'])->pluck('product_id');
 
+                $products = Product::findMany($ids)->keyBy('id');
+                
                 foreach ($validated['items'] as $item) {
 
-                    $product = Product::findOrFail($item['product_id']);
+                    // $product = Product::findOrFail($item['product_id']);
+                    $product = $products[$item['product_id']];
 
                     $quantity = $item['quantity'];
                     $unitPrice = $product->unit_price;
@@ -86,5 +94,28 @@ class OrderController extends Controller
         //     'order' => $order,
         // ]);
         return new OrderResource($order);
+    }
+    public function cancel(Request $request, Order $order)
+    {
+        if ($order->user_id !== $request->user()->id) {
+            return response()->json([
+                'message' => 'Unauthorized.',
+            ], 403);
+        }
+
+        if ($order->status !== 'pending') {
+            return response()->json([
+                'message' => 'Only pending orders can be canceled.',
+            ], 422);
+        }
+
+        $order->update(['status' => 'cancelled']);
+
+        $order->load('orderItems.product');
+        
+        return response()->json([
+            'message' => 'Order canceled successfully.',
+            'order' => new OrderResource($order),
+        ], 200);
     }
 }

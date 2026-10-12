@@ -33,6 +33,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/orders', [OrderController::class, 'index']);
     Route::post('/orders', [OrderController::class, 'store']);
     Route::get('/orders/{order}', [OrderController::class, 'show']);
+    Route::post('/orders/{order}/cancel', [OrderController::class, 'cancel']);
 });
 
 
@@ -56,6 +57,7 @@ Route::middleware(['auth:sanctum', 'admin'])
             Route::get('/orders', [AdminOrderController::class, 'index']);
             Route::get('/orders/{order}', [AdminOrderController::class, 'show']);
             Route::patch('/orders/{order}', [AdminOrderController::class, 'update']);
+            
 
             Route::get('/customers', [CustomerController::class, 'index']);
             Route::get('/customers/{customer}', [CustomerController::class, 'show']);

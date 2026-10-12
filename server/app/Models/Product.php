@@ -15,8 +15,13 @@ class Product extends Model
         'category_id',
         'unit_price',
         'unit',
+        'is_available',
         'image'
     ];
+    protected function casts(): array
+    {
+        return ['is_available' => 'boolean'];
+    }
     // public function product()
     // {
     //     return $this->belongsTo(Product::class);

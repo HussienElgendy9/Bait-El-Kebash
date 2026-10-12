@@ -20,6 +20,7 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->decimal('unit_price', 8, 2);
             $table->string('unit')->default('0.5kg');
+            $table->boolean('is_available')->default(true);
             // $table->string('image')->nullable();
             $table->timestamps();
         });

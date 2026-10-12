@@ -17,6 +17,8 @@ return new class extends Migration
                 ->constrained()
                 ->cascadeOnDelete();
             $table->enum('status',['pending','cancelled','completed']);
+            $table->string('phone_number', 20);
+            $table->text('address');
             $table->timestamps();
         });
     }

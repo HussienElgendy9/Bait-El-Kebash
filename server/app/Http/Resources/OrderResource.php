@@ -12,6 +12,8 @@ class OrderResource extends JsonResource
         return [
             'id' => $this->id,
             'status' => $this->status,
+            'address' => $this->address,
+            'phone_number' => $this->phone_number,
             'total' => $this->whenLoaded('orderItems', fn () => $this->orderItems->sum('price_snapshot')),
             'created_at' => $this->created_at,
 

@@ -94,6 +94,7 @@ class AuthController extends Controller
     public function update(Request $request)
     {
         $validated = $request->validate([
+            'name' => ['sometimes', 'required', 'string', 'max:255'],
             'phone_number' => ['sometimes', 'required', 'regex:/^01[0125][0-9]{8}$/', 'unique:users,phone_number,'.$request->user()->id],
             'address' => ['sometimes', 'required', 'string', 'max:1000'],
         ]);

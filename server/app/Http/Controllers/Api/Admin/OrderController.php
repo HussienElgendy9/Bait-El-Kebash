@@ -15,10 +15,27 @@ class OrderController extends Controller
         // $orders = Order::with('user')->get();
         // $orders = Order::with('user')->latest()->paginate(10);
 
-        $orders = Order::with([
+         $request->validate([
+            'status' => ['nullable', 'in:pending,processing,completed,cancelled'],
+        ]);
+        $query = Order::with([
             'user',
             'orderItems.product',
-        ])->latest()->paginate(10);
+        ]);
+        if($request->status){
+            $query->where('status', $request->status);
+        }
+        if($request->search) {
+            $search = $request->search;
+            $query->where(function ($q) use ($search) {
+            $q->where('id', $search)
+              ->orWhereHas('user', function ($u) use ($search) {
+                  $u->where('name', 'like', "%{$search}%")
+                    ->orWhere('phone_number', 'like', "%{$search}%");
+                });
+            });
+        }
+        $orders = $query->latest()->paginate(10);
         return OrderResource::collection($orders);
         // return response()->json([
         //     'orders' => $orders,
