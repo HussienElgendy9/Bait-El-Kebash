@@ -18,9 +18,9 @@ return new class extends Migration
                 ->cascadeOnDelete();
             $table->foreignId('product_id')
                 ->constrained()
-                ->cascadeOnDelete();
-            $table->string('quantity');
-            $table->string('price_snapshot');
+                ->restrictOnDelete();
+            $table->unsignedInteger('quantity');
+            $table->decimal('price_snapshot',10,2);
             $table->timestamps();
         });
     }

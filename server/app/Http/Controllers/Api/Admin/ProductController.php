@@ -12,9 +12,23 @@ use App\Http\Resources\ProductResource;
 
 class ProductController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $products = Product::with('category')->paginate(12);
+        // $products = Product::with('category')->paginate(12);
+        // return ProductResource::collection($products);
+        
+        
+        $query = Product::with('category');
+
+        if ($request->search) {
+            $query->where('name', 'like', "%{$request->search}%");
+        }
+
+        if ($request->category_id) {
+            $query->where('category_id', $request->category_id);
+        }
+
+        $products = $query->latest()->paginate(12);
         return ProductResource::collection($products);
 
         // return response()->json([
@@ -50,7 +64,7 @@ class ProductController extends Controller
             'category_id'=>$validated['category_id'],
             'unit_price'=>$validated['unit_price'],
             'unit'=>$validated['unit'] ?? '0.5kg',
-            'description'=>$validated['description'],
+            'description'=>$validated['description']?? null,
             'image' => $imagePath,
         ]);
             $product->load('category');
@@ -66,7 +80,7 @@ class ProductController extends Controller
         $validated = $request->validate([
             'name' => ['sometimes', 'string', 'max:255'],
             'category_id' => ['sometimes', 'integer', 'exists:categories,id'],
-            'unit_price' => ['sometimes', 'numeric', 'min:0'],
+            'unit_price' => ['sometimes', 'numeric', 'min:100'],
             'unit' => ['sometimes', 'string', 'max:50'],
             'description' => ['sometimes','nullable', 'string'],
             'image' => ['sometimes', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048'],
@@ -105,6 +119,12 @@ class ProductController extends Controller
         // ]);
     }
     public function destroy(Product $product){
+        if ($product->orderItems()->exists()) {
+        return response()->json([
+            'message' => 'Product has orders and cannot be deleted.',
+        ], 422);
+        }
+
         if ($product->image) {
             Storage::disk('public')->delete($product->image);
         }

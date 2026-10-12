@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
 
 return new class extends Migration
 {
@@ -26,8 +27,10 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('orders', function (Blueprint $table) {
-            //
-        });
+        // DB::table('orders')->where('status', 'processing')->update(['status' => 'pending']);
+
+        // Schema::table('orders', function (Blueprint $table) {
+        //     $table->enum('status', ['pending', 'cancelled', 'completed'])->change();
+        // });
     }
 };

@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         // $orders = Order::all();
         // $orders = Order::with('user')->get();

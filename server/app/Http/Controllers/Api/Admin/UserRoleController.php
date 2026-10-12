@@ -18,6 +18,11 @@ class UserRoleController extends Controller
                 'message' => 'User already has the specified role.',
             ], 400);
         }
+        if ($user->isSuperAdmin()) {
+            return response()->json([
+                'message' => 'Super admin role cannot be changed.',
+            ], 403);
+        }
 
         $user->update([
             'role' => $validated['role'],

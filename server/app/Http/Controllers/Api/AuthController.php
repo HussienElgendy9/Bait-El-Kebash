@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Validation\Rules;
+use Illuminate\Support\Facades\Auth;
 // use App\Models\PhoneVerification;
 use App\Http\Resources\UserResource;
 
@@ -32,13 +33,15 @@ class AuthController extends Controller
             'role'=>'customer',
         ]);
 
-        $token = $user->createToken('api-token')->plainTextToken;
+        Auth::login($user);
+        $request->session()->regenerate();
+        // $token = $user->createToken('api-token')->plainTextToken;
 
         return response()->json([
             'message' => 'Registration successful.',
             'user' => new UserResource($user),
             // 'user' => $user,
-            'token' => $token,
+            // 'token' => $token,
         ], 201);
     }
 
@@ -49,22 +52,35 @@ class AuthController extends Controller
             'password' => 'required|string',
         ]);
 
-        $user = User::where('email', $validated['email'])->first();
-
-        if (!$user || !Hash::check($validated['password'], $user->password)) {
+        if (! Auth::attempt($validated)) {
             throw ValidationException::withMessages([
                 'email' => ['The provided credentials are incorrect.'],
             ]);
         }
 
-        $token = $user->createToken('api-token')->plainTextToken;
+        $request->session()->regenerate();
 
         return response()->json([
             'message' => 'Login successful.',
-            'user' => new UserResource($user),
-            // 'user' => $user,
-            'token' => $token,
+            'user' => new UserResource($request->user()),
         ]);
+
+        // $user = User::where('email', $validated['email'])->first();
+
+        // if (!$user || !Hash::check($validated['password'], $user->password)) {
+        //     throw ValidationException::withMessages([
+        //         'email' => ['The provided credentials are incorrect.'],
+        //     ]);
+        // }
+
+        // $token = $user->createToken('api-token')->plainTextToken;
+
+        // return response()->json([
+        //     'message' => 'Login successful.',
+        //     'user' => new UserResource($user),
+        //     // 'user' => $user,
+        //     'token' => $token,
+        // ]);
     }
 
     public function user(Request $request)
@@ -91,6 +107,21 @@ class AuthController extends Controller
             'user' => new UserResource($user),
             // 'user' => $user,
         ]);
+    }
+        public function logout(Request $request)
+    {
+
+    Auth::guard('web')->logout();
+    $request->session()->invalidate();
+    $request->session()->regenerateToken();
+
+    return response()->json(['message' => 'Logged out successfully.']);
+
+        // $request->user()->currentAccessToken()->delete();
+
+        // return response()->json([
+        //     'message' => 'Logged out successfully.',
+        // ]);
     }
     // public function requestPhoneChange(Request $request)
     // {
@@ -196,12 +227,5 @@ class AuthController extends Controller
     //     ]);
     // }
 
-    public function logout(Request $request)
-    {
-        $request->user()->currentAccessToken()->delete();
 
-        return response()->json([
-            'message' => 'Logged out successfully.',
-        ]);
-    }
 }

@@ -47,7 +47,8 @@ class CategoryController extends Controller
     }
     public function show(Category $category)
     {
-        $category->load('products')->paginate(5);
+        $category->loadCount('products');
+        // $category->load('products')->paginate(5);
         
         return new CategoryResource($category);
         // return response()->json([
