@@ -1,21 +1,18 @@
 import { infiniteQueryOptions, queryOptions, useInfiniteQuery, useQuery } from "@tanstack/react-query"
-import { getProduct, getProducts, PRICE_RANGES } from "./api"
+import { getCategories, getProduct, getProducts } from "./api"
 import type { Product, ProductListParams } from "./types"
 
 export const productKeys = {
   all: ["products"] as const,
   list: (p: ProductListParams) => [...productKeys.all, "list", p] as const,
   detail: (id: number) => [...productKeys.all, "detail", id] as const,
+  categories: ["categories"] as const,
 }
 
-// TODO(api): search/price/sort aren't supported by GET /products, so apply them to the loaded pages too.
-function filterLocally(items: Product[], { search, price, sort }: ProductListParams) {
+// TODO(api): search/sort aren't supported by public GET /products, so apply them to the loaded pages.
+function filterLocally(items: Product[], { search, sort }: ProductListParams) {
   let out = items
   if (search) out = out.filter((p) => p.name.includes(search) || p.description?.includes(search))
-  if (price) {
-    const [lo, hi] = PRICE_RANGES[price]
-    out = out.filter((p) => Number(p.unit_price) >= lo && Number(p.unit_price) < hi)
-  }
   if (sort === "price_asc") out = [...out].sort((a, b) => Number(a.unit_price) - Number(b.unit_price))
   if (sort === "price_desc") out = [...out].sort((a, b) => Number(b.unit_price) - Number(a.unit_price))
   return out
@@ -39,3 +36,5 @@ export const productOptions = (id: number) =>
 
 export const useProducts = (params: ProductListParams) => useInfiniteQuery(productListOptions(params))
 export const useProduct = (id: number) => useQuery(productOptions(id))
+export const useCategories = () =>
+  useQuery({ queryKey: productKeys.categories, queryFn: getCategories, staleTime: Infinity })

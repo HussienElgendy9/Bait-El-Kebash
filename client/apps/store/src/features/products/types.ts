@@ -9,6 +9,7 @@ export type Product = {
   unit_price: string
   unit: string
   image: string | null
+  is_available: boolean
   category?: Category
   // TODO(api): design-only fields, not on ProductResource yet
   breed?: string
@@ -16,7 +17,6 @@ export type Product = {
   weight_max?: number
   age?: string
   images?: string[]
-  is_available?: boolean
 }
 
 export type PriceRange = "lt10" | "p10" | "p15" | "gt20"
@@ -24,8 +24,8 @@ export type ProductSort = "newest" | "price_asc" | "price_desc"
 
 export type ProductListParams = {
   category_id?: number
-  // TODO(api): ProductController@index only filters by category_id; these are sent but ignored server-side.
-  search?: string
   price?: PriceRange
+  // TODO(api): public GET /products ignores search + sort; applied client-side in queries.ts.
+  search?: string
   sort?: ProductSort
 }

@@ -6,7 +6,8 @@ import {
   useQuery,
   useQueryClient,
 } from "@tanstack/react-query"
-import { createOrder, getOrder, getOrders } from "./api"
+import type { Order } from "./types"
+import { cancelOrder, createOrder, getOrder, getOrders } from "./api"
 
 export const orderKeys = {
   all: ["orders"] as const,
@@ -30,13 +31,17 @@ export const orderOptions = (id: number) =>
 export const useOrders = () => useInfiniteQuery(orderListOptions())
 export const useOrder = (id: number) => useQuery(orderOptions(id))
 
-export function useCreateOrder() {
+/** Create and cancel both return the full order. */
+function useOrderMutation<V>(mutationFn: (v: V) => Promise<Order>) {
   const qc = useQueryClient()
   return useMutation({
-    mutationFn: createOrder,
+    mutationFn,
     onSuccess: (order) => {
       qc.setQueryData(orderKeys.detail(order.id), order)
-      return qc.invalidateQueries({ queryKey: orderKeys.all })
+      return qc.invalidateQueries({ queryKey: orderKeys.list() })
     },
   })
 }
+
+export const useCreateOrder = () => useOrderMutation(createOrder)
+export const useCancelOrder = () => useOrderMutation(cancelOrder)

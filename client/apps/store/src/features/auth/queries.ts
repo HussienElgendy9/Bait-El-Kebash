@@ -1,5 +1,5 @@
 import { queryOptions, useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
-import { getMe, login, logout, register } from "./api"
+import { getMe, login, logout, register, updateMe } from "./api"
 import type { AuthResponse } from "./types"
 
 export const authKeys = { me: ["me"] as const }
@@ -21,6 +21,11 @@ function useAuthSuccess() {
 
 export const useLogin = () => useMutation({ mutationFn: login, onSuccess: useAuthSuccess() })
 export const useRegister = () => useMutation({ mutationFn: register, onSuccess: useAuthSuccess() })
+
+export function useUpdateMe() {
+  const qc = useQueryClient()
+  return useMutation({ mutationFn: updateMe, onSuccess: (user) => qc.setQueryData(authKeys.me, user) })
+}
 
 export function useLogout() {
   const qc = useQueryClient()

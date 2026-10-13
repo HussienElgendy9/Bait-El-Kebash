@@ -14,7 +14,7 @@ import type { Product } from "../types"
 export const weightLabel = (p: Product) =>
   p.weight_min != null && p.weight_max != null ? `${p.weight_min}–${p.weight_max} كجم` : null
 
-export const isAvailable = (p: Product) => p.is_available !== false // TODO(api): no stock flag yet
+export const isAvailable = (p: Product) => p.is_available
 
 export function ProductImage({ product, className }: { product: Product; className?: string }) {
   const src = product.image ?? product.images?.[0]

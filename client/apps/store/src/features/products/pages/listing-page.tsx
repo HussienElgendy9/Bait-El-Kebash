@@ -22,7 +22,6 @@ import {
 } from "@workspace/ui/components/sheet"
 import { Spinner } from "@workspace/ui/components/spinner"
 import { CardGridSkeleton, LoadError, StateBlock } from "@/shared/components/states"
-import { categoryBySlug, type CategorySlug } from "../categories"
 import { CategoryChips } from "../components/category-chips"
 import { PRICE_OPTIONS, PriceFilter, SortSelect } from "../components/product-filters"
 import { ProductGrid } from "../components/product-grid"
@@ -31,12 +30,12 @@ import type { PriceRange, ProductSort } from "../types"
 
 export function ListingPage() {
   const [params, setParams] = useSearchParams()
-  const category = categoryBySlug(params.get("category"))
+  const categoryId = Number(params.get("category")) || undefined
   const price = PRICE_OPTIONS.find((o) => o.value === params.get("price"))?.value
   const sort = (params.get("sort") as ProductSort | null) ?? "newest"
   const search = params.get("search") ?? undefined
 
-  const query = useProducts({ category_id: category.id, price, sort, search })
+  const query = useProducts({ category_id: categoryId, price, sort, search })
   const items = query.data?.items ?? []
   const activeCount = price ? 1 : 0
 
@@ -72,7 +71,7 @@ export function ListingPage() {
         </h1>
       </div>
 
-      <CategoryChips value={category.slug} onChange={(v: CategorySlug) => set("category", v)} />
+      <CategoryChips value={categoryId} onChange={(id) => set("category", id?.toString())} />
 
       {/* desktop filters */}
       <Card className="hidden flex-row flex-wrap items-end gap-x-8 gap-y-4 px-5 md:flex">

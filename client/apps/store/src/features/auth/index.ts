@@ -1,2 +1,2 @@
 export type { User } from "./types"
-export { useMe, useLogout } from "./queries"
+export { useMe, useLogout, useUpdateMe } from "./queries"

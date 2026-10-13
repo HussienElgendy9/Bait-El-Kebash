@@ -6,3 +6,5 @@ export const getOrders = (page: number) => api<Paginated<Order>>("/orders", { pa
 export const getOrder = (id: number) => api<Order>(`/orders/${id}`)
 export const createOrder = (body: CreateOrderInput) =>
   api<{ message: string; order: Order }>("/orders", { method: "POST", body }).then((r) => r.order)
+export const cancelOrder = (id: number) =>
+  api<{ message: string; order: Order }>(`/orders/${id}/cancel`, { method: "POST" }).then((r) => r.order)

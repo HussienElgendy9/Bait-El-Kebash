@@ -23,7 +23,7 @@ import { RadioGroup, RadioGroupItem } from "@workspace/ui/components/radio-group
 import { Separator } from "@workspace/ui/components/separator"
 import { Spinner } from "@workspace/ui/components/spinner"
 import { Textarea } from "@workspace/ui/components/textarea"
-import { useMe } from "@/features/auth"
+import { useMe, useUpdateMe } from "@/features/auth"
 import { CartLine, useCart } from "@/features/cart"
 import { ApiError } from "@/shared/api/client"
 import { StateBlock, useOnline } from "@/shared/components/states"
@@ -45,6 +45,7 @@ export function CheckoutPage() {
   const online = useOnline()
   const { data: me } = useMe()
   const createOrder = useCreateOrder()
+  const updateMe = useUpdateMe()
 
   const form = useForm<CheckoutInput>({
     resolver: zodResolver(checkoutSchema),
@@ -69,7 +70,27 @@ export function CheckoutPage() {
       </div>
     )
 
-  const onSubmit = form.handleSubmit(() =>
+  /** 422 `errors[key][0]` → the matching field; `items.N.product_id` (sold out) → root, naming the cart line. */
+  const showServerErrors = (e: Error) => {
+    if (!(e instanceof ApiError) || e.status !== 422) return
+    for (const [key, [msg]] of Object.entries(e.errors)) {
+      const line = key.match(/^items\.(\d+)\.product_id$/)
+      const name = line && cart.items[Number(line[1])]?.product.name
+      if (key in FIELD_LABELS) form.setError(key as FieldPath<CheckoutInput>, { message: msg })
+      else if (name) form.setError("root", { message: `«${name}» مبقاش متاح. شيلها من السلة وكمّل.` })
+      else form.setError("root", { message: msg })
+    }
+  }
+
+  // The order snapshots address + phone from the profile, so save any edits there first.
+  const onSubmit = form.handleSubmit(async ({ name, phone_number, address }) => {
+    if (me && (name !== me.name || phone_number !== me.phone_number || address !== me.address)) {
+      try {
+        await updateMe.mutateAsync({ name, phone_number, address })
+      } catch (e) {
+        return showServerErrors(e as Error)
+      }
+    }
     createOrder.mutate(
       { items: cart.items.map((i) => ({ product_id: i.product.id, quantity: i.quantity })) },
       {
@@ -78,20 +99,15 @@ export function CheckoutPage() {
           toast.success("تم تسجيل طلبك", { description: `رقم الطلب #${order.id}. هيوصلك إيميل بالتفاصيل.` })
           navigate(`/orders/${order.id}`, { replace: true })
         },
-        onError: (e) => {
-          if (!(e instanceof ApiError) || e.status !== 422) return
-          for (const [key, [msg]] of Object.entries(e.errors)) {
-            if (key in FIELD_LABELS) form.setError(key as FieldPath<CheckoutInput>, { message: msg })
-            else form.setError("root", { message: msg })
-          }
-        },
+        onError: showServerErrors,
       }
     )
-  )
+  })
 
   const invalid = (Object.keys(FIELD_LABELS) as FieldPath<CheckoutInput>[]).filter((k) => errors[k])
-  const serverFailed = createOrder.isError && !(createOrder.error instanceof ApiError && createOrder.error.status === 422)
-  const busy = createOrder.isPending
+  const failure = createOrder.error ?? updateMe.error
+  const serverFailed = !!failure && !(failure instanceof ApiError && failure.status === 422)
+  const busy = createOrder.isPending || updateMe.isPending
 
   const submitButton = (
     <Button type="submit" form="checkout" size="xl" className="w-full" disabled={busy || !online}>

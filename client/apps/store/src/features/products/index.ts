@@ -1,6 +1,5 @@
 export type { Product } from "./types"
 export { useProducts, useProduct } from "./queries"
-export { CATEGORIES, categoryBySlug, type CategorySlug } from "./categories"
 export { ProductCard, ProductImage, weightLabel } from "./components/product-card"
 export { ProductGrid } from "./components/product-grid"
 export { CategoryChips } from "./components/category-chips"

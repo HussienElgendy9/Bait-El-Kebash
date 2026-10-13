@@ -10,7 +10,6 @@ import { LoadError, StateBlock } from "@/shared/components/states"
 import { formatDate, price } from "@/shared/lib/format"
 import { StatusBadge } from "../components/status-badge"
 import { useOrders } from "../queries"
-import { orderTotal } from "../status"
 import type { Order } from "../types"
 
 function OrderRow({ order }: { order: Order }) {
@@ -30,7 +29,7 @@ function OrderRow({ order }: { order: Order }) {
           <span className="text-sm text-muted-foreground">
             طلب <span dir="ltr">#{order.id}</span> · {formatDate(order.created_at)}
           </span>
-          <span className="text-sm font-semibold text-price">{price(orderTotal(order))}</span>
+          <span className="text-sm font-semibold text-price">{price(order.total)}</span>
         </div>
         <div className="flex flex-col items-end gap-1.5">
           <StatusBadge status={order.status} />

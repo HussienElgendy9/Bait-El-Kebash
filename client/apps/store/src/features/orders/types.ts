@@ -16,6 +16,11 @@ export type Order = {
   id: number
   status: OrderStatus
   created_at: string
+  /** Delivery details snapshotted from the profile when the order was placed. */
+  address: string
+  phone_number: string
+  /** Sum of price_snapshot; Laravel may send a number or a decimal string. */
+  total: number | string
   order_items: OrderItem[]
   // TODO(api): not stored on orders yet
   cut?: string

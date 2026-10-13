@@ -10,6 +10,3 @@ export const ORDER_STATUS: Record<
   completed: { label: "تم التسليم", icon: CircleCheck, variant: "status-completed" },
   cancelled: { label: "ملغي", icon: CircleX, variant: "status-cancelled" },
 }
-
-export const orderTotal = (o: { order_items: { price_snapshot: string }[] }) =>
-  o.order_items.reduce((n, i) => n + Number(i.price_snapshot), 0)

@@ -4,7 +4,7 @@ import { Link } from "react-router"
 import { Badge } from "@workspace/ui/components/badge"
 import { Button } from "@workspace/ui/components/button"
 import { Card } from "@workspace/ui/components/card"
-import { CategoryChips, categoryBySlug, ProductGrid, useProducts, type CategorySlug } from "@/features/products"
+import { CategoryChips, ProductGrid, useProducts } from "@/features/products"
 import { SheepIcon } from "@/shared/components/logo"
 import { CardGridSkeleton, LoadError, StateBlock } from "@/shared/components/states"
 import { price } from "@/shared/lib/format"
@@ -17,8 +17,8 @@ const STEPS = [
 ]
 
 export function HomePage() {
-  const [cat, setCat] = useState<CategorySlug>("all")
-  const products = useProducts({ category_id: categoryBySlug(cat).id })
+  const [cat, setCat] = useState<number>()
+  const products = useProducts({ category_id: cat })
   const featured = products.data?.items.slice(0, 4) ?? []
   const prices = featured.map((p) => Number(p.unit_price))
 
@@ -67,7 +67,7 @@ export function HomePage() {
               الأكثر طلبًا
             </h2>
             <Button variant="link" className="h-11 text-base font-semibold" asChild>
-              <Link to={cat === "all" ? "/products" : `/products?category=${cat}`}>
+              <Link to={cat === undefined ? "/products" : `/products?category=${cat}`}>
                 عرض الكل
                 <ArrowLeft />
               </Link>
@@ -83,7 +83,7 @@ export function HomePage() {
               title="مفيش أضاحي في القسم ده دلوقتي"
               description="جرّب قسم تاني، أو اسألنا على واتساب ونبلّغك أول ما يتوفر."
             >
-              <Button size="lg" variant="outline" onClick={() => setCat("all")}>
+              <Button size="lg" variant="outline" onClick={() => setCat(undefined)}>
                 عرض كل الأقسام
               </Button>
             </StateBlock>

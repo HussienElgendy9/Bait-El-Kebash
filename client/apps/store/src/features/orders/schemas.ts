@@ -14,7 +14,7 @@ export const DAYS = [
 ] as const
 
 export const checkoutSchema = z.object({
-  // TODO(api): POST /orders only accepts `items`; everything below is collected but not sent.
+  // TODO(api): POST /orders doesn't take cut, delivery_day or notes; they're collected but not sent.
   cut: z.enum(["whole", "halves", "quarters", "small"]),
   delivery_day: z.enum(["d1", "d2", "d3"], "اختار يوم التوصيل."),
   name: z.string().trim().min(1, "اكتب اسمك."),

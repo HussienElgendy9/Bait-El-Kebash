@@ -4,6 +4,8 @@ import type { AuthResponse, User } from "./types"
 
 export const login = (body: LoginInput) => api<AuthResponse>("/login", { method: "POST", body })
 export const register = (body: RegisterInput) => api<AuthResponse>("/register", { method: "POST", body })
+export const updateMe = (body: Partial<Pick<User, "name" | "phone_number" | "address">>) =>
+  api<{ message: string; user: User }>("/user", { method: "PATCH", body }).then((r) => r.user)
 export const logout = () => api<{ message: string }>("/logout", { method: "POST" })
 /** `null` for guests. */
 export const getMe = () =>

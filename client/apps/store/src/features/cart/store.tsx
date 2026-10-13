@@ -17,6 +17,8 @@ type Cart = {
 }
 
 const KEY = "cart"
+/** POST /orders: items.*.quantity max:100 */
+export const MAX_QUANTITY = 100
 const CartContext = createContext<Cart | null>(null)
 
 function load(): CartItem[] {
@@ -39,12 +41,12 @@ export function CartProvider({ children }: { children: ReactNode }) {
       setItems((xs) =>
         quantity < 1
           ? xs.filter((x) => x.product.id !== id)
-          : xs.map((x) => (x.product.id === id ? { ...x, quantity } : x))
+          : xs.map((x) => (x.product.id === id ? { ...x, quantity: Math.min(quantity, MAX_QUANTITY) } : x))
       )
     const add = (product: Product, quantity = 1) =>
       setItems((xs) =>
         xs.some((x) => x.product.id === product.id)
-          ? xs.map((x) => (x.product.id === product.id ? { ...x, quantity: x.quantity + quantity } : x))
+          ? xs.map((x) => (x.product.id === product.id ? { ...x, quantity: Math.min(x.quantity + quantity, MAX_QUANTITY) } : x))
           : [...xs, { product, quantity }]
       )
     return {
