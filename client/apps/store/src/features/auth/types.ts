@@ -7,4 +7,4 @@ export type User = {
   address: string
 }
 
-export type AuthResponse = { message: string; user: User; token: string }
+export type AuthResponse = { message: string; user: User }

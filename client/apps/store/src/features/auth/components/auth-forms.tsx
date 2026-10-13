@@ -15,6 +15,7 @@ import { loginSchema, registerSchema, type LoginInput, type RegisterInput } from
 function applyServerErrors<T extends FieldValues>(form: UseFormReturn<T>, e: unknown) {
   if (!(e instanceof ApiError)) return form.setError("root", { message: "حصلت مشكلة عندنا. جرّب تاني." })
   if (e.status === 0) return form.setError("root", { message: "مفيش اتصال بالإنترنت." })
+  if (e.status === 429) return form.setError("root", { message: "محاولات كتير. استنى دقيقة وجرّب تاني." })
   if (e.status !== 422) return form.setError("root", { message: "حصلت مشكلة عندنا. جرّب تاني." })
   const fields = Object.keys(form.getValues())
   for (const [key, [msg]] of Object.entries(e.errors)) {

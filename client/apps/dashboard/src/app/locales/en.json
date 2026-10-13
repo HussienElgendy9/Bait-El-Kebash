@@ -54,6 +54,7 @@
     "tryLater": "Try again in a moment.",
     "generic": "Something went wrong. Try again.",
     "network": "No internet connection.",
+    "tooMany": "Too many attempts. Wait a minute and try again.",
     "notFound": "Page not found"
   },
   "table": {

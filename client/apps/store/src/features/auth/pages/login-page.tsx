@@ -5,7 +5,7 @@ import { Button } from "@workspace/ui/components/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@workspace/ui/components/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@workspace/ui/components/tabs"
 import { LoginForm, RegisterForm } from "../components/auth-forms"
-import { hasToken } from "../queries"
+import { useMe } from "../queries"
 
 // TODO(api): phone OTP flow (InputOTP) per Auth.dc.html — the API only has email/password POST /login + /register.
 export function LoginPage() {
@@ -14,8 +14,9 @@ export function LoginPage() {
   const raw = params.get("next") ?? "/"
   const next = raw.startsWith("/") && !raw.startsWith("//") ? raw : "/" // same-origin paths only
   const done = () => navigate(next, { replace: true })
+  const { data: me } = useMe()
 
-  if (hasToken()) return <Navigate to={next} replace />
+  if (me) return <Navigate to={next} replace />
 
   return (
     <div className="flex justify-center px-4 pt-[clamp(24px,6vw,72px)] pb-12">

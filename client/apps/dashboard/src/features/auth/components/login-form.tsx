@@ -21,6 +21,7 @@ export function LoginForm({ onDone }: { onDone: () => void }) {
     if (!(e instanceof ApiError)) return form.setError("root", { message: t("errors.generic") })
     if (e.status === 0) return form.setError("root", { message: t("errors.network") })
     if (e.status === 403) return form.setError("root", { message: t("auth.notAdmin") })
+    if (e.status === 429) return form.setError("root", { message: t("errors.tooMany") })
     // 422: Laravel `errors[field][0]` (server-language message).
     const email = e.errors.email?.[0]
     const password = e.errors.password?.[0]

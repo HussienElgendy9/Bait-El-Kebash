@@ -1,24 +1,20 @@
 import { queryOptions, useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
-import { TOKEN_KEY } from "@/shared/api/client"
 import { getMe, login, logout, register } from "./api"
 import type { AuthResponse } from "./types"
 
 export const authKeys = { me: ["me"] as const }
 
-export const hasToken = () => !!localStorage.getItem(TOKEN_KEY)
-
 export const meOptions = () =>
   queryOptions({
     queryKey: authKeys.me,
-    queryFn: () => (hasToken() ? getMe() : null),
+    queryFn: getMe,
   })
 
 export const useMe = () => useQuery(meOptions())
 
 function useAuthSuccess() {
   const qc = useQueryClient()
-  return ({ token, user }: AuthResponse) => {
-    localStorage.setItem(TOKEN_KEY, token)
+  return ({ user }: AuthResponse) => {
     qc.setQueryData(authKeys.me, user)
   }
 }
@@ -30,9 +26,6 @@ export function useLogout() {
   const qc = useQueryClient()
   return useMutation({
     mutationFn: logout,
-    onSettled: () => {
-      localStorage.removeItem(TOKEN_KEY)
-      qc.clear()
-    },
+    onSettled: () => qc.clear(),
   })
 }

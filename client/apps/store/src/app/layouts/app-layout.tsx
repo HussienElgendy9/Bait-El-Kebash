@@ -1,5 +1,5 @@
 import { Outlet, useMatches } from "react-router"
-import { hasToken, useMe } from "@/features/auth"
+import { useMe } from "@/features/auth"
 import { useCart } from "@/features/cart"
 import { Dock } from "@/shared/components/dock"
 import { Header } from "@/shared/components/header"
@@ -20,7 +20,7 @@ export function AppLayout() {
   const { count } = useCart()
   const { data: me } = useMe()
   const { hideHeader, hideNav, ...handle } = (useMatches().at(-1)?.handle ?? {}) as RouteHandle
-  const accountHref = me || hasToken() ? "/orders" : "/login"
+  const accountHref = me ? "/orders" : "/login"
 
   return (
     <div className="flex min-h-svh flex-col">

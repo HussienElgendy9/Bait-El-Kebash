@@ -1,7 +1,6 @@
 import type { ApiErrorBody } from "@/shared/types/api"
 
 const BASE_URL = import.meta.env.VITE_API_URL ?? "http://localhost:8000/api"
-export const TOKEN_KEY = "auth_token"
 
 export class ApiError extends Error {
   status: number
@@ -19,21 +18,35 @@ type Options = Omit<RequestInit, "body"> & {
   params?: Record<string, string | number | undefined>
 }
 
-export async function api<T>(path: string, { body, params, headers, ...init }: Options = {}): Promise<T> {
+const xsrfToken = () => {
+  const m = document.cookie.match(/(?:^|; )XSRF-TOKEN=([^;]*)/)
+  return m ? decodeURIComponent(m[1]!) : undefined
+}
+
+/** Sanctum SPA auth: the session cookie rides along, and writes echo the XSRF-TOKEN cookie back as a header. */
+async function ensureXsrf(refresh = false) {
+  if (refresh || !xsrfToken()) await fetch(new URL("/sanctum/csrf-cookie", BASE_URL), { credentials: "include" })
+  return xsrfToken()
+}
+
+export async function api<T>(path: string, options: Options = {}, retried = false): Promise<T> {
+  const { body, params, headers, ...init } = options
   const url = new URL(BASE_URL + path)
   for (const [k, v] of Object.entries(params ?? {})) {
     if (v !== undefined && v !== "") url.searchParams.set(k, String(v))
   }
 
-  const token = localStorage.getItem(TOKEN_KEY)
+  const write = !!init.method && init.method !== "GET"
   let res: Response
   try {
+    const xsrf = write ? await ensureXsrf(retried) : undefined
     res = await fetch(url, {
       ...init,
+      credentials: "include",
       headers: {
         Accept: "application/json",
         ...(body !== undefined && { "Content-Type": "application/json" }),
-        ...(token && { Authorization: `Bearer ${token}` }),
+        ...(xsrf && { "X-XSRF-TOKEN": xsrf }),
         ...headers,
       },
       body: body !== undefined ? JSON.stringify(body) : undefined,
@@ -42,12 +55,15 @@ export async function api<T>(path: string, { body, params, headers, ...init }: O
     throw new ApiError(0, "network")
   }
 
+  // 419: the XSRF token outlived its session; fetch a fresh one and retry once.
+  if (res.status === 419 && !retried) return api(path, options, true)
+
   const json = res.status === 204 ? null : await res.json().catch(() => null)
 
   if (!res.ok) {
     const err = (json ?? {}) as ApiErrorBody
-    if (res.status === 401 && token) {
-      localStorage.removeItem(TOKEN_KEY)
+    // `/user` 401 just means "guest" (see getMe); anywhere else the session expired.
+    if (res.status === 401 && path !== "/user") {
       const next = encodeURIComponent(location.pathname + location.search)
       location.assign(`/login?next=${next}&expired=1`)
     }
