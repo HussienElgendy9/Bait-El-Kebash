@@ -1,20 +1,9 @@
 import { api } from "@/shared/api/client"
 import type { Paginated } from "@/shared/types/api"
-import type { Category, PriceRange, Product, ProductListParams } from "./types"
+import type { Category, Product, ProductListParams } from "./types"
 
-export const PRICE_RANGES: Record<PriceRange, [number, number]> = {
-  lt10: [0, 10_000],
-  p10: [10_000, 15_000],
-  p15: [15_000, 20_000],
-  gt20: [20_000, Infinity],
-}
-
-export function getProducts({ price, ...params }: ProductListParams, page: number) {
-  const [min_price, hi] = price ? PRICE_RANGES[price] : []
-  // Server's max_price is inclusive; nudge it so a boundary price lands in one range only.
-  const max_price = hi === undefined || hi === Infinity ? undefined : hi - 0.01
-  return api<Paginated<Product>>("/products", { params: { ...params, min_price, max_price, page } })
-}
+export const getProducts = (params: ProductListParams, page: number) =>
+  api<Paginated<Product>>("/products", { params: { ...params, page } })
 
 export const getProduct = (id: number) => api<Product>(`/products/${id}`)
 

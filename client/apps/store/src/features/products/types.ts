@@ -19,12 +19,12 @@ export type Product = {
   images?: string[]
 }
 
-export type PriceRange = "lt10" | "p10" | "p15" | "gt20"
 export type ProductSort = "newest" | "price_asc" | "price_desc"
 
 export type ProductListParams = {
   category_id?: number
-  price?: PriceRange
+  min_price?: number
+  max_price?: number
   // TODO(api): public GET /products ignores search + sort; applied client-side in queries.ts.
   search?: string
   sort?: ProductSort

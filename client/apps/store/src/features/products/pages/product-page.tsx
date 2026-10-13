@@ -34,7 +34,7 @@ function Similar({ product }: { product: Product }) {
   return (
     <section aria-labelledby="sim-title" className="flex flex-col gap-4">
       <h2 id="sim-title" className="text-[clamp(1.375rem,1.1rem+0.8vw,1.75rem)] font-bold">
-        أضاحي بنفس الوزن تقريبًا
+        {product.category ? `أضاحي تانية من ${product.category.name}` : "أضاحي تانية"}
       </h2>
       <ProductGrid products={items} />
     </section>
@@ -48,10 +48,10 @@ function NotFoundState() {
         icon={SearchX}
         tone="error"
         title="الأضحية دي مش موجودة"
-        description="ممكن تكون اتباعت أو اتشالت. عندنا أضاحي تانية بنفس الوزن."
+        description="ممكن تكون اتباعت أو اتشالت. عندنا أضاحي تانية."
       >
         <Button size="lg" asChild>
-          <Link to="/products">شوف أضاحي مشابهة</Link>
+          <Link to="/products">شوف أضاحي تانية</Link>
         </Button>
         <Button size="lg" variant="outline" asChild>
           <Link to="/">الرجوع للرئيسية</Link>
@@ -146,7 +146,9 @@ export function ProductPage() {
             <BreadcrumbSeparator />
             <BreadcrumbItem>
               <BreadcrumbLink asChild>
-                <Link to="/products">{p.category?.name ?? "الأضاحي"}</Link>
+                <Link to={p.category ? `/products?category=${p.category.id}` : "/products"}>
+                  {p.category?.name ?? "الأضاحي"}
+                </Link>
               </BreadcrumbLink>
             </BreadcrumbItem>
             <BreadcrumbSeparator />
@@ -219,7 +221,6 @@ export function ProductPage() {
                 <Truck />
               </Badge>
               <div className="flex flex-col">
-                <strong>التوصيل يوم العيد</strong>
                 <span className="text-muted-foreground">تختار أول أو تاني أو تالت يوم. الدفع عند الاستلام.</span>
               </div>
             </div>

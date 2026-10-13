@@ -23,21 +23,24 @@ import {
 import { Spinner } from "@workspace/ui/components/spinner"
 import { CardGridSkeleton, LoadError, StateBlock } from "@/shared/components/states"
 import { CategoryChips } from "../components/category-chips"
-import { PRICE_OPTIONS, PriceFilter, SortSelect } from "../components/product-filters"
+import { PriceFilter, SortSelect } from "../components/product-filters"
 import { ProductGrid } from "../components/product-grid"
-import { useProducts } from "../queries"
-import type { PriceRange, ProductSort } from "../types"
+import { useCategories, useProducts } from "../queries"
+import type { ProductSort } from "../types"
 
 export function ListingPage() {
   const [params, setParams] = useSearchParams()
   const categoryId = Number(params.get("category")) || undefined
-  const price = PRICE_OPTIONS.find((o) => o.value === params.get("price"))?.value
+  const min_price = Number(params.get("min_price")) || undefined
+  const max_price = Number(params.get("max_price")) || undefined
   const sort = (params.get("sort") as ProductSort | null) ?? "newest"
   const search = params.get("search") ?? undefined
 
-  const query = useProducts({ category_id: categoryId, price, sort, search })
+  const query = useProducts({ category_id: categoryId, min_price, max_price, sort, search })
   const items = query.data?.items ?? []
-  const activeCount = price ? 1 : 0
+  const activeCount = (min_price ? 1 : 0) + (max_price ? 1 : 0)
+  const category = useCategories().data?.find((c) => c.id === categoryId)
+  const priceFilter = <PriceFilter min={min_price} max={max_price} onChange={(k, v) => set(k, v?.toString())} />
 
   const set = (key: string, value?: string) =>
     setParams(
@@ -62,12 +65,12 @@ export function ListingPage() {
             </BreadcrumbItem>
             <BreadcrumbSeparator />
             <BreadcrumbItem>
-              <BreadcrumbPage>الأضاحي</BreadcrumbPage>
+              <BreadcrumbPage>{category?.name ?? "الأضاحي"}</BreadcrumbPage>
             </BreadcrumbItem>
           </BreadcrumbList>
         </Breadcrumb>
         <h1 className="text-4xl leading-tight font-bold text-primary">
-          {search ? `نتايج البحث: ${search}` : "كل الأضاحي"}
+          {search ? `نتايج البحث: ${search}` : (category?.name ?? "كل الأضاحي")}
         </h1>
       </div>
 
@@ -75,7 +78,7 @@ export function ListingPage() {
 
       {/* desktop filters */}
       <Card className="hidden flex-row flex-wrap items-end gap-x-8 gap-y-4 px-5 md:flex">
-        <PriceFilter value={price} onChange={(v?: PriceRange) => set("price", v)} />
+        {priceFilter}
         <div className="ms-auto">
           <SortSelect value={sort} onChange={(v) => set("sort", v)} showLabel />
         </div>
@@ -96,7 +99,7 @@ export function ListingPage() {
               <SheetTitle className="text-xl font-bold">فلترة</SheetTitle>
             </SheetHeader>
             <div className="px-4">
-              <PriceFilter value={price} onChange={(v?: PriceRange) => set("price", v)} />
+              {priceFilter}
             </div>
             <SheetFooter className="flex-row border-t border-border">
               <Button variant="link" size="lg" onClick={clearAll}>
@@ -121,7 +124,7 @@ export function ListingPage() {
         <LoadError onRetry={() => query.refetch()} />
       ) : items.length === 0 ? (
         <Card className="border-dashed py-10">
-          <StateBlock icon={SearchX} title="مفيش أضاحي بالفلاتر دي" description="جرّب وزن أو سعر تاني، أو اسألنا على واتساب.">
+          <StateBlock icon={SearchX} title="مفيش أضاحي بالفلاتر دي" description="جرّب قسم أو سعر تاني، أو اسألنا على واتساب.">
             <Button variant="outline-primary" size="lg" className="h-11" onClick={clearAll}>
               مسح الفلاتر
             </Button>

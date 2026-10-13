@@ -1,15 +1,8 @@
 import { useId } from "react"
-import { ToggleGroup, ToggleGroupItem } from "@workspace/ui/components/toggle-group"
+import { Input } from "@workspace/ui/components/input"
 import { Label } from "@workspace/ui/components/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@workspace/ui/components/select"
-import type { PriceRange, ProductSort } from "../types"
-
-export const PRICE_OPTIONS: { value: PriceRange; label: string }[] = [
-  { value: "lt10", label: "أقل من 10,000" },
-  { value: "p10", label: "10,000–15,000" },
-  { value: "p15", label: "15,000–20,000" },
-  { value: "gt20", label: "أكتر من 20,000" },
-]
+import type { ProductSort } from "../types"
 
 const SORT_OPTIONS: { value: ProductSort; label: string }[] = [
   { value: "price_asc", label: "الأقل سعرًا" },
@@ -19,30 +12,38 @@ const SORT_OPTIONS: { value: ProductSort; label: string }[] = [
 
 // TODO(api): weight filter (أقل من 35 / 35–45 / 45–55 / أكتر من 55 كجم) hidden until products have weight_min/max.
 
-type PriceProps = { value?: PriceRange; onChange: (v?: PriceRange) => void }
+type PriceValue = { min?: number; max?: number }
+type PriceProps = PriceValue & { onChange: (key: "min_price" | "max_price", v?: number) => void }
 
-export function PriceFilter({ value, onChange }: PriceProps) {
+/** Commits on blur/Enter so typing doesn't fire a request per keystroke. */
+export function PriceFilter({ min, max, onChange }: PriceProps) {
   const id = useId()
+  const field = (key: "min_price" | "max_price", value: number | undefined, label: string) => (
+    <Input
+      key={value ?? ""} // re-sync when cleared from outside
+      type="number"
+      inputMode="numeric"
+      min={0}
+      step={100}
+      dir="ltr"
+      defaultValue={value}
+      placeholder={label}
+      aria-label={`السعر ${label}`}
+      className="h-11 w-32"
+      onBlur={(e) => onChange(key, Number(e.target.value) || undefined)}
+      onKeyDown={(e) => e.key === "Enter" && e.currentTarget.blur()}
+    />
+  )
   return (
     <div role="group" aria-labelledby={id} className="flex flex-col gap-2">
       <span id={id} className="text-sm font-bold">
-        السعر
+        السعر (جنيه)
       </span>
-      <ToggleGroup
-        type="single"
-        variant="chip"
-        size="chip"
-        spacing={1.5}
-        value={value ?? ""}
-        onValueChange={(v) => onChange((v || undefined) as PriceRange | undefined)}
-        className="flex-wrap"
-      >
-        {PRICE_OPTIONS.map((o) => (
-          <ToggleGroupItem key={o.value} value={o.value}>
-            {o.label}
-          </ToggleGroupItem>
-        ))}
-      </ToggleGroup>
+      <div className="flex items-center gap-2">
+        {field("min_price", min, "من")}
+        <span className="text-muted-foreground">–</span>
+        {field("max_price", max, "إلى")}
+      </div>
     </div>
   )
 }

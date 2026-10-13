@@ -112,7 +112,6 @@ export function Header({ cartCount, accountHref, title = "بيت الكباش", 
             <span dir="ltr">[رقم الهاتف]</span>
             <span>[عنوان المزرعة]</span>
             <span>[مواعيد العمل]</span>
-            <span className="font-semibold text-primary-foreground">توصيل يوم العيد</span>
           </div>
         </div>
         <div className="mx-auto flex max-w-300 items-center gap-6 px-8 py-3">
