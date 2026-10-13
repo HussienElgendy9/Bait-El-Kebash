@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next"
 import { Button } from "@workspace/ui/components/button"
 import { useMe } from "@/features/auth"
 import { ConfirmButton } from "@/shared/components/confirm-button"
-import { DataTable, type Column } from "@/shared/components/data-table"
+import { DataTable, SearchFilter, type Column } from "@/shared/components/data-table"
 import { formatNumber } from "@/shared/lib/format"
 import type { User } from "@/shared/types/models"
 import { getCustomers } from "../api"
@@ -40,5 +40,12 @@ export function UsersPage() {
       ),
     })
 
-  return <DataTable queryKey={userKeys.customers} fetch={getCustomers} columns={columns} />
+  return (
+    <DataTable
+      queryKey={userKeys.customers}
+      fetch={getCustomers}
+      toolbar={<SearchFilter placeholder={t("users.search")} />}
+      columns={columns}
+    />
+  )
 }

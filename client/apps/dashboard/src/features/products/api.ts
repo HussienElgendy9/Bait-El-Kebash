@@ -1,8 +1,9 @@
 import { api } from "@/shared/api/client"
-import type { Paginated } from "@/shared/types/api"
+import type { Filters, Paginated } from "@/shared/types/api"
 import type { Product } from "@/shared/types/models"
 
-export const getProducts = (page: number) => api<Paginated<Product>>("/admin/products", { params: { page } })
+export const getProducts = (page: number, filters?: Filters) =>
+  api<Paginated<Product>>("/admin/products", { params: { ...filters, page } })
 
 /** Multipart (image upload). PHP can't parse multipart PATCH, so updates POST with Laravel's `_method` spoof. */
 export const saveProduct = ({ id, data }: { id?: number; data: FormData }) => {

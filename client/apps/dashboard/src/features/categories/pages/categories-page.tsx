@@ -24,7 +24,7 @@ export function CategoriesPage() {
     <>
       <DataTable
         queryKey={categoryKeys.all}
-        fetch={getCategories}
+        fetch={(page) => getCategories(page)}
         toolbar={
           <Button onClick={() => setEditing(null)}>
             <Plus />

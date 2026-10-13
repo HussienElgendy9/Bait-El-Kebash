@@ -1,6 +1,7 @@
 import { ImageOff, Pencil, Plus, Trash2 } from "lucide-react"
 import { useState } from "react"
 import { useTranslation } from "react-i18next"
+import { Badge } from "@workspace/ui/components/badge"
 import { Button } from "@workspace/ui/components/button"
 import { Field, FieldError, FieldLabel } from "@workspace/ui/components/field"
 import { Input } from "@workspace/ui/components/input"
@@ -8,7 +9,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Textarea } from "@workspace/ui/components/textarea"
 import { useAllCategories } from "@/features/categories"
 import { ConfirmButton } from "@/shared/components/confirm-button"
-import { DataTable } from "@/shared/components/data-table"
+import { DataTable, SearchFilter, useFilter } from "@/shared/components/data-table"
 import { fieldError, FormSheet } from "@/shared/components/form-sheet"
 import { price } from "@/shared/lib/format"
 import type { Product } from "@/shared/types/models"
@@ -22,6 +23,7 @@ export function ProductsPage() {
   const save = useSaveProduct()
   const remove = useDeleteProduct()
   const categories = useAllCategories()
+  const [categoryId, setCategoryId] = useFilter("category_id")
   const close = () => (setEditing(undefined), save.reset())
 
   const submit = (data: FormData) => {
@@ -46,10 +48,26 @@ export function ProductsPage() {
         queryKey={productKeys.all}
         fetch={getProducts}
         toolbar={
-          <Button onClick={() => setEditing(null)}>
+          <>
+            <SearchFilter placeholder={t("products.search")} />
+            <Select value={categoryId ?? "all"} onValueChange={(v) => setCategoryId(v === "all" ? undefined : v)}>
+              <SelectTrigger aria-label={t("fields.category")} className="w-full sm:w-44">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">{t("products.allCategories")}</SelectItem>
+                {categories.data?.map((c) => (
+                  <SelectItem key={c.id} value={String(c.id)}>
+                    {c.name}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+            <Button onClick={() => setEditing(null)}>
             <Plus />
-            {t("products.new")}
-          </Button>
+              {t("products.new")}
+            </Button>
+          </>
         }
         columns={[
           {
@@ -66,6 +84,14 @@ export function ProductsPage() {
           { header: t("fields.category"), cell: (p) => p.category?.name },
           { header: t("fields.price"), cell: (p) => price(p.unit_price) },
           { header: t("fields.unit"), cell: (p) => p.unit },
+          {
+            header: t("fields.availability"),
+            cell: (p) => (
+              <Badge variant={p.is_available ? "secondary" : "outline"}>
+                {t(p.is_available ? "products.available" : "products.unavailable")}
+              </Badge>
+            ),
+          },
           {
             header: t("table.actions"),
             className: "w-px",
@@ -116,7 +142,21 @@ export function ProductsPage() {
         {field(
           "unit_price",
           t("fields.price"),
-          <Input id="unit_price" name="unit_price" type="number" required min={0} step="any" dir="ltr" defaultValue={editing?.unit_price} />
+          <Input id="unit_price" name="unit_price" type="number" required min={100} step="any" dir="ltr" defaultValue={editing?.unit_price} />
+        )}
+        {field(
+          "is_available",
+          t("fields.availability"),
+          // Laravel's `boolean` rule takes "1"/"0", not "true"/"false".
+          <Select name="is_available" defaultValue={editing?.is_available === false ? "0" : "1"}>
+            <SelectTrigger id="is_available" className="w-full">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="1">{t("products.available")}</SelectItem>
+              <SelectItem value="0">{t("products.unavailable")}</SelectItem>
+            </SelectContent>
+          </Select>
         )}
         {field("unit", t("fields.unit"), <Input id="unit" name="unit" maxLength={50} placeholder="0.5kg" defaultValue={editing?.unit} />)}
         {field(

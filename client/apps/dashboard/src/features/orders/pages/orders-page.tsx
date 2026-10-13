@@ -4,22 +4,22 @@ import { useTranslation } from "react-i18next"
 import { Badge } from "@workspace/ui/components/badge"
 import { Button } from "@workspace/ui/components/button"
 import { Card, CardDescription, CardHeader, CardTitle } from "@workspace/ui/components/card"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@workspace/ui/components/select"
 import { Separator } from "@workspace/ui/components/separator"
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from "@workspace/ui/components/sheet"
 import { Skeleton } from "@workspace/ui/components/skeleton"
 import { useDashboard } from "@/features/overview"
 import { ConfirmButton } from "@/shared/components/confirm-button"
-import { DataTable } from "@/shared/components/data-table"
+import { DataTable, SearchFilter, useFilter } from "@/shared/components/data-table"
 import { formatDate, formatNumber, price } from "@/shared/lib/format"
-import { NEXT_STATUS, type Order, type OrderStatus } from "@/shared/types/models"
+import { NEXT_STATUS, ORDER_STATUSES, type Order, type OrderStatus } from "@/shared/types/models"
 import { getOrders } from "../api"
 import { orderKeys, useUpdateOrderStatus } from "../queries"
-
-const total = (o: Order) => o.order_items?.reduce((s, i) => s + Number(i.price_snapshot), 0) ?? 0
 
 export function OrdersPage() {
   const { t } = useTranslation()
   const [open, setOpen] = useState<Order>()
+  const [status, setStatus] = useFilter("status")
 
   return (
     <div className="grid gap-4">
@@ -27,11 +27,29 @@ export function OrdersPage() {
       <DataTable
         queryKey={orderKeys.all}
         fetch={getOrders}
+        toolbar={
+          <>
+            <SearchFilter placeholder={t("orders.search")} />
+            <Select value={status ?? "all"} onValueChange={(v) => setStatus(v === "all" ? undefined : v)}>
+              <SelectTrigger aria-label={t("orders.status")} className="w-full sm:w-40">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">{t("orders.allStatuses")}</SelectItem>
+                {ORDER_STATUSES.map((s) => (
+                  <SelectItem key={s} value={s}>
+                    {t(`overview.status.${s}`)}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </>
+        }
         columns={[
           { header: "#", cell: (o) => o.id },
           { header: t("orders.customer"), cell: (o) => o.user?.name },
           { header: t("orders.items"), cell: (o) => formatNumber(o.order_items?.length ?? 0) },
-          { header: t("orders.total"), cell: (o) => price(total(o)) },
+          { header: t("orders.total"), cell: (o) => price(o.total) },
           { header: t("orders.status"), cell: (o) => <StatusBadge status={o.status} /> },
           { header: t("orders.date"), cell: (o) => formatDate(o.created_at) },
           {
@@ -97,8 +115,8 @@ function OrderSheet({ order, onClose }: { order?: Order; onClose: () => void }) 
               <StatusBadge status={order.status} />
               <div className="grid gap-1">
                 <span className="font-medium">{order.user?.name}</span>
-                <span dir="ltr" className="text-start text-muted-foreground">{order.user?.phone_number}</span>
-                <span className="text-muted-foreground">{order.user?.address}</span>
+                <span dir="ltr" className="text-start text-muted-foreground">{order.phone_number}</span>
+                <span className="text-muted-foreground">{order.address}</span>
               </div>
               <Separator />
               <ul className="grid gap-2">
@@ -114,7 +132,7 @@ function OrderSheet({ order, onClose }: { order?: Order; onClose: () => void }) 
               <Separator />
               <div className="flex justify-between font-semibold">
                 <span>{t("orders.total")}</span>
-                <span>{price(total(order))}</span>
+                <span>{price(order.total)}</span>
               </div>
               {NEXT_STATUS[order.status].length > 0 && (
                 <div className="flex flex-wrap gap-2">

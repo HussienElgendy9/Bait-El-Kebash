@@ -79,7 +79,8 @@
     "price": "السعر",
     "unit": "الوحدة",
     "description": "الوصف",
-    "image": "الصورة"
+    "image": "الصورة",
+    "availability": "التوفر"
   },
   "categories": {
     "new": "قسم جديد",
@@ -89,7 +90,11 @@
   "products": {
     "new": "منتج جديد",
     "edit": "تعديل المنتج",
-    "deleteTitle": "تحذف \"{{name}}\"؟"
+    "deleteTitle": "تحذف \"{{name}}\"؟",
+    "search": "دوّر على منتج",
+    "allCategories": "كل الأقسام",
+    "available": "متاح",
+    "unavailable": "مش متاح"
   },
   "orders": {
     "all": "كل الطلبات",
@@ -104,11 +109,14 @@
     "to": {
       "processing": "ابدأ التنفيذ",
       "completed": "اتعمل"
-    }
+    },
+    "search": "رقم الطلب أو الاسم أو الموبايل",
+    "allStatuses": "كل الحالات"
   },
   "users": {
     "promote": "اجعله مشرف",
-    "promoteTitle": "تخلي {{name}} مشرف؟"
+    "promoteTitle": "تخلي {{name}} مشرف؟",
+    "search": "الاسم أو الإيميل أو الموبايل"
   },
   "roles": {
     "role": "الصلاحية",

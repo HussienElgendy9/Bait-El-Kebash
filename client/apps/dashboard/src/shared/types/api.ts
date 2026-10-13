@@ -10,3 +10,6 @@ export type ApiErrorBody = {
   message?: string
   errors?: Record<string, string[]>
 }
+
+/** List filters as `?key=value` query params (see DataTable/useFilter). */
+export type Filters = Record<string, string>

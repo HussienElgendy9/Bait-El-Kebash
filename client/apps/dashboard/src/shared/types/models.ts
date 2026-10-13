@@ -20,6 +20,7 @@ export type Product = {
   unit_price: number | string
   unit: string
   image: string | null
+  is_available: boolean
   category?: Category
 }
 
@@ -46,6 +47,11 @@ export type OrderItem = {
 export type Order = {
   id: number
   status: OrderStatus
+  /** Delivery details snapshotted from the customer's profile at order time. */
+  address: string
+  phone_number: string
+  /** Sum of price_snapshot; Laravel may send a number or a decimal string. */
+  total: number | string
   created_at: string
   user?: User
   order_items?: OrderItem[]

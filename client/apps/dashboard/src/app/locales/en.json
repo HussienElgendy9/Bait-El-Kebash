@@ -75,7 +75,8 @@
     "price": "Price",
     "unit": "Unit",
     "description": "Description",
-    "image": "Image"
+    "image": "Image",
+    "availability": "Availability"
   },
   "categories": {
     "new": "New category",
@@ -85,7 +86,11 @@
   "products": {
     "new": "New product",
     "edit": "Edit product",
-    "deleteTitle": "Delete \"{{name}}\"?"
+    "deleteTitle": "Delete \"{{name}}\"?",
+    "search": "Search products",
+    "allCategories": "All categories",
+    "available": "Available",
+    "unavailable": "Unavailable"
   },
   "orders": {
     "all": "All orders",
@@ -100,11 +105,14 @@
     "to": {
       "processing": "Start processing",
       "completed": "Mark completed"
-    }
+    },
+    "search": "Order #, name or phone",
+    "allStatuses": "All statuses"
   },
   "users": {
     "promote": "Make admin",
-    "promoteTitle": "Make {{name}} an admin?"
+    "promoteTitle": "Make {{name}} an admin?",
+    "search": "Name, email or phone"
   },
   "roles": {
     "role": "Role",
