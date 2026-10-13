@@ -17,10 +17,7 @@ export function SheepIcon({ className = "size-6" }: { className?: string }) {
   )
 }
 
+// Rasterized from the designer's 4MB SVG (embedded PNGs) — 256px is plenty for header sizes.
 export function LogoMark() {
-  return (
-    <div className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-secondary text-secondary-foreground">
-      <SheepIcon />
-    </div>
-  )
+  return <img src="/logo.png" alt="" width={40} height={40} className="size-10 shrink-0 rounded-full" />
 }
