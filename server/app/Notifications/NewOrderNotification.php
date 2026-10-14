@@ -24,7 +24,8 @@ class NewOrderNotification extends Notification implements ShouldQueue
 
     public function toMail(object $notifiable): MailMessage
     {
-        $total = $this->order->orderItems->sum('price_snapshot');
+        // $total = $this->order->orderItems->sum('price_snapshot');
+        $total = $this->order->total_price;
 
         $mail = (new MailMessage)
             ->subject("New Order #{$this->order->id} - Bait El Kebash")
@@ -54,7 +55,8 @@ class NewOrderNotification extends Notification implements ShouldQueue
             'customer_name' => $this->order->user->name,
             'phone' => $this->order->phone_number,
             'address' => $this->order->address,
-            'total' => $this->order->orderItems->sum('price_snapshot'),
+            'total' => $this->order->total_price,
+            // 'total' => $this->order->orderItems->sum('price_snapshot'),
             'message' => "New order #{$this->order->id} received.",
         ];
     }

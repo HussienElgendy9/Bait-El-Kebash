@@ -32,13 +32,17 @@ class OrderController extends Controller
             'items' => ['required','array','min:1'],
             'items.*.product_id' => ['required', 'integer', 'distinct', Rule::exists('products', 'id')->where('is_available', true),],
             'items.*.quantity'=>['required','integer','min:1','max:100'],
+            'address' => ['sometimes', 'nullable', 'string', 'max:1000'],
         ]);
         $order = DB::transaction(function () use ($validated, $request) {
+                $total =0;
 
                 $order = Order::create([
                     'user_id' => $request->user()->id,
                     'status' => 'pending',
-                    'address' => $request->user()->address,
+                    'total_price' => 0,
+                    'address' => $validated['address'] ?? $request->user()->address,
+                    // 'address' => $request->user()->address,
                     'phone_number' =>$request->user()->phone_number,
                 ]);
                 
@@ -54,6 +58,7 @@ class OrderController extends Controller
                     $quantity = $item['quantity'];
                     $unitPrice = $product->unit_price;
                     $priceSnapshot = $unitPrice * $quantity;
+                    $total += $priceSnapshot;
 
                     $order->orderItems()->create([
                         'product_id' => $product->id,
@@ -62,6 +67,8 @@ class OrderController extends Controller
                         'price_snapshot' => $priceSnapshot,
                     ]);
                 }
+
+                $order->update(['total_price' => $total]);
 
                 return $order;
             });

@@ -41,13 +41,17 @@ class DashboardController extends Controller
             $salesLabels[] = $date->format('M');
 
             // Total sales for this month
-            $salesData[] = OrderItem::whereHas('order', function ($query) use ($date) {
+            // $salesData[] = OrderItem::whereHas('order', function ($query) use ($date) {
 
-                    $query->where('status','completed')
-                        ->whereYear('created_at', $date->year)
-                        ->whereMonth('created_at', $date->month);
+            //         $query->where('status','completed')
+            //             ->whereYear('created_at', $date->year)
+            //             ->whereMonth('created_at', $date->month);
 
-                })->sum('price_snapshot');
+            //     })->sum('price_snapshot');
+            $salesData[] = Order::where('status', 'completed')
+                ->whereYear('created_at', $date->year)
+                ->whereMonth('created_at', $date->month)
+                ->sum('total_price');
 
 
         }

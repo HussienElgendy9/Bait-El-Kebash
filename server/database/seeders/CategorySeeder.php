@@ -7,7 +7,7 @@ use Illuminate\Database\Seeder;
 
 class CategorySeeder extends Seeder
 {
-    public const NAMES = ['خراف', 'ماعز', 'عجول'];
+    public const NAMES = ['ضاني', 'نيفة', 'كندوز'];
 
     public function run(): void
     {
